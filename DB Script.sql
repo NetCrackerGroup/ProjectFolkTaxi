@@ -50,6 +50,7 @@ CREATE TABLE public.Review (
                 Review_ID BIGINT NOT NULL,
                 Mark NUMERIC NOT NULL,
                 Additional_Text VARCHAR,
+                User_ID BIGINT NOT NULL,
                 CONSTRAINT review_pk PRIMARY KEY (Review_ID)
 );
 
@@ -262,22 +263,16 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-/*
-Warning: Relationship has no columns to map:
-*/
 ALTER TABLE public.Review ADD CONSTRAINT driver_rating_review_fk
-FOREIGN KEY ()
-REFERENCES public.Driver_Rating ()
+FOREIGN KEY (User_ID)
+REFERENCES public.Driver_Rating (User_ID)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-/*
-Warning: Relationship has no columns to map:
-*/
 ALTER TABLE public.Review ADD CONSTRAINT passenger_rating_review_fk
-FOREIGN KEY ()
-REFERENCES public.Passenger_Rating ()
+FOREIGN KEY (User_ID)
+REFERENCES public.Passenger_Rating (User_ID)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
