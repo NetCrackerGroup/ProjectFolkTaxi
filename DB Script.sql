@@ -17,7 +17,7 @@ CREATE TABLE public.Group_1 (
 CREATE TABLE public.City (
                 City_ID BIGINT NOT NULL,
                 City_Name VARCHAR NOT NULL,
-                City_Map DATALINK NOT NULL,
+                City_Map VARCHAR NOT NULL,
                 CONSTRAINT city_pk PRIMARY KEY (City_ID)
 );
 
@@ -94,7 +94,7 @@ CREATE TABLE public.Group_Moderator (
 CREATE TABLE public.Route (
                 Route_ID BIGINT NOT NULL,
                 City_ID BIGINT NOT NULL,
-                Route_Beging VARCHAR NOT NULL,
+                Route_Begin VARCHAR NOT NULL,
                 Route_End VARCHAR NOT NULL,
                 Price NUMERIC,
                 Driver_ID BIGINT NOT NULL,
