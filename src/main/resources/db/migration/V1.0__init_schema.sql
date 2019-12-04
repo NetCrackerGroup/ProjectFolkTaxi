@@ -17,7 +17,7 @@ CREATE TABLE public.Group_1 (
 CREATE TABLE public.City (
                 City_ID BIGINT NOT NULL,
                 City_Name VARCHAR NOT NULL,
-                City_Map DATALINK NOT NULL,
+                City_Map VARCHAR NOT NULL,
                 CONSTRAINT city_pk PRIMARY KEY (City_ID)
 );
 
@@ -87,7 +87,7 @@ CREATE TABLE public.Group_Moderator (
                 User_ID BIGINT NOT NULL,
                 Group_ID BIGINT NOT NULL,
                 FIO VARCHAR NOT NULL,
-                CONSTRAINT moderator_pk PRIMARY KEY (User_ID)
+                CONSTRAINT group_moderator_pk PRIMARY KEY (User_ID)
 );
 
 
