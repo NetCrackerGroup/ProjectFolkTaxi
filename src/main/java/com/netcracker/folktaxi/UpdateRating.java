@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class UpdateRating {
     public static void main(String[] args) {
-        update(9, true, 1, "well done", 1);
+        update(11, false, 5, "well done", 5);
     }
 
     public static void update(int Review_ID, Boolean Is_passenger, int Mark, String Additional_Text, int User_ID) {
@@ -52,11 +52,9 @@ public class UpdateRating {
 
             if (!Is_passenger) {
                 while (rs.next()) { rating = rs.getInt(2); }
-                System.out.println(rating + " 213");
                 stmtUpdate.executeUpdate("UPDATE Driver_Rating SET Average_Mark = "+ rating +" WHERE User_ID = "+User_ID);
             } else {
                 while (rs.next()) { rating = rs.getInt(3); }
-                System.out.println(rating + "321");
                 stmtUpdate.executeUpdate("UPDATE Passenger_Rating SET Average_Mark = "+ rating +" WHERE User_ID = "+User_ID);
 
             }
