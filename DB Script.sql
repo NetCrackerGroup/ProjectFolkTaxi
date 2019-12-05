@@ -1,4 +1,3 @@
-
 CREATE TABLE public.Moderator (
                 Moderator_ID BIGINT NOT NULL,
                 FIO VARCHAR NOT NULL,
