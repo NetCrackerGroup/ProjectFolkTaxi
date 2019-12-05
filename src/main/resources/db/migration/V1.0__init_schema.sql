@@ -86,8 +86,9 @@ CREATE TABLE public.Group_Moderator (
                 User_ID BIGINT NOT NULL,
                 Group_ID BIGINT NOT NULL,
                 FIO VARCHAR NOT NULL,
-                CONSTRAINT gmoderator_pk PRIMARY KEY (User_ID)
+                CONSTRAINT group_moderator_pk PRIMARY KEY (User_ID)
 );
+
 
 
 CREATE TABLE public.Route (
@@ -317,3 +318,4 @@ REFERENCES public.Journey (Journey_ID)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
+
