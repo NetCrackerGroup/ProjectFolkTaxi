@@ -16,7 +16,7 @@ public class Main
     {
     
         //System.out.println( "Hello FolkTaxi!" );
-        /*try {
+        try {
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/folktaxi",
                     "postgres",
                     "root"
@@ -31,10 +31,7 @@ public class Main
             con.close();
         } catch (Exception e) {
             System.out.println(e);
-        }*/
-
-        Toxicity t = new Toxicity(2);
-        out.println(t.getCountReport());
+        }
     }
   
 }
