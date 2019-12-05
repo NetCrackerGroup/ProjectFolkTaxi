@@ -23,7 +23,7 @@
 	                <id>flyway database migration</id>
 	                <phase>compile</phase>
 	                <goals>
-	                    <goal>clean</goal>
+	                	<goal>clean</goal>
 	                    <goal>migrate</goal>
 	                </goals>
              	</execution>

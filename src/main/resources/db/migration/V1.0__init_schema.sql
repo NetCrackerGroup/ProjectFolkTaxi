@@ -41,6 +41,7 @@ CREATE TABLE public.Driver_Rating (
 
 CREATE TABLE public.Passenger_Rating (
                 User_ID BIGINT NOT NULL,
+                Marker BOOLEAN NOT NULL,
                 Average_Mark NUMERIC,
                 CONSTRAINT passenger_rating_pk PRIMARY KEY (User_ID)
 );
