@@ -48,6 +48,7 @@ CREATE TABLE public.Passenger_Rating (
 
 CREATE TABLE public.Review (
                 Review_ID BIGINT NOT NULL,
+                Is_passenger BOOLEAN NOT NULL,
                 Mark NUMERIC NOT NULL,
                 Additional_Text VARCHAR,
                 User_ID BIGINT NOT NULL,
