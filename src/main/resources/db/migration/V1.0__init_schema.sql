@@ -1,4 +1,3 @@
-
 CREATE TABLE public.Moderator (
                 Moderator_ID BIGINT NOT NULL,
                 FIO VARCHAR NOT NULL,
@@ -90,6 +89,7 @@ CREATE TABLE public.Group_Moderator (
                 FIO VARCHAR NOT NULL,
                 CONSTRAINT group_moderator_pk PRIMARY KEY (User_ID)
 );
+
 
 
 CREATE TABLE public.Route (
@@ -319,3 +319,4 @@ REFERENCES public.Journey (Journey_ID)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
+
