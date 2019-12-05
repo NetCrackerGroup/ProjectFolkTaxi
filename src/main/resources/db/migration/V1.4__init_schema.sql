@@ -1,0 +1,12 @@
+INSERT INTO Driver_Rating(User_ID, Average_Mark) VALUES (1, 0);
+INSERT INTO Driver_Rating(User_ID, Average_Mark) VALUES (2, 0);
+INSERT INTO Driver_Rating(User_ID, Average_Mark) VALUES (3, 0);
+INSERT INTO Driver_Rating(User_ID, Average_Mark) VALUES (4, 0);
+INSERT INTO Driver_Rating(User_ID, Average_Mark) VALUES (5, 0);
+INSERT INTO Driver_Rating(User_ID, Average_Mark) VALUES (6, 0);
+INSERT INTO Passenger_Rating(User_ID, Average_Mark) VALUES (1, 0);
+INSERT INTO Passenger_Rating(User_ID, Average_Mark) VALUES (2, 0);
+INSERT INTO Passenger_Rating(User_ID, Average_Mark) VALUES (3, 0);
+INSERT INTO Passenger_Rating(User_ID, Average_Mark) VALUES (4, 0);
+INSERT INTO Passenger_Rating(User_ID, Average_Mark) VALUES (5, 0);
+INSERT INTO Passenger_Rating(User_ID, Average_Mark) VALUES (6, 0);
