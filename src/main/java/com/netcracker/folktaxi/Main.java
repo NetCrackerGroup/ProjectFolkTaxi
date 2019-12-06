@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import static java.lang.System.out;
+//import static java.lang.System.out;
 
 /**
  * Hello world!
@@ -19,12 +19,13 @@ public class Main
         try {
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/folktaxi",
                     "postgres",
-                    "root"
+                    "szdx8462"
             );
 
             //PreparedStatement stmt = con.prepareStatement(" SELECT current_database();");
-            PreparedStatement stmt = con.prepareStatement(" SELECT COUNT(*)" +
-                                                                    "FROM REPORT");
+            
+            PreparedStatement stmt = con.prepareStatement(" SELECT 'Hello FolkTaxi!'");
+            
             ResultSet rs = stmt.executeQuery();
             while (rs.next())
             	System.out.println(rs.getString(1));

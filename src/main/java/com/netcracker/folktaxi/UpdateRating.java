@@ -1,7 +1,5 @@
 package com.netcracker.folktaxi;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import java.sql.*;
 
 public class UpdateRating {
