@@ -1,4 +1,3 @@
-
 CREATE TABLE public.Moderator (
                 Moderator_ID BIGINT NOT NULL,
                 FIO VARCHAR NOT NULL,
@@ -95,7 +94,7 @@ CREATE TABLE public.Group_Moderator (
 CREATE TABLE public.Route (
                 Route_ID BIGINT NOT NULL,
                 City_ID BIGINT NOT NULL,
-                Route_Beging VARCHAR NOT NULL,
+                Route_Begin VARCHAR NOT NULL,
                 Route_End VARCHAR NOT NULL,
                 Price NUMERIC,
                 Driver_ID BIGINT NOT NULL,

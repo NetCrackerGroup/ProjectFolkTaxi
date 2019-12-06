@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
- * Класс дающий представление об токсичности пользователя народного такси
+ * Class which represents the level of user's toxicity
  */
 public class Toxicity {
 
