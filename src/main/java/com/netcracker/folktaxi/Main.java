@@ -19,7 +19,7 @@ public class Main
         try {
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/folktaxi",
                     "postgres",
-                    "szdx8462"
+                    "dunayeva1*"
             );
 
             //PreparedStatement stmt = con.prepareStatement(" SELECT current_database();");
