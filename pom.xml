@@ -12,11 +12,11 @@
 	        <artifactId>flyway-maven-plugin</artifactId>
 	        <version>2.3.1</version>
 	        <configuration>
-	            <user></user>
-	            <password></password>
+	            <user>postgres</user>
+	            <password>dunayeva1*</password>
 	            <driver>org.postgresql.Driver</driver>
-	            <url>jdbc:postgresql://localhost:5432/folktaxi</url>
-	            <baseDir>db/migration</baseDir>
+				<url>jdbc:postgresql://localhost:5432/falktaxi</url>
+				<baseDir>db/migration</baseDir>
 	        </configuration>
 	        <executions>
 	    		<execution>
