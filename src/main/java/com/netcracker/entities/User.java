@@ -3,6 +3,7 @@ package com.netcracker.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 
 @Entity
 @Table(name = "User_1")
@@ -26,6 +27,30 @@ public class User {
 
     @Column(name = "Phone_Number")
     private String phoneNumber;
+
+    @ManyToMany(mappedBy ="User_1",fetch=FetchType.EAGER)
+    Collection<Route> routes;
+
+    public Collection<Route> getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(Collection<Route> routes) {
+        this.routes = routes;
+    }
+
+    public Collection<Journey> getJournies() {
+        return journies;
+    }
+
+    public void setJournies(Collection<Journey> journies) {
+        this.journies = journies;
+    }
+
+    @ManyToMany(mappedBy ="User_1",fetch=FetchType.EAGER)
+    Collection<Journey> journies;
+
+
 
     public User() {
     }
