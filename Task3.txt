@@ -1,19 +1,19 @@
 The task is to create classes (entities) and their repositories:
 chat -
-city -
+city +
 driver_rating -
 group_1 -
 group_moderator -
-journey -
+journey +
 message -
 moderator -
 notification -
-passenger_in_journey -
-passenger_in_route -
+passenger_in_journey +
+passenger_in_route +
 passenger_raiting -
 report -
 review -
-route -
+route +
 schedule -
 user_1 - 
 user_in_group -
