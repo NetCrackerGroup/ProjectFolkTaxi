@@ -13,10 +13,10 @@
 	        <version>2.3.1</version>
 	        <configuration>
 	            <user>postgres</user>
-	            <password>dunayeva1*</password>
+	            <password>root</password>
 	            <driver>org.postgresql.Driver</driver>
-				<url>jdbc:postgresql://localhost:5432/falktaxi</url>
-				<baseDir>db/migration</baseDir>
+				<url>jdbc:postgresql://localhost:5432/folktaxi</url>
+
 	        </configuration>
 	        <executions>
 	    		<execution>
