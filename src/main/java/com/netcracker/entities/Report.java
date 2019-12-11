@@ -5,7 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Report")
+@Table
 public class Report {
 
     @Id
@@ -28,8 +28,9 @@ public class Report {
     private Long moderatorId;
 
     @NotNull
-    @Column(name = "User_ID")
-    private Long userId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn (name = "User_ID")
+    private User user;
 
     public Report() {
     }
@@ -74,11 +75,11 @@ public class Report {
         this.moderatorId = moderatorId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }
