@@ -24,7 +24,7 @@ CREATE TABLE public.City (
 CREATE SEQUENCE user_id_seq;
 CREATE TABLE public.User_1 (
                 User_ID INTEGER default nextval('user_id_seq'),
-                City_ID INTEGER ,
+                City_ID SERIAL ,
                 FIO VARCHAR NOT NULL,
                 Email VARCHAR,
                 Phone_Number VARCHAR,
@@ -34,24 +34,24 @@ CREATE TABLE public.User_1 (
 
 CREATE TABLE public.Driver_Rating (
                 User_ID SERIAL ,
-                Average_Mark INT,
+                Average_Mark double precision,
                 CONSTRAINT driver_rating_pk PRIMARY KEY (User_ID)
 );
 
 
 CREATE TABLE public.Passenger_Rating (
                 User_ID SERIAL NOT NULL,
-                Average_Mark INT,
+                Average_Mark double precision,
                 CONSTRAINT passenger_rating_pk PRIMARY KEY (User_ID)
 );
 
 
 CREATE TABLE public.Review (
-                Review_ID BIGINT NOT NULL,
+                Review_ID SERIAL NOT NULL,
                 Is_passenger BOOLEAN NOT NULL,
-                Mark NUMERIC NOT NULL,
+                Mark INTEGER NOT NULL,
                 Additional_Text VARCHAR,
-                User_ID BIGINT NOT NULL,
+                User_ID INTEGER NOT NULL,
                 CONSTRAINT review_pk PRIMARY KEY (Review_ID)
 );
 
