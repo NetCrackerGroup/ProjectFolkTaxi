@@ -1,6 +1,8 @@
 package com.netcracker.folktaxi;
 
-//import com.netcracker.hibernate.EntityManagerConfiguration;
+import com.netcracker.hibernate.EntityManagerConfiguration;
+import com.netcracker.entities.City;
+import com.netcracker.repositories.CityRepository;
 
 import static java.lang.System.out;
 
@@ -16,6 +18,7 @@ public class MainHibernate {
 	public static void main(String[] args) {
 		ShowReport();
 		ShowNotification();
+    EntityManagerConfiguration.getInstance().releaseResourcesAndClose();
 	}
 
 
@@ -34,7 +37,6 @@ public class MainHibernate {
 		ReportRepository nr = new ReportRepository();
 		Report report = nr.find(1l);
 		out.println(report.getReportText());
-
 		User user = report.getUser();
 		out.println(user.getFio());
 	}

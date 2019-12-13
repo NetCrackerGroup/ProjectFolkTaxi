@@ -14,8 +14,8 @@ passenger_raiting -
 report -
 review -
 route +
-schedule -
-user_1 - 
+schedule +
+user_1 + 
 user_in_group -
 (Sign '+' means the task is completed for the specific table, 
 Sign '-' means the task is not completed or in progress)
