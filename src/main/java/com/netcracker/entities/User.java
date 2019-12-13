@@ -38,6 +38,9 @@ public class User {
 	
 	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
 	Collection<Route> routes;
+  
+  @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+  Collection<Group> groups;
 	
 	public User() {
 		
@@ -117,5 +120,3 @@ public class User {
 				", phoneNumber=" + phoneNumber + 
 				"}";
 	}
-	
-}

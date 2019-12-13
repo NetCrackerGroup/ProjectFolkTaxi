@@ -6,7 +6,7 @@ import javax.persistence.Persistence;
 
 public class EntityManagerConfiguration {
 
-    private static final String PERSISTENCE_UNIT_NAME = "com.students.hibernate";
+    private static final String PERSISTENCE_UNIT_NAME = "com.netcracker.hibernate";
     private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 
     private static final EntityManagerConfiguration INSTANCE = new EntityManagerConfiguration();

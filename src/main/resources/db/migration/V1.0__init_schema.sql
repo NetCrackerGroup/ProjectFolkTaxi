@@ -1,3 +1,5 @@
+
+
 CREATE TABLE public.Moderator (
                 Moderator_ID BIGINT NOT NULL,
                 FIO VARCHAR NOT NULL,
@@ -6,7 +8,7 @@ CREATE TABLE public.Moderator (
 
 
 CREATE TABLE public.Group_1 (
-                Group_ID BIGINT NOT NULL,
+                Group_ID INTEGER,
                 Group_Name VARCHAR NOT NULL,
                 Link VARCHAR NOT NULL,
                 CONSTRAINT group_1_pk PRIMARY KEY (Group_ID)
@@ -21,6 +23,7 @@ CREATE TABLE public.City (
                 CONSTRAINT city_pk PRIMARY KEY (City_ID) 
 );
 
+
 CREATE SEQUENCE user_id_seq;
 
 CREATE TABLE public.User_1 (
@@ -34,25 +37,25 @@ CREATE TABLE public.User_1 (
 
 
 CREATE TABLE public.Driver_Rating (
-                User_ID BIGINT NOT NULL,
-                Average_Mark NUMERIC,
+                User_ID SERIAL ,
+                Average_Mark double precision,
                 CONSTRAINT driver_rating_pk PRIMARY KEY (User_ID)
 );
 
 
 CREATE TABLE public.Passenger_Rating (
-                User_ID BIGINT NOT NULL,
-                Average_Mark NUMERIC,
+                User_ID SERIAL NOT NULL,
+                Average_Mark double precision,
                 CONSTRAINT passenger_rating_pk PRIMARY KEY (User_ID)
 );
 
 
 CREATE TABLE public.Review (
-                Review_ID BIGINT NOT NULL,
+                Review_ID SERIAL NOT NULL,
                 Is_passenger BOOLEAN NOT NULL,
-                Mark NUMERIC NOT NULL,
+                Mark INTEGER NOT NULL,
                 Additional_Text VARCHAR,
-                User_ID BIGINT NOT NULL,
+                User_ID INTEGER NOT NULL,
                 CONSTRAINT review_pk PRIMARY KEY (Review_ID)
 );
 
@@ -79,8 +82,8 @@ CREATE TABLE public.Report (
 
 
 CREATE TABLE public.User_In_Group (
-                Group_ID BIGINT NOT NULL,
-                User_ID BIGINT NOT NULL,
+                Group_ID INTEGER NOT NULL,
+                User_ID INTEGER NOT NULL,
                 CONSTRAINT user_in_group_pk PRIMARY KEY (Group_ID, User_ID)
 );
 

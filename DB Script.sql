@@ -23,7 +23,7 @@ CREATE TABLE public.City (
 
 
 CREATE TABLE public.User_1 (
-                User_ID BIGINT NOT NULL,
+                User_ID INT NOT NULL,
                 City_ID BIGINT NOT NULL,
                 FIO VARCHAR NOT NULL,
                 Email VARCHAR,

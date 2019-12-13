@@ -4,13 +4,13 @@ city +
 driver_rating -
 group_1 -
 group_moderator -
-journey -
+journey +
 message -
 moderator -
 notification -
-passenger_in_journey -
-passenger_in_route -
-passenger_raiting +
+passenger_in_journey +
+passenger_in_route +
+passenger_raiting -
 report -
 review -
 route +
