@@ -17,10 +17,10 @@ import java.util.Collection;
 public class Group {
 
     @Id
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "group_id_generator")
+	@SequenceGenerator(name = "group_id_generator", sequenceName = "group_id_seq", allocationSize = 1)
     @Column(name = "Group_ID")
-    private int groupId;
+    private Long groupId;
 
     @Column(name = "Group_Name")
     private String groupName;

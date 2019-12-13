@@ -36,11 +36,11 @@ public class User {
 	@Column(name = "phone_number")
 	private String phoneNumber;
 	
-	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	Collection<Route> routes;
   
-  @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-  Collection<Group> groups;
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    Collection<Group> groups;
 	
 	public User() {
 		
@@ -120,3 +120,4 @@ public class User {
 				", phoneNumber=" + phoneNumber + 
 				"}";
 	}
+}

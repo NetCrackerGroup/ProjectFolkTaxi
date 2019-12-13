@@ -7,13 +7,13 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Driver_Rating")
 public class DriverRating {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "User_ID")
-    private int id;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+	
+	@Id
+	private Long id;
+	
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    @JoinColumn(name = "User_id")
     private User driveRatingUser;
 
     @Column(name = "Average_Mark")

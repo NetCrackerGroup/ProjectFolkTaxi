@@ -8,3 +8,4 @@ public class UserRepository extends AbstractRepository<User>{
 		super(User.class);
 		// TODO Auto-generated constructor stub
 	}
+}

@@ -1,7 +1,5 @@
 package com.netcracker.entities;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
@@ -12,7 +10,7 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Review_ID")
-    private Integer reviewId;
+    private Long reviewId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "User_ID")

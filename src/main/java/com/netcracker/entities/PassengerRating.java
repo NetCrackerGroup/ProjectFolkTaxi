@@ -1,21 +1,19 @@
 package com.netcracker.entities;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Passenger_Rating")
 public class PassengerRating {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "User_ID")
-    private int id;
+	@Id
+    private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+	@OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    @JoinColumn(name = "User_id")
     private User passRatingUser;
 
     public User getPassRatingUser() {
@@ -26,7 +24,7 @@ public class PassengerRating {
         return averageMark;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
