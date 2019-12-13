@@ -17,7 +17,7 @@ public class User {
     @SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", allocationSize = 1)*/
     @NotNull
     @Column(name = "User_ID")
-    private Long userId;
+    private int userId;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinColumn(name = "City_ID")
@@ -33,7 +33,7 @@ public class User {
     @Column(name = "Email")
     private String email;
 
-    public Long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
