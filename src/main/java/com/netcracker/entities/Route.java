@@ -26,7 +26,7 @@ public class Route {
 
 
     @Column(name = "Price")
-    private Long price;
+    private Float price;
 
 
     @NotNull
@@ -71,11 +71,11 @@ public class Route {
         this.route_end = route_end;
     }
 
-    public Long getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

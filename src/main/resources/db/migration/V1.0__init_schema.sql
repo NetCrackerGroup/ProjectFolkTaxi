@@ -14,7 +14,6 @@ CREATE TABLE public.Group_1 (
                 CONSTRAINT group_1_pk PRIMARY KEY (Group_ID)
 );
 
-
 CREATE TABLE public.City (
                 City_ID SERIAL,
                 City_Name VARCHAR NOT NULL,
@@ -40,7 +39,7 @@ CREATE TABLE public.Driver_Rating (
 
 
 CREATE TABLE public.Passenger_Rating (
-                User_ID SERIAL NOT NULL,
+                User_ID INTEGER NOT NULL,
                 Average_Mark double precision,
                 CONSTRAINT passenger_rating_pk PRIMARY KEY (User_ID)
 );
@@ -61,7 +60,7 @@ CREATE TABLE public.Notification (
                 Text VARCHAR NOT NULL,
                 Delivery_Channel VARCHAR NOT NULL,
                 Was_Watched BOOLEAN NOT NULL,
-                User_ID BIGINT NOT NULL,
+                User_ID INTEGER NOT NULL,
                 CONSTRAINT notification_pk PRIMARY KEY (Notification_ID)
 );
 
@@ -72,7 +71,7 @@ CREATE TABLE public.Report (
                 Report_Reason VARCHAR NOT NULL,
                 Was_Considered BOOLEAN NOT NULL,
                 Moderator_ID BIGINT NOT NULL,
-                User_ID BIGINT NOT NULL,
+                User_ID INTEGER NOT NULL,
                 CONSTRAINT report_pk PRIMARY KEY (Report_ID)
 );
 
@@ -140,14 +139,14 @@ CREATE TABLE public.Journey (
 
 CREATE TABLE public.Passenger_in_Journey (
                 Journey_ID BIGINT NOT NULL,
-                User_ID BIGINT NOT NULL,
+                User_ID INTEGER NOT NULL,
                 CONSTRAINT passenger_in_journey_pk PRIMARY KEY (Journey_ID, User_ID)
 );
 
 
 CREATE TABLE public.Passenger_In_Route (
                 Route_ID BIGINT NOT NULL,
-                User_ID BIGINT NOT NULL,
+                User_ID INTEGER NOT NULL,
                 CONSTRAINT passenger_in_route_pk PRIMARY KEY (Route_ID, User_ID)
 );
 

@@ -10,7 +10,7 @@ public class Report {
 
     @Id
     @Column(name = "Report_ID")
-    private int Report_ID;
+    private Long Report_ID;
 
     @NotNull
     @Column(name = "Report_Reason")
@@ -35,11 +35,11 @@ public class Report {
     public Report() {
     }
 
-    public int getReport_ID() {
+    public Long getReport_ID() {
         return Report_ID;
     }
 
-    public void setReport_ID(int report_ID) {
+    public void setReport_ID(Long report_ID) {
         Report_ID = report_ID;
     }
 
