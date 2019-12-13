@@ -1,6 +1,6 @@
 package com.netcracker.repositories;
 
-import com.netcracker.entities.City
+import com.netcracker.entities.City;
 
 public class CityRepository extends AbstractRepository<City>{
 
@@ -8,4 +8,5 @@ public class CityRepository extends AbstractRepository<City>{
 		super(City.class);
 		// TODO Auto-generated constructor stub
 	}
+}
 

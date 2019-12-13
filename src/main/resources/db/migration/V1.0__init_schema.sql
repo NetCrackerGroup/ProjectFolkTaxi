@@ -6,9 +6,10 @@ CREATE TABLE public.Moderator (
                 CONSTRAINT moderator_pk PRIMARY KEY (Moderator_ID)
 );
 
+CREATE SEQUENCE group_id_seq;
 
 CREATE TABLE public.Group_1 (
-                Group_ID INTEGER,
+                Group_ID BIGINT NOT NULL default nextval('group_id_seq'),
                 Group_Name VARCHAR NOT NULL,
                 Link VARCHAR NOT NULL,
                 CONSTRAINT group_1_pk PRIMARY KEY (Group_ID)
@@ -37,25 +38,26 @@ CREATE TABLE public.User_1 (
 
 
 CREATE TABLE public.Driver_Rating (
-                User_ID SERIAL ,
+                User_ID BIGINT NOT NULL,
                 Average_Mark double precision,
                 CONSTRAINT driver_rating_pk PRIMARY KEY (User_ID)
 );
 
 
 CREATE TABLE public.Passenger_Rating (
-                User_ID SERIAL NOT NULL,
+                User_ID BIGINT NOT NULL,
                 Average_Mark double precision,
                 CONSTRAINT passenger_rating_pk PRIMARY KEY (User_ID)
 );
 
+CREATE SEQUENCE review_id_seq;
 
 CREATE TABLE public.Review (
-                Review_ID SERIAL NOT NULL,
+                Review_ID BIGINT NOT NULL default nextval('review_id_seq'),
                 Is_passenger BOOLEAN NOT NULL,
                 Mark INTEGER NOT NULL,
                 Additional_Text VARCHAR,
-                User_ID INTEGER NOT NULL,
+                User_ID BIGINT NOT NULL,
                 CONSTRAINT review_pk PRIMARY KEY (Review_ID)
 );
 
@@ -82,8 +84,8 @@ CREATE TABLE public.Report (
 
 
 CREATE TABLE public.User_In_Group (
-                Group_ID INTEGER NOT NULL,
-                User_ID INTEGER NOT NULL,
+                Group_ID BIGINT NOT NULL,
+                User_ID BIGINT NOT NULL,
                 CONSTRAINT user_in_group_pk PRIMARY KEY (Group_ID, User_ID)
 );
 
@@ -117,26 +119,29 @@ CREATE TABLE public.Schedule (
                 CONSTRAINT schedule_pk PRIMARY KEY (Schedule_ID)
 );
 
+CREATE SEQUENCE chat_id_seq;
 
 CREATE TABLE public.Chat (
-                Chat_ID BIGINT NOT NULL,
+                Chat_ID BIGINT NOT NULL default nextval('chat_id_seq'),
                 Route_ID BIGINT,
                 Group_ID BIGINT,
                 CONSTRAINT chat_pk PRIMARY KEY (Chat_ID)
 );
 
+CREATE SEQUENCE message_id_seq;
 
 CREATE TABLE public.Message (
-                Message_ID BIGINT NOT NULL,
+                Message_ID BIGINT NOT NULL default nextval('message_id_seq'),
                 Text VARCHAR,
                 Date_Of_Sending TIMESTAMP NOT NULL,
                 Chat_ID BIGINT NOT NULL,
                 CONSTRAINT message_pk PRIMARY KEY (Message_ID)
 );
 
+CREATE SEQUENCE journey_id_seq;
 
 CREATE TABLE public.Journey (
-                Journey_ID BIGINT NOT NULL,
+                Journey_ID BIGINT NOT NULL default nextval('journey_id_seq'),
                 Route_ID BIGINT NOT NULL,
                 Date_Of_Journey DATE NOT NULL,
                 Driver_ID BIGINT NOT NULL,
