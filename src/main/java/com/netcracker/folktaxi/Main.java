@@ -18,8 +18,8 @@ public class Main
         //System.out.println( "Hello FolkTaxi!" );
         try {
             Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/folktaxi",
-                    "postgres",
-                    "szdx8462"
+                    "",
+                    ""
             );
 
             //PreparedStatement stmt = con.prepareStatement(" SELECT current_database();");

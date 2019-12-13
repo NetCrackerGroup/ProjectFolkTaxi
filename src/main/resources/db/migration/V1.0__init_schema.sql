@@ -12,17 +12,19 @@ CREATE TABLE public.Group_1 (
                 CONSTRAINT group_1_pk PRIMARY KEY (Group_ID)
 );
 
+CREATE SEQUENCE city_id_seq;
 
 CREATE TABLE public.City (
-                City_ID BIGINT NOT NULL,
+                City_ID BIGINT NOT NULL default nextval('city_id_seq'),
                 City_Name VARCHAR NOT NULL,
                 City_Map VARCHAR NOT NULL,
-                CONSTRAINT city_pk PRIMARY KEY (City_ID)
+                CONSTRAINT city_pk PRIMARY KEY (City_ID) 
 );
 
+CREATE SEQUENCE user_id_seq;
 
 CREATE TABLE public.User_1 (
-                User_ID BIGINT NOT NULL,
+                User_ID BIGINT NOT NULL default nextval('user_id_seq'),
                 City_ID BIGINT NOT NULL,
                 FIO VARCHAR NOT NULL,
                 Email VARCHAR,
@@ -90,9 +92,10 @@ CREATE TABLE public.Group_Moderator (
                 CONSTRAINT group_moderator_pk PRIMARY KEY (User_ID)
 );
 
+CREATE SEQUENCE route_id_seq;
 
 CREATE TABLE public.Route (
-                Route_ID BIGINT NOT NULL,
+                Route_ID BIGINT NOT NULL default nextval('route_id_seq'),
                 City_ID BIGINT NOT NULL,
                 Route_Begin VARCHAR NOT NULL,
                 Route_End VARCHAR NOT NULL,
@@ -101,9 +104,10 @@ CREATE TABLE public.Route (
                 CONSTRAINT route_pk PRIMARY KEY (Route_ID)
 );
 
+CREATE SEQUENCE schedule_id_seq;
 
 CREATE TABLE public.Schedule (
-                Schedule_ID BIGINT NOT NULL,
+                Schedule_ID BIGINT NOT NULL default nextval('schedule_id_seq'),
                 Schedule_Day VARCHAR NOT NULL,
                 Route_ID BIGINT NOT NULL,
                 Time_Of_Journey TIME,
