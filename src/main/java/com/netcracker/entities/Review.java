@@ -1,6 +1,5 @@
 package com.netcracker.entities;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -8,6 +7,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "Review")
 public class Review {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

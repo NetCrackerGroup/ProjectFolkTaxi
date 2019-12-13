@@ -14,7 +14,7 @@ import com.netcracker.repositories.ReportRepository;
 public class MainHibernate {
 
 	public static void main(String[] args) {
-		ShowReport();
+		//ShowReport();
 		ShowNotification();
 	}
 
@@ -26,7 +26,7 @@ public class MainHibernate {
 		out.println(notification.getText());
 
 		User user = notification.getUser();
-		out.println(user.getFio());
+		out.println(user.getFIO());
 
 	}
 	
@@ -36,6 +36,6 @@ public class MainHibernate {
 		out.println(report.getReportText());
 
 		User user = report.getUser();
-		out.println(user.getFio());
+		out.println(user.getFIO());
 	}
 }

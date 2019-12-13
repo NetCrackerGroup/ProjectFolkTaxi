@@ -12,8 +12,8 @@
 	        <artifactId>flyway-maven-plugin</artifactId>
 	        <version>1.5</version>
 	        <configuration>
-	            <user></user>
-	            <password></password>
+	            <user>postgres</user>
+	            <password>root</password>
 	            <driver>org.postgresql.Driver</driver>
 				<url>jdbc:postgresql://localhost:5432/folktaxi</url>
 				<baseDir>db/migration</baseDir>

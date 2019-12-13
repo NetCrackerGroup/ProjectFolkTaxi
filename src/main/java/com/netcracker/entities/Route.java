@@ -45,7 +45,7 @@ public class Route {
             joinColumns = {@JoinColumn(name = "Route_ID")},
             inverseJoinColumns = {@JoinColumn(name = "User_ID")}
     )
-    Collection<User> users;
+    private Collection<User> users_route;
 
     public Long getRoute_Id() {
         return route_Id;
@@ -95,12 +95,12 @@ public class Route {
         this.city = city;
     }
 
-    public Collection<User> getUsers() {
-        return users;
+    public Collection<User> getUsers_route() {
+        return users_route;
     }
 
-    public void setUsers(Collection<User> users) {
-        this.users = users;
+    public void setUsers_route(Collection<User> users_route) {
+        this.users_route = users_route;
     }
 
     @Override
@@ -114,7 +114,7 @@ public class Route {
                 Objects.equals(price, route.price) &&
                 driver.equals(route.driver) &&
                 city.equals(route.city) &&
-                Objects.equals(users, route.users);
+                Objects.equals(users_route, route.users_route);
     }
 
     @Override

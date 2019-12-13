@@ -13,18 +13,19 @@ import java.util.Collection;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
-    @SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", allocationSize = 1)
+    /*@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
+    @SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", allocationSize = 1)*/
     @NotNull
     @Column(name = "User_ID")
-    private int userId;
+    private Long userId;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinColumn(name = "City_ID")
     private City city;
 
-    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-    Collection<Group> groups;
+    /*@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+    Collection<Group> groups;*/
+
 
     private String FIO;
 
@@ -32,7 +33,7 @@ public class User {
     @Column(name = "Email")
     private String email;
 
-    public int getUserId() {
+    public Long getUserId() {
         return userId;
     }
 

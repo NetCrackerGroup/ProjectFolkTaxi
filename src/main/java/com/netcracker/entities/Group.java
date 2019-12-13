@@ -38,7 +38,7 @@ public class Group {
             joinColumns = { @JoinColumn(name = "Group_ID") },
             inverseJoinColumns = { @JoinColumn(name = "User_ID") }
     )
-    private Collection<User> users;
+    Collection<User> users;
 
     @Column(name = "Link")
     private String cityLink;
