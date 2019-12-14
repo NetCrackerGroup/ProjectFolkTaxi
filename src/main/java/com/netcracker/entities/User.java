@@ -1,74 +1,123 @@
 package com.netcracker.entities;
 
-import com.sun.istack.NotNull;
-import lombok.Getter;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
-
+//import java.util.Collection;
+import java.util.Objects;
 
 @Entity
-@Table(name = "User_1")
+@Table(name = "user_1")
 public class User {
 
-    @Id
-    /*@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
-    @SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", allocationSize = 1)*/
-    @NotNull
-    @Column(name = "User_ID")
-    private int userId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
+	@SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", allocationSize = 1)
+	@Column(name = "user_id")
+	private Long userId;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "city_id")
+	private City cityId;
+	
+	@NotNull
+	@Size(min = 1, max = 200)
+	@Column(name = "fio")
+	private String fio;
+	
+	@NotNull
+	@Size(min = 1, max = 100)
+	@Column(name = "email")
+	private String email;
+	
+	@NotNull
+	@Size(min = 1, max = 20)
+	@Column(name = "phone_number")
+	private String phoneNumber;
+	
+	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+	Collection<Route> routes;
+  
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    Collection<Group> groups;
+	
+	public User() {
+		
+	}
+	
+	/*@OneToOne(mappedBy = "users", fetch = FetchType.EAGER)
+	  Collection<City> cities;*/
+	
+	public User(@NotNull @Size(min = 1, max = 200) String fio,
+				@NotNull @Size(min = 1, max = 20) String phoneNumber
+				) {
+		this.fio = fio;
+		this.phoneNumber = phoneNumber;
+		
+	}
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    @JoinColumn(name = "City_ID")
-    private City city;
+	public Long getUserId() {
+		return userId;
+	}
 
-    /*@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-    Collection<Group> groups;*/
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
+	public City getCityId() {
+		return cityId;
+	}
 
-    private String FIO;
+	public void setCityId(City cityId) {
+		this.cityId = cityId;
+	}
 
-    public User(){}
-    @Column(name = "Email")
-    private String email;
+	public String getFio() {
+		return fio;
+	}
 
-    public int getUserId() {
-        return userId;
-    }
+	public void setFio(String fio) {
+		this.fio = fio;
+	}
 
-    public City getCity() {
-        return city;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getFIO() {
-        return FIO;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
-    public User(@Size(min = 1, max = 50) String FIO,
-                @Size(min = 1, max = 100) String phoneNumber,
-                String email,
-                City city) {
-        this.FIO = FIO;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.city = city;
+	@Override
+	public int hashCode() {
+		return Objects.hash(userId);
+	}
 
-    }
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;
+	    if (obj == null || getClass() != obj.getClass()) return false;
+	    User user = (User) obj;
+	    return userId.equals(user.userId);
+	}
 
-    @Column(name = "Phone_Number")
-    private String phoneNumber;
-
-
-
-
-
+	@Override
+	public String toString() {
+		return "User{"+
+				"userId=" + userId + 
+				", cityId=" + cityId + 
+				", fio=" + fio + 
+				", email=" + email + 
+				", phoneNumber=" + phoneNumber + 
+				"}";
+	}
 }

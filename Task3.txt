@@ -1,21 +1,21 @@
 The task is to create classes (entities) and their repositories:
-chat -
+chat +
 city +
-driver_rating -
-group_1 -
+driver_rating +
+group_1 +
 group_moderator -
 journey +
-message -
+message +
 moderator -
-notification -
+notification +
 passenger_in_journey +
 passenger_in_route +
-passenger_raiting -
-report -
-review -
+passenger_raiting +
+report +
+review +
 route +
-schedule -
-user_1 - 
-user_in_group -
+schedule +
+user_1 + 
+user_in_group +
 (Sign '+' means the task is completed for the specific table, 
 Sign '-' means the task is not completed or in progress)
