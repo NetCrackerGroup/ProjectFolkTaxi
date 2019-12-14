@@ -8,7 +8,7 @@ public class MainHibernateRoute {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		showUserRepository();
+		//showUserRepository();
 		//showRouteRepository();
 		showCityRepository();
 		//showScheduleRep();
@@ -16,13 +16,13 @@ public class MainHibernateRoute {
 
 	}
 	
-	public static void showUserRepository() {
+	/*public static void showUserRepository() {
 		UserRepository userRepository = new UserRepository();
         User user = userRepository.find(1l);
         //User user2 = userRepository.find(2l);
         System.out.println(user);
   
-	}
+	}*/
 	
 	public static void showCityRepository() {
 		CityRepository cityRepository = new CityRepository();

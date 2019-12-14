@@ -50,9 +50,11 @@ public class User {
 	  Collection<City> cities;*/
 	
 	public User(@NotNull @Size(min = 1, max = 200) String fio,
+				@NotNull @Size(min = 1, max = 100) String email,
 				@NotNull @Size(min = 1, max = 20) String phoneNumber
 				) {
 		this.fio = fio;
+		this.email = email;
 		this.phoneNumber = phoneNumber;
 		
 	}
