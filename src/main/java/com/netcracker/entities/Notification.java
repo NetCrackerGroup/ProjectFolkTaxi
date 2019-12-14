@@ -3,6 +3,7 @@ package com.netcracker.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 @Table
@@ -59,5 +60,31 @@ public class Notification {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "notificationId=" + notificationId +
+                ", text='" + text + '\'' +
+                ", deliveryChannel='" + deliveryChannel + '\'' +
+                ", user=" + user +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Notification that = (Notification) o;
+        return Objects.equals(getNotificationId(), that.getNotificationId()) &&
+                Objects.equals(getText(), that.getText()) &&
+                Objects.equals(getDeliveryChannel(), that.getDeliveryChannel()) &&
+                Objects.equals(getUser(), that.getUser());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNotificationId(), getText(), getDeliveryChannel(), getUser());
     }
 }

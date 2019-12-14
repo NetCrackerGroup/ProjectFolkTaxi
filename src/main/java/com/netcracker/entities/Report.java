@@ -3,6 +3,7 @@ package com.netcracker.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 @Table
@@ -81,5 +82,38 @@ public class Report {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Report{" +
+                "Report_ID=" + Report_ID +
+                ", reportReason='" + reportReason + '\'' +
+                ", reportText='" + reportText + '\'' +
+                ", wasConsidered=" + wasConsidered +
+                ", moderatorId=" + moderatorId +
+                ", user=" + user +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Report report = (Report) o;
+        return getReport_ID().equals(report.getReport_ID()) &&
+                getReportReason().equals(report.getReportReason()) &&
+                getReportText().equals(report.getReportText()) &&
+                getWasConsidered().equals(report.getWasConsidered()) &&
+                getModeratorId().equals(report.getModeratorId()) &&
+                getUser().equals(report.getUser());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getReport_ID(), getReportReason(), getReportText(),
+                getWasConsidered(), getModeratorId(), getUser());
+
     }
 }

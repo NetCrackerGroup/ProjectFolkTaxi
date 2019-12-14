@@ -1,92 +1,70 @@
 package com.netcracker.entities;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Route")
+@Table(name = "route")
 public class Route {
+
     @Id
-    @NotNull
-    @Column(name = "Route_ID")
-    private Long route_Id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "route_id_generator")
+    @SequenceGenerator(name = "route_id_generator", sequenceName = "route_id_seq", allocationSize = 1)
+    @Column(name = "route_id")
+    private Long routeId;
 
-    @NotNull
-    @Size(min=1,max=200)
-    @Column(name = "Route_Beging")
-    private String route_beging;
-
-    @NotNull
-    @Size(min=1,max=200)
-    @Column(name = "Route_End")
-    private String route_end;
-
-
-    @Column(name = "Price")
-    private Float price;
-
-
-    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name = "User_ID")
-    private User driver;
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name = "City_ID")
+    @JoinColumn(name = "city_id")
     private City city;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "route_begin")
+    private String routeBegin;
+
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "route_end")
+    private String routeEnd;
+
+    @Column(name = "price")
+    private BigDecimal price;
+
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "driver_id")
+    private User driverId;
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "Passenger_In_Route",
-            joinColumns = {@JoinColumn(name = "Route_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "User_ID")}
+            name = "passenger_in_route",
+            joinColumns = { @JoinColumn(name = "route_id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id") }
     )
-    private Collection<User> users_route;
+    Collection<User> users;
 
-    public Long getRoute_Id() {
-        return route_Id;
+    public Route() {
     }
 
-    public void setRoute_Id(Long route_Id) {
-        this.route_Id = route_Id;
-    }
-
-    public String getRoute_beging() {
-        return route_beging;
-    }
-
-    public void setRoute_beging(String route_beging) {
-        this.route_beging = route_beging;
-    }
-
-    public String getRoute_end() {
-        return route_end;
-    }
-
-    public void setRoute_end(String route_end) {
-        this.route_end = route_end;
-    }
-
-    public Float getPrice() {
-        return price;
-    }
-
-    public void setPrice(Float price) {
+    public Route(@NotNull @Size(min = 1, max = 20) String routeBegin,
+                 @NotNull @Size(min = 1, max = 20) String routeEnd,
+                 BigDecimal price) {
+        this.routeBegin = routeBegin;
+        this.routeEnd = routeEnd;
         this.price = price;
     }
 
-    public User getDriver() {
-        return driver;
+    public Long getRouteId() {
+        return routeId;
     }
 
-    public void setDriver(User driver) {
-        this.driver = driver;
+    public void setRouteId(Long routeId) {
+        this.routeId = routeId;
     }
+
 
     public City getCity() {
         return city;
@@ -96,30 +74,60 @@ public class Route {
         this.city = city;
     }
 
-    public Collection<User> getUsers_route() {
-        return users_route;
+    public String getRouteBegin() {
+        return routeBegin;
     }
 
-    public void setUsers_route(Collection<User> users_route) {
-        this.users_route = users_route;
+    public void setRouteBegin(String routeBegin) {
+        this.routeBegin = routeBegin;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Route route = (Route) o;
-        return route_Id.equals(route.route_Id) &&
-                route_beging.equals(route.route_beging) &&
-                route_end.equals(route.route_end) &&
-                Objects.equals(price, route.price) &&
-                driver.equals(route.driver) &&
-                city.equals(route.city) &&
-                Objects.equals(users_route, route.users_route);
+    public String getRouteEnd() {
+        return routeEnd;
+    }
+
+    public void setRouteEnd(String routeEnd) {
+        this.routeEnd = routeEnd;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public User getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(User driverId) {
+        this.driverId = driverId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(route_Id);
+        return Objects.hash(routeId);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Route route = (Route) obj;
+        return routeId.equals(route.routeId);
+    }
+
+    @Override
+    public String toString() {
+        return "Route{" +
+                "routeId=" + routeId +
+                ", city='" + city  +
+                ", routeBegin='" + routeBegin +
+                ", routeEnd=" + routeEnd +
+                ", price=" + price +
+                ", driver=" + driverId +
+                '}';
     }
 }
