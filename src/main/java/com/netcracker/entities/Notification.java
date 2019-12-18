@@ -10,6 +10,8 @@ import java.util.Objects;
 public class Notification {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_id_generator")
+    @SequenceGenerator(name = "report_id_generator", sequenceName = "report_id_seq", allocationSize = 1)
     @NotNull
     @Column(name = "Notification_ID")
     private Long notificationId;
@@ -28,6 +30,22 @@ public class Notification {
     private User user;
 
     public Notification() {
+    }
+
+    public Notification(    @NotNull String text,
+                            @NotNull String deliveryChannel
+    ) {
+        this.text = text;
+        this.deliveryChannel = deliveryChannel;
+    }
+
+    public Notification(    @NotNull String text,
+                            @NotNull String deliveryChannel,
+                            @NotNull User user
+    ) {
+        this.text = text;
+        this.deliveryChannel = deliveryChannel;
+        this.user = user;
     }
 
     public Long getNotificationId() {

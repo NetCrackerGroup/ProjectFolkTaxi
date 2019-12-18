@@ -59,9 +59,9 @@ CREATE TABLE public.Review (
                 CONSTRAINT review_pk PRIMARY KEY (Review_ID)
 );
 
-
+CREATE SEQUENCE notification_id_seq;
 CREATE TABLE public.Notification (
-                Notification_ID BIGINT NOT NULL,
+                Notification_ID BIGINT NOT NULL default nextval('notification_id_seq'),
                 Text VARCHAR NOT NULL,
                 Delivery_Channel VARCHAR NOT NULL,
                 Was_Watched BOOLEAN NOT NULL,
@@ -69,9 +69,10 @@ CREATE TABLE public.Notification (
                 CONSTRAINT notification_pk PRIMARY KEY (Notification_ID)
 );
 
+CREATE SEQUENCE report_id_seq;
 
 CREATE TABLE public.Report (
-                Report_ID BIGINT NOT NULL,
+                Report_ID BIGINT NOT NULL  default nextval('report_id_seq'),
                 Report_Text VARCHAR,
                 Report_Reason VARCHAR NOT NULL,
                 Was_Considered BOOLEAN NOT NULL,

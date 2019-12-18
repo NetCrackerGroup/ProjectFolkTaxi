@@ -24,7 +24,7 @@
 	        <artifactId>flyway-maven-plugin</artifactId>
 	        <version>1.5</version>
 	        <configuration>
-	            <user>postgres</user>
+	            <user></user>
 	            <password></password>
 	            <driver>org.postgresql.Driver</driver>
 				<url>jdbc:postgresql://localhost:5432/folktaxi</url>

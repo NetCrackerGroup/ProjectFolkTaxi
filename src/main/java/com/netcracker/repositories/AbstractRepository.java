@@ -3,6 +3,11 @@ package com.netcracker.repositories;
 import javax.persistence.EntityManager;
 
 import com.netcracker.hibernate.EntityManagerConfiguration;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 public abstract class AbstractRepository<T> {
     final Class<T> entityClass;

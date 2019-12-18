@@ -50,14 +50,14 @@ public class UsersService {
      * 
      * @return
      */
-    /*public Iterable<User> getAllUsers(){
+   /* public Iterable<User> getAllUsers(){
         LOG.debug("[ getAllUsers");
 
         Iterable<User> users = usersRepository.find();
 
         LOG.debug("] (return : {})", users);
         return users;
-    }*/
-	
+    }
+	*/
 
 }
