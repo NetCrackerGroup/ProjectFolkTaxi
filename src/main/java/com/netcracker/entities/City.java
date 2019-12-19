@@ -1,5 +1,7 @@
 package com.netcracker.entities;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -8,6 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "city")
+@Component
 public class City {
 	
 	@Id

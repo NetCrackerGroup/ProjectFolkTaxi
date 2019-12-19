@@ -2,9 +2,10 @@ package com.netcracker.repositories;
 
 import com.netcracker.entities.Chat;
 
-public class ChatRepository extends AbstractRepository<Chat> {
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-	public ChatRepository() {
-        super(Chat.class);
-    }
+@Repository
+public interface ChatRepository extends CrudRepository<Chat, Long> {
+
 }

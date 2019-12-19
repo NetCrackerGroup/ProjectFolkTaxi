@@ -16,7 +16,7 @@ public class ReportService {
 
     public Report getReport(Long reportId){
 
-        Report report = reportRepository.find(reportId);
+        Report report = reportRepository.findOne(reportId);
 
         return report;
     }

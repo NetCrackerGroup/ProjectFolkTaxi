@@ -1,10 +1,11 @@
 package com.netcracker.repositories;
 
 import com.netcracker.entities.Journey;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public class JourneyRepository extends AbstractRepository<Journey> {
+@Repository
+public interface JourneyRepository extends CrudRepository<Journey, Long> {
 
-    public JourneyRepository() {
-        super(Journey.class);}
 
 }

@@ -10,6 +10,8 @@ import java.util.Objects;
 public class Report {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_id_generator")
+    @SequenceGenerator(name = "report_id_generator", sequenceName = "report_id_seq", allocationSize = 1)
     @Column(name = "Report_ID")
     private Long Report_ID;
 
