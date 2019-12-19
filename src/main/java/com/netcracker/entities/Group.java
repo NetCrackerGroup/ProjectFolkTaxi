@@ -1,17 +1,10 @@
 package com.netcracker.entities;
 
-import com.sun.istack.NotNull;
+
 
 import javax.persistence.*;
 import java.util.Collection;
 
-//доделать
-//доделать
-//доделать
-//доделать
-//доделать
-//доделать
-//доделать
 @Entity
 @Table(name = "Group_1")
 public class Group {

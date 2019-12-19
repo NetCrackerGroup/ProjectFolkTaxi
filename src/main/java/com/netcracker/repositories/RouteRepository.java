@@ -1,13 +1,12 @@
 package com.netcracker.repositories;
 
 import com.netcracker.entities.Route;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public class RouteRepository extends AbstractRepository<Route>{
+@Repository
+public interface RouteRepository extends CrudRepository<Route, Long> {
 
-	public RouteRepository() {
-		super(Route.class);
-		// TODO Auto-generated constructor stub
-	}
 
 }
 

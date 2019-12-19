@@ -22,7 +22,7 @@ public class ReportService {
 
     public Report getReportById(Long reportId){
 
-        Report report = reportRepository.find(reportId);
+        Report report = reportRepository.findOne(reportId);
 
         return report;
     }

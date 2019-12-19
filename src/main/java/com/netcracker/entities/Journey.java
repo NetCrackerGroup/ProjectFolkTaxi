@@ -6,16 +6,20 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Objects;
 
+@Entity
+@Table(name = "Journey")
 public class Journey {
 
     @Id
     @NotNull
-    @Column(name = "Route_ID")
-    private Long route_Id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "journey_id_generator")
+    @SequenceGenerator(name = "journey_id_generator", sequenceName = "journey_id_seq", allocationSize = 1)
+    @Column(name = "Journey_ID")
+    private Long journeyId;
 
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "Route_ID")
     private Route route;
 
@@ -33,11 +37,11 @@ public class Journey {
     Collection<User> users;
 
     public Long getRoute_Id() {
-        return route_Id;
+        return journeyId;
     }
 
     public void setRoute_Id(Long route_Id) {
-        this.route_Id = route_Id;
+        this.journeyId = route_Id;
     }
 
     public Route getRoute() {
@@ -69,7 +73,7 @@ public class Journey {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Journey journey = (Journey) o;
-        return route_Id.equals(journey.route_Id) &&
+        return journeyId.equals(journey.journeyId) &&
                 route.equals(journey.route) &&
                 date.equals(journey.date) &&
                 users.equals(journey.users);
@@ -77,6 +81,6 @@ public class Journey {
 
     @Override
     public int hashCode() {
-        return Objects.hash(route_Id);
+        return Objects.hash(journeyId);
     }
 }

@@ -2,16 +2,16 @@ package com.netcracker.entities;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@Entity
+@Table(name = "Message")
 public class Message {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notification_id_generator")
+	@SequenceGenerator(name = "notification_id_generator", sequenceName = "notification_id_seq", allocationSize = 1)
     @NotNull
     @Column(name = "Message_ID")
     private Long messageId;
@@ -22,10 +22,7 @@ public class Message {
 	@NotNull
     @Column(name = "Date_Of_Sending")
     private LocalDate dateOfSending;
-	
-	@NotNull
-    @Column(name = "Link")
-    private String link;
+
 	
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Chat_ID")
@@ -55,13 +52,7 @@ public class Message {
 		this.dateOfSending = dateOfSending;
 	}
 
-	public String getLink() {
-		return link;
-	}
 
-	public void setLink(String link) {
-		this.link = link;
-	}
 
 	public Chat getChat() {
 		return chat;
@@ -77,7 +68,6 @@ public class Message {
 		int result = 1;
 		result = prime * result + ((chat == null) ? 0 : chat.hashCode());
 		result = prime * result + ((dateOfSending == null) ? 0 : dateOfSending.hashCode());
-		result = prime * result + ((link == null) ? 0 : link.hashCode());
 		result = prime * result + ((messageId == null) ? 0 : messageId.hashCode());
 		result = prime * result + ((text == null) ? 0 : text.hashCode());
 		return result;
@@ -101,11 +91,6 @@ public class Message {
 			if (other.dateOfSending != null)
 				return false;
 		} else if (!dateOfSending.equals(other.dateOfSending))
-			return false;
-		if (link == null) {
-			if (other.link != null)
-				return false;
-		} else if (!link.equals(other.link))
 			return false;
 		if (messageId == null) {
 			if (other.messageId != null)

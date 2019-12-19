@@ -29,24 +29,13 @@ CREATE TABLE public.User_1 (
                 User_ID BIGINT NOT NULL default nextval('user_id_seq'),
                 City_ID BIGINT NOT NULL,
                 FIO VARCHAR NOT NULL,
+                Driver_Rating DOUBLE PRECISION,
+                Passenger_Rating DOUBLE PRECISION,
                 Email VARCHAR,
                 Phone_Number VARCHAR,
                 CONSTRAINT user_id PRIMARY KEY (User_ID)
 );
 
-
-CREATE TABLE public.Driver_Rating (
-                User_ID BIGINT NOT NULL,
-                Average_Mark double precision,
-                CONSTRAINT driver_rating_pk PRIMARY KEY (User_ID)
-);
-
-
-CREATE TABLE public.Passenger_Rating (
-                User_ID BIGINT NOT NULL,
-                Average_Mark double precision,
-                CONSTRAINT passenger_rating_pk PRIMARY KEY (User_ID)
-);
 
 CREATE SEQUENCE review_id_seq;
 
@@ -70,9 +59,8 @@ CREATE TABLE public.Notification (
 );
 
 CREATE SEQUENCE report_id_seq;
-
 CREATE TABLE public.Report (
-                Report_ID BIGINT NOT NULL  default nextval('report_id_seq'),
+                Report_ID BIGINT NOT NULL default nextval('report_id_seq'),
                 Report_Text VARCHAR,
                 Report_Reason VARCHAR NOT NULL,
                 Was_Considered BOOLEAN NOT NULL,
@@ -232,19 +220,6 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE public.Passenger_Rating ADD CONSTRAINT user_passenger_rating_fk
-FOREIGN KEY (User_ID)
-REFERENCES public.User_1 (User_ID)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
-
-ALTER TABLE public.Driver_Rating ADD CONSTRAINT user_driver_rating_fk
-FOREIGN KEY (User_ID)
-REFERENCES public.User_1 (User_ID)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
 
 ALTER TABLE public.Passenger_in_Journey ADD CONSTRAINT user_passenger_in_journey_fk
 FOREIGN KEY (User_ID)
@@ -274,19 +249,6 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE public.Review ADD CONSTRAINT driver_rating_review_fk
-FOREIGN KEY (User_ID)
-REFERENCES public.Driver_Rating (User_ID)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
-
-ALTER TABLE public.Review ADD CONSTRAINT passenger_rating_review_fk
-FOREIGN KEY (User_ID)
-REFERENCES public.Passenger_Rating (User_ID)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
 
 ALTER TABLE public.Passenger_In_Route ADD CONSTRAINT ____________________________________fk
 FOREIGN KEY (Route_ID)

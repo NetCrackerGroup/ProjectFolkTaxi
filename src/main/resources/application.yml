@@ -1,0 +1,14 @@
+server.port: 9090
+
+logging:
+  level:
+    root: INFO
+    com.netcracker: TRACE
+
+spring.datasource:
+  hikari:
+    connectionTimeout: 20000
+    maximumPoolSize: 5
+  url: jdbc:postgresql://localhost:5432/folktaxi
+  username: postgres
+  password: root
