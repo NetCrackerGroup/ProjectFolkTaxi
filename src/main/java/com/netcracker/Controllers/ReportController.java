@@ -53,12 +53,12 @@ public class ReportController {
     }
 
 
-    @GetMapping("/moderator/{id}")
+    /*@GetMapping("/moderator/{id}")
     List<Report> findAllReportOfModerator (@PathVariable(name = "id") String id){
         LOG.info("[ getReportById : {}", id);
 
         List<Report> reports = reportService.findAllReportOfModerator(Long.decode(id));
 
         return reports;
-    }
+    }*/
 }

@@ -1,8 +1,9 @@
 package com.netcracker.entities;
 
-import com.sun.istack.NotNull;
+
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Driver_Rating")

@@ -45,10 +45,10 @@ public class ReportService {
         return report.getReportId();
     }
 
-    public List<Report> findAllReportOfModerator(Long moderatorId) {
+   /* public List<Report> findAllReportOfModerator(Long moderatorId) {
         LOG.debug("find all report of moderator : {}" , moderatorId );
 
         return reportRepository.findAllReportOfModerator(moderatorId);
-    }
+    }*/
 
 }
