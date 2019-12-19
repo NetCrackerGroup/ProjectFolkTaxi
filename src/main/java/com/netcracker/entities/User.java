@@ -17,7 +17,7 @@ public class User {
 	@Column(name = "user_id")
 	private Long userId;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "city_id")
 	private City cityId;
 	
@@ -28,7 +28,7 @@ public class User {
 	
 	@NotNull
 	@Size(min = 1, max = 100)
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	private String email;
 	
 	@NotNull
@@ -41,21 +41,31 @@ public class User {
   
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
     Collection<Group> groups;
+
+    @Column(name = "Passenger_Rating")
+    private Double passengerRating;
+
+
+
+	@Column(name = "Driver_Rating")
+	private Double driverRating;
 	
 	public User() {
 		
 	}
-	
-	/*@OneToOne(mappedBy = "users", fetch = FetchType.EAGER)
-	  Collection<City> cities;*/
+
 	
 	public User(@NotNull @Size(min = 1, max = 200) String fio,
 				@NotNull @Size(min = 1, max = 100) String email,
-				@NotNull @Size(min = 1, max = 20) String phoneNumber
+				@NotNull @Size(min = 1, max = 20) String phoneNumber,
+				@NotNull City city
 				) {
 		this.fio = fio;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+		this.driverRating = Double.valueOf(0);
+		this.passengerRating = Double.valueOf(0);
+		this.cityId = city;
 		
 	}
 
@@ -95,9 +105,25 @@ public class User {
 		return phoneNumber;
 	}
 
+	public Double getPassengerRating() { return passengerRating; }
+
+	public void setRoutes(Collection<Route> routes) { this.routes = routes; }
+
+	public void setGroups(Collection<Group> groups) { this.groups = groups; }
+
+	public void setPassengerRating(Double passengerRating) { this.passengerRating = passengerRating; }
+
+	public void setDriverRating(Double driverRating) { this.driverRating = driverRating; }
+
+	public Double getDriverRating() { return driverRating; }
+
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+
+	public Collection<Route> getRoutes() { return routes; }
+
+	public Collection<Group> getGroups() { return groups; }
 
 	@Override
 	public int hashCode() {

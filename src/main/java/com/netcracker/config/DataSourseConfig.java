@@ -1,16 +1,15 @@
 package com.netcracker.config;
 
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
 
-@Configuration
+//@Configuration
 public class DataSourseConfig {
 
-    public DataSourseConfig(){
+   /* public DataSourseConfig(){
 
     }
 
@@ -22,5 +21,5 @@ public class DataSourseConfig {
         dataSourceBuilder.username("postgres");
         dataSourceBuilder.password("root");
         return dataSourceBuilder.build();
-    }
+    }*/
 }

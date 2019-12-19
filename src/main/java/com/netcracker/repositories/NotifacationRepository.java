@@ -1,10 +1,11 @@
 package com.netcracker.repositories;
 
 import com.netcracker.entities.Notification;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public class NotifacationRepository extends AbstractRepository<Notification> {
+@Repository
+public interface NotifacationRepository extends CrudRepository<Notification, Long> {
 
-    public NotifacationRepository() {
-        super(Notification.class);
-    }
+
 }

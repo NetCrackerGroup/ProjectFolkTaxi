@@ -1,11 +1,10 @@
 package com.netcracker.repositories;
 
 import com.netcracker.entities.Group;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public class GroupRepository extends AbstractRepository<Group> {
+@Repository
+public interface GroupRepository extends CrudRepository<Group, Long> {
 
-	public GroupRepository() {
-        super(Group.class);
-    }
-	
 }

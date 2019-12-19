@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "route")
+@Table(name = "Route")
 public class Route {
 
     @Id
@@ -32,7 +32,6 @@ public class Route {
 
     @Column(name = "price")
     private BigDecimal price;
-
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "driver_id")

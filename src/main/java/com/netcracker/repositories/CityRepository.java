@@ -1,12 +1,11 @@
 package com.netcracker.repositories;
 
 import com.netcracker.entities.City;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public class CityRepository extends AbstractRepository<City>{
+@Repository
+public interface CityRepository extends CrudRepository<City, Long> {
 
-	public CityRepository() {
-		super(City.class);
-		// TODO Auto-generated constructor stub
-	}
 }
 

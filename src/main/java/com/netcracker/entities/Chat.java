@@ -1,15 +1,16 @@
 package com.netcracker.entities;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+
+@Entity
+@Table(name = "Chat")
 public class Chat {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chat_id_generator")
+	@SequenceGenerator(name = "chat_id_generator", sequenceName = "chat_id_seq", allocationSize = 1)
     @NotNull
     @Column(name = "Chat_ID")
     private Long chatId;

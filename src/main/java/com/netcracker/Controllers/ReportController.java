@@ -26,14 +26,14 @@ public class ReportController {
         return "reports";
     }
 
-    @GetMapping("/{id}")
+  /*  @GetMapping("/{id}")
     Report getReportById (@PathVariable(name = "id") String id){
         LOG.info("[ getReportById : {}", id);
 
         Report report = reportService.getReportById( Long.decode(id));
 
         return report;
-    }
+    }*/
 
     @PostMapping("")
     public Long createNewUser(  @RequestParam  String reportReason,
