@@ -91,7 +91,6 @@ public class UsersService {
         return users;
     }
     public User getUserById(Long userId) {
-        System.out.println("`2223");
         return usersRepository.findOne(userId);
     }
 	

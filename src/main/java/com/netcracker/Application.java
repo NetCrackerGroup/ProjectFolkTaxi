@@ -36,6 +36,6 @@ public class Application {
 //    }
     private static void cityCreateCity() {
         CityController cityController = new CityController();
-        cityController.createNewCity("New", "City");
+        cityController.createNewСity("New","City");
     }
 }
