@@ -4,6 +4,8 @@ CREATE TABLE public.Moderator (
                 CONSTRAINT moderator_pk PRIMARY KEY (Moderator_ID)
 );
 
+
+
 CREATE SEQUENCE group_id_seq;
 
 CREATE TABLE public.Group_1 (

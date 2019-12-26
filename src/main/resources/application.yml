@@ -12,3 +12,6 @@ spring.datasource:
   url: jdbc:postgresql://localhost:5432/folktaxi
   username: postgres
   password: root
+
+flyway:
+  table=schema_version:
