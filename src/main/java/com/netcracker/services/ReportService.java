@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReportService {
@@ -19,4 +20,13 @@ public class ReportService {
     @Autowired
     private ReportRepository reportRepository;
 
+
+
+    public Report findReportById(Long id){
+
+        Optional<Report> report = reportRepository.findById(id);
+
+        return report.isPresent() ? report.get() : null;
+
+    }
 }
