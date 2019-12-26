@@ -27,7 +27,7 @@ public class UsersService {
      * @param phoneNumber
      * @return
      */
-    public Long createNewUser(String fio, String email, String phoneNumber, City city){
+ /*   public Long createNewUser(String fio, String email, String phoneNumber, City city){
         LOG.debug("[ createUser(fio : {}, email : {}, phoneNumber : {}", fio, email, phoneNumber);
 
         User user = new User(fio, email, phoneNumber, city);
@@ -35,14 +35,14 @@ public class UsersService {
 
         LOG.debug("] (userId : {})", user.getUserId());
         return user.getUserId();
-    }
+    }*/
 
     /**
      *
      * @param email
      * @return
      */
-    public User getUserByEmail(String email){
+   /* public User getUserByEmail(String email){
         LOG.debug("[ getByEmail(email : {})", email);
 
         User user = usersRepository.findUserByEmail(email);
@@ -90,8 +90,8 @@ public class UsersService {
         LOG.debug("] (return : {})", users);
         return users;
     }
-    public User getUserById(Long userId) {
+   /* public User getUserById(Long userId) {
         System.out.println("`2223");
         return usersRepository.findOne(userId);
-    }
+    }*/
 }

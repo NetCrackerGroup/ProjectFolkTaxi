@@ -29,7 +29,7 @@ public class UsersController {
     @Autowired
     private UsersService usersService;
 
-    @PostMapping("")
+   /* @PostMapping("")
     public Long createNewUser(@RequestParam  String fio, @RequestParam  String email, @RequestParam  String phoneNumber, @RequestParam City city){
         LOG.debug("[ createUser(fio : {}, email : {}, phoneNumber : {}", fio, email, phoneNumber);
         Long userId = usersService.createNewUser(fio, email, phoneNumber, city);
@@ -46,7 +46,7 @@ public class UsersController {
 
         LOG.info("] return : {}", user);
         return user;
-    }
+    }*/
 
     @GetMapping("")
     public Iterable<User> getAllUsers(){
@@ -57,6 +57,7 @@ public class UsersController {
         LOG.info("] (return : {})", users);
         return users;
     }
+    /*
     @GetMapping("/{id}")
     public User getUserByid(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserByid : {}", id);
@@ -91,5 +92,5 @@ public class UsersController {
     public Double getRating(@PathVariable(name = "id") Long id, @PathVariable(name = "isPassenger") Boolean isPassenger) {
         LOG.info("[getUserRoutesGroupes : {} {}",id,  isPassenger);
         return usersService.getRating(id, isPassenger);
-    }
+    }*/
 }
