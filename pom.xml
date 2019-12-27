@@ -18,7 +18,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-maven-plugin</artifactId>
 		</plugin>
-  	 	<!--plugin>
+  	 	<plugin>
 	        <groupId>com.googlecode.flyway</groupId>
 	        <artifactId>flyway-maven-plugin</artifactId>
 	        <version>1.5</version>
@@ -39,7 +39,7 @@
 	                </goals>
              	</execution>
 	        </executions>
-	    </plugin-->
+	    </plugin>
   		<!-- plugin>
 	      	<groupId>org.apache.maven.plugins</groupId>
 	        <artifactId>maven-checkstyle-plugin</artifactId>

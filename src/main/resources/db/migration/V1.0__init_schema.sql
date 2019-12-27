@@ -1,7 +1,21 @@
+CREATE TABLE public.Passenger_Rating (
+                User_ID BIGINT NOT NULL,
+                Average_Mark NUMERIC,
+                CONSTRAINT passenger_rating_pk PRIMARY KEY (User_ID)
+);
+
 CREATE TABLE public.Moderator (
                 Moderator_ID BIGINT NOT NULL,
                 FIO VARCHAR NOT NULL,
                 CONSTRAINT moderator_pk PRIMARY KEY (Moderator_ID)
+);
+
+
+
+CREATE TABLE public.Driver_Rating (
+                User_ID BIGINT NOT NULL,
+                Average_Mark NUMERIC,
+                CONSTRAINT driver_rating_pk PRIMARY KEY (User_ID)
 );
 
 
@@ -21,7 +35,7 @@ CREATE TABLE public.City (
                 City_ID BIGINT NOT NULL default nextval('city_id_seq'),
                 City_Name VARCHAR NOT NULL,
                 City_Map VARCHAR NOT NULL,
-                CONSTRAINT city_pk PRIMARY KEY (City_ID) 
+                CONSTRAINT city_pk PRIMARY KEY (City_ID)
 );
 
 

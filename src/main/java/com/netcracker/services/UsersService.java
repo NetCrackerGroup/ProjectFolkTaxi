@@ -27,7 +27,7 @@ public class UsersService {
      * @param phoneNumber
      * @return
      */
- /*   public Long createNewUser(String fio, String email, String phoneNumber, City city){
+    public Long createNewUser(String fio, String email, String phoneNumber, City city){
         LOG.debug("[ createUser(fio : {}, email : {}, phoneNumber : {}", fio, email, phoneNumber);
 
         User user = new User(fio, email, phoneNumber, city);
@@ -35,14 +35,14 @@ public class UsersService {
 
         LOG.debug("] (userId : {})", user.getUserId());
         return user.getUserId();
-    }*/
+    }
 
     /**
      *
      * @param email
      * @return
      */
-   /* public User getUserByEmail(String email){
+    public User getUserByEmail(String email){
         LOG.debug("[ getByEmail(email : {})", email);
 
         User user = usersRepository.findUserByEmail(email);
@@ -52,30 +52,37 @@ public class UsersService {
     }
 
     public Map<Class, Collection<?>> getGroupAndRoute(Long userId) {
-        User user = usersRepository.findOne(userId);
-
+        Optional<User> possible_user = usersRepository.findById(userId);
+        HashMap<Class, Collection<?>> map = null;
+        if( possible_user.isPresent() ){
+            User user =  possible_user.get();
             Collection<Group> userGroup = user.getGroups();
             Collection<Route> usersRoute = user.getRoutes();
-            HashMap<Class, Collection<?>> map = new HashMap<>();
+            map = new HashMap<>();
             map.put(Group.class, userGroup);
             map.put(Route.class, usersRoute);
-
+        }
         return map;
-
     }
 
     public Collection<Group> getUserGroup(Long userId) {
-        User user = usersRepository.findOne(userId);
-        return user.getGroups();
+        Optional<User> possible_user = usersRepository.findById(userId);
+        return possible_user.isPresent() ? possible_user.get().getGroups() : null;
     }
     public Collection<Route> getUserRoute(Long userId) {
-        User user = usersRepository.findOne(userId);
-        return user.getRoutes();
+        Optional<User> possible_user = usersRepository.findById(userId);
+        return possible_user.isPresent() ?
+                    possible_user.get().getRoutes() :
+                    null;
     }
 
     public Double getRating(Long userId, Boolean isPassenger) {
-        User user = usersRepository.findOne(userId);
-        return isPassenger? user.getPassengerRating(): user.getDriverRating();
+        Optional<User> possible_user = usersRepository.findById(userId);
+        return possible_user.isPresent() ?
+                isPassenger ?
+                        possible_user.get().getPassengerRating() :
+                        possible_user.get().getDriverRating() :
+                null;
     }
 
     /**
@@ -90,8 +97,9 @@ public class UsersService {
         LOG.debug("] (return : {})", users);
         return users;
     }
-   /* public User getUserById(Long userId) {
+    public User getUserById(Long userId) {
         System.out.println("`2223");
-        return usersRepository.findOne(userId);
-    }*/
+        Optional<User> user = usersRepository.findById(userId);
+        return user.isPresent() ? user.get() : null;
+    }
 }
