@@ -14,32 +14,6 @@
 
     <build>
   	<plugins>
-		<plugin>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-maven-plugin</artifactId>
-		</plugin>
-  	 	<plugin>
-	        <groupId>com.googlecode.flyway</groupId>
-	        <artifactId>flyway-maven-plugin</artifactId>
-	        <version>1.5</version>
-	        <configuration>
-	            <user>postgres</user>
-	            <password>root</password>
-	            <driver>org.postgresql.Driver</driver>
-				<url>jdbc:postgresql://localhost:5432/folktaxi</url>
-				<baseDir>db/migration</baseDir>
-	        </configuration>
-	        <executions>
-	    		<execution>
-	                <id>flyway database migration</id>
-	                <phase>compile</phase>
-	                <goals>
-	                    <goal>clean</goal>
-	                    <goal>migrate</goal>
-	                </goals>
-             	</execution>
-	        </executions>
-	    </plugin>
   		<!-- plugin>
 	      	<groupId>org.apache.maven.plugins</groupId>
 	        <artifactId>maven-checkstyle-plugin</artifactId>
