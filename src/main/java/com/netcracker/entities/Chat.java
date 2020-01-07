@@ -15,12 +15,11 @@ public class Chat {
     @Column(name = "Chat_ID")
     private Long chatId;
 
-//!!!!!!!!!!!!!!!!!!!!!!
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Route_ID")
     private Route route;
-//!!!!!!!!!!!!!!!!!!!!!!!
-    @ManyToOne(fetch = FetchType.EAGER)
+    
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Group_ID")
     private Group group;
 
