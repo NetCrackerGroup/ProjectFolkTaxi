@@ -1,4 +1,5 @@
 package com.netcracker.entities;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -32,7 +33,6 @@ public class Route {
 
     @Column(name = "price")
     private BigDecimal price;
-
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "driver_id")

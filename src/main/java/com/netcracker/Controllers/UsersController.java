@@ -57,6 +57,7 @@ public class UsersController {
         LOG.info("] (return : {})", users);
         return users;
     }
+
     @GetMapping("/{id}")
     public User getUserByid(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserByid : {}", id);

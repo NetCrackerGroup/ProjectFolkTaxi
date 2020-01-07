@@ -1,7 +1,5 @@
 package com.netcracker.entities;
 
-
-
 import javax.persistence.*;
 import java.util.Collection;
 

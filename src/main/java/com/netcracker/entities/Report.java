@@ -13,7 +13,7 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_id_generator")
     @SequenceGenerator(name = "report_id_generator", sequenceName = "report_id_seq", allocationSize = 1)
     @Column(name = "Report_ID")
-    private Long Report_ID;
+    private Long reportId;
 
     @NotNull
     @Column(name = "Report_Reason")
@@ -38,12 +38,28 @@ public class Report {
     public Report() {
     }
 
-    public Long getReport_ID() {
-        return Report_ID;
+
+    public Report (
+                        @NotNull String reportReason,
+                        String reportText,
+                        @NotNull Boolean wasConsidered,
+                        @NotNull Long moderatorId,
+                        @NotNull User user
+                    )
+    {
+        this.reportReason = reportReason;
+        this.reportText = reportText;
+        this.wasConsidered = wasConsidered;
+        this.moderatorId = moderatorId;
+        this.user = user;
     }
 
-    public void setReport_ID(Long report_ID) {
-        Report_ID = report_ID;
+    public Long getReportId() {
+        return reportId;
+    }
+
+    public void setReport_ID(Long reportId) {
+        reportId = reportId;
     }
 
     public String getReportReason() {
@@ -90,7 +106,7 @@ public class Report {
     @Override
     public String toString() {
         return "Report{" +
-                "Report_ID=" + Report_ID +
+                "Report_ID=" + reportId +
                 ", reportReason='" + reportReason + '\'' +
                 ", reportText='" + reportText + '\'' +
                 ", wasConsidered=" + wasConsidered +
@@ -104,7 +120,7 @@ public class Report {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Report report = (Report) o;
-        return getReport_ID().equals(report.getReport_ID()) &&
+        return getReportId().equals(report.getReportId()) &&
                 getReportReason().equals(report.getReportReason()) &&
                 getReportText().equals(report.getReportText()) &&
                 getWasConsidered().equals(report.getWasConsidered()) &&
@@ -114,7 +130,7 @@ public class Report {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getReport_ID(), getReportReason(), getReportText(),
+        return Objects.hash(getReportId(), getReportReason(), getReportText(),
                 getWasConsidered(), getModeratorId(), getUser());
 
     }
