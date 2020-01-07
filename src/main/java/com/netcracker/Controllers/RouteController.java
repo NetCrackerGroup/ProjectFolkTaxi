@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.User;
 import com.netcracker.services.ReportService;
+import com.netcracker.services.RouteService;
 
 @RestController
 @RequestMapping("routes")
@@ -30,10 +31,10 @@ public class RouteController {
     }
 	
     @GetMapping("/route/{id}")
-    public ArrayList<Route> getRoutesById(@PathVariable(value="id") Integer id){
+    public ArrayList<Route> getRoutesById(@PathVariable(value="id") Long id){
         LOG.info("[ getRoutesById : {}", id);
 
-        ArrayList<Route> routes = routeService.getRoutesByCountryId(id);
+        ArrayList<Route> routes = routeService.getRoutesByCityId(id);
 
         LOG.info("] return : {}", routes.toString());
         return routes;

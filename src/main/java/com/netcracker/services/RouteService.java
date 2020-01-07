@@ -18,9 +18,9 @@ public class RouteService {
     @Autowired
     private RouteRepository routeRepository;
 	
-    public ArrayList<Route> getRoutesByCountryId(Long countryId){
+    public ArrayList<Route> getRoutesByCityId(Long cityId){
 
-        ArrayList<Route> routes = routeRepository.findRouteByCity(countryId);
+        ArrayList<Route> routes = routeRepository.findRouteByCity(cityId);
 
         return routes;
     }
