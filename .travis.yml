@@ -20,10 +20,10 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
 
 
-#notifications:
-#  slack: ncvrneducatio-ilo8811:wiR4y5A4El7Sd2QxjiY9DkCN
-#    on_success: always # default: change
-#    on_failure: always # default: always
+notifications:
+  slack: ncvrneducatio-ilo8811:wiR4y5A4El7Sd2QxjiY9DkCN
+    on_success: always # default: change
+    on_failure: always # default: always
 
 
 env:
