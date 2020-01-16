@@ -1,11 +1,11 @@
 INSERT INTO City(City_ID, City_Name, City_Map) VALUES (100, 'Moscow', '777000');
 INSERT INTO City(City_ID, City_Name, City_Map) VALUES (47, 'Lipetsk', '777000');
 
-INSERT INTO User_1(User_ID, City_ID, FIO, Email, Phone_Number) VALUES (2, 1, 'Alex Shevtsov', 'alex@alex.com', '896345342');
-INSERT INTO User_1(User_ID, City_ID, FIO, Email, Phone_Number) VALUES (3, 47, 'Jimmy Hendrix', 'jimmy@jimmy.com', '865745350');
-INSERT INTO User_1(User_ID, City_ID, FIO, Email, Phone_Number) VALUES (4, 47, 'Bob Dylan', 'bob@bob.com', '865723250');
-INSERT INTO User_1(User_ID, City_ID, FIO, Email, Phone_Number) VALUES (5, 100, 'Artemiy Artemiev', 'artemiy@artemiy.com', '840923452');
-INSERT INTO User_1(User_ID, City_ID, FIO, Email, Phone_Number) VALUES (6, 100, 'Artemiy Artemov', 'artemov@artemov.com', '840923452');
+INSERT INTO User_1(User_ID, City_ID,Role_name, FIO, Email, Phone_Number, Password) VALUES (2, 1,'ROLE_USER', 'Alex Shevtsov', 'alex@alex.com', '896345342', '$2a$04$xgnNAO4k8F3nV6x8.Z2cy.INZXhGRt4wqj9F3HLO8Cv2bQjK2XTwa');
+INSERT INTO User_1(User_ID, City_ID,Role_name, FIO, Email, Phone_Number, Password) VALUES (3, 47,'ROLE_USER', 'Jimmy Hendrix', 'jimmy@jimmy.com', '865745350', '$2a$04$7NuaVD3eF5gFmKJX0Pfpt.WEgFdpSXDNWXLRAAloHrUnK5KpH6Bnu');
+INSERT INTO User_1(User_ID, City_ID,Role_name, FIO, Email, Phone_Number, Password) VALUES (4, 47,'ROLE_USER', 'Bob Dylan', 'bob@bob.com', '865723250', '$2a$04$V3E6ghq86cpHmWIs7I41mucXkqG2/lWFGBSdiwuySGpfsSfmpUA96');
+INSERT INTO User_1(User_ID, City_ID,Role_name, FIO, Email, Phone_Number, Password) VALUES (5, 100,'ROLE_USER', 'Artemiy Artemiev', 'artemiy@artemiy.com', '840923452', '$2a$04$KIDfVNIrB3h/AQZLkHf8Ru4MqkXxKqK4EsPkWYGiEeInTyvjyQg5G');
+INSERT INTO User_1(User_ID, City_ID,Role_name, FIO, Email, Phone_Number, Password) VALUES (6, 100,'ROLE_USER', 'Artemiy Artemov', 'artemov@artemov.com', '840923452', '$2a$04$lexjoWkJLmk4pttvByM09Ofe/J2gxlRYsJhFpRFVNurcxMTlieg3a');
 
 INSERT INTO Driver_Rating(User_ID, Average_Mark) VALUES (1, 0);
 INSERT INTO Driver_Rating(User_ID, Average_Mark) VALUES (2, 0);

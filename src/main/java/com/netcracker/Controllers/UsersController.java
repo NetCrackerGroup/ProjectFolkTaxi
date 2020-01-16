@@ -1,27 +1,26 @@
 package com.netcracker.Controllers;
 
-import com.netcracker.entities.City;
-import com.netcracker.entities.Group;
-import com.netcracker.entities.Route;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+        import com.netcracker.dto.UserDto;
+        import com.netcracker.entities.City;
+        import com.netcracker.entities.Group;
+        import com.netcracker.entities.Route;
+        import com.netcracker.security.SecurityRole;
+        import org.slf4j.Logger;
+        import org.slf4j.LoggerFactory;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+        import org.springframework.web.bind.annotation.*;
 
-import com.netcracker.services.UsersService;
-import com.netcracker.entities.User;
+        import com.netcracker.services.UsersService;
+        import com.netcracker.entities.User;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+        import java.util.Collection;
+        import java.util.List;
+        import java.util.Map;
 
 @RestController
 @RequestMapping("users")
+//@CrossOrigin(origins = { "http://localhost:4200" }, maxAge = 3000)
 public class UsersController {
 
     private static final Logger LOG = LoggerFactory.getLogger(UsersController.class);
@@ -29,10 +28,17 @@ public class UsersController {
     @Autowired
     private UsersService usersService;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @PostMapping("")
-    public Long createNewUser(@RequestParam  String fio, @RequestParam  String email, @RequestParam  String phoneNumber, @RequestParam City city){
+    public Long createNewUser(@RequestParam String fio,
+                              @RequestParam String email,
+                              @RequestParam String phoneNumber,
+                              @RequestParam City city,
+                              @RequestParam String password){
         LOG.debug("[ createUser(fio : {}, email : {}, phoneNumber : {}", fio, email, phoneNumber);
-        Long userId = usersService.createNewUser(fio, email, phoneNumber, city);
+        Long userId = usersService.createNewUser(fio, email, phoneNumber, city, password, "ROLE_USER");
 
         LOG.debug("] (userId : {})", userId);
         return userId;
@@ -92,5 +98,14 @@ public class UsersController {
     public Double getRating(@PathVariable(name = "id") Long id, @PathVariable(name = "isPassenger") Boolean isPassenger) {
         LOG.info("[getUserRoutesGroupes : {} {}",id,  isPassenger);
         return usersService.getRating(id, isPassenger);
+    }
+    @PostMapping("/sign-up")
+    public void signUp(@RequestBody UserDto user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        usersService.saveNewUser(user);
+    }
+    @GetMapping("/helloUser")
+    public String helloUser() {
+        return "hello user world";
     }
 }

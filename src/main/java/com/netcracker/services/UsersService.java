@@ -1,8 +1,12 @@
 package com.netcracker.services;
 
+import com.netcracker.dto.UserDto;
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
+import com.netcracker.repositories.CityRepository;
+import com.netcracker.security.SecurityRole;
+import org.omg.CORBA.WStringSeqHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.netcracker.entities.User;
 import com.netcracker.repositories.UserRepository;
+import sun.rmi.runtime.Log;
 
 import java.util.*;
 
@@ -20,6 +25,9 @@ public class UsersService {
     @Autowired
     private UserRepository usersRepository;
 
+    @Autowired
+    private CityRepository cityRepository;
+
     /**
      *
      * @param fio
@@ -27,12 +35,21 @@ public class UsersService {
      * @param phoneNumber
      * @return
      */
-    public Long createNewUser(String fio, String email, String phoneNumber, City city){
+    public Long createNewUser(String fio, String email, String phoneNumber, City city, String password, String securityRole){
         LOG.debug("[ createUser(fio : {}, email : {}, phoneNumber : {}", fio, email, phoneNumber);
 
-        User user = new User(fio, email, phoneNumber, city);
+        User user = new User(fio, email, phoneNumber, city, password, securityRole);
         usersRepository.save(user);
 
+        LOG.debug("] (userId : {})", user.getUserId());
+        return user.getUserId();
+    }
+
+    public Long saveNewUser(UserDto userDto) {
+        LOG.debug("[ saveNewUser(fio : {}", userDto);
+        Optional<City> city = cityRepository.findById((long) userDto.getCityId());
+        User user = userDto.toUser(city.get());
+        usersRepository.save(user);
         LOG.debug("] (userId : {})", user.getUserId());
         return user.getUserId();
     }
@@ -63,6 +80,11 @@ public class UsersService {
             map.put(Route.class, usersRoute);
         }
         return map;
+    }
+    public User getUserByFIO(String fio) {
+        LOG.debug("getUserByUsername(username: {})", fio);
+        User user = usersRepository.findUserByFio(fio);
+        return user;
     }
 
     public Collection<Group> getUserGroup(Long userId) {
@@ -102,4 +124,6 @@ public class UsersService {
         Optional<User> user = usersRepository.findById(userId);
         return user.isPresent() ? user.get() : null;
     }
+
+
 }

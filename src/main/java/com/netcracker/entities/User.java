@@ -1,5 +1,8 @@
 package com.netcracker.entities;
 
+import com.netcracker.security.SecurityRole;
+
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -44,20 +47,34 @@ public class User {
     @Column(name = "Passenger_Rating")
     private Double passengerRating;
 
+    @Column(name = "Password")
+	private String password;
+
+    @Column(name = "Role_name")
+	private String securityRole;
+
 
 
 	@Column(name = "Driver_Rating")
 	private Double driverRating;
 	
-	public User() {
-		
+	public User() {	}
+
+
+	public String getSecurityRole() {
+		return securityRole;
 	}
 
-	
+	public void setSecurityRole(String securityRole) {
+		this.securityRole = securityRole;
+	}
+
 	public User(@NotNull @Size(min = 1, max = 200) String fio,
 				@NotNull @Size(min = 1, max = 100) String email,
 				@NotNull @Size(min = 1, max = 20) String phoneNumber,
-				@NotNull City city
+				@NotNull City city,
+				@NotNull @Size(min = 1, max = 100) String password,
+				@NotNull String securityRole
 				) {
 		this.fio = fio;
 		this.email = email;
@@ -65,6 +82,8 @@ public class User {
 		this.driverRating = Double.valueOf(0);
 		this.passengerRating = Double.valueOf(0);
 		this.cityId = city;
+		this.password = password;
+		this.securityRole = securityRole;
 		
 	}
 
@@ -123,6 +142,9 @@ public class User {
 	public Collection<Route> getRoutes() { return routes; }
 
 	public Collection<Group> getGroups() { return groups; }
+	public String getPassword() { return password; }
+
+	public void setPassword(String password) { this.password = password; }
 
 	@Override
 	public int hashCode() {

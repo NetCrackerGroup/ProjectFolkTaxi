@@ -39,18 +39,34 @@ CREATE TABLE public.City (
 );
 
 
+
+-- CREATE TABLE public.Role_1 (
+--                 Role_ID BIGINT NOT NULL,
+--                 Role_name anyenum NOT NULL
+-- );
 CREATE SEQUENCE user_id_seq;
 
+CREATE TYPE Role_names AS ENUM ( 'ROLE_ADMIN', 'ROLE_USER');
 CREATE TABLE public.User_1 (
                 User_ID BIGINT NOT NULL default nextval('user_id_seq'),
                 City_ID BIGINT NOT NULL,
+                Role_name VARCHAR NOT NULL,
                 FIO VARCHAR NOT NULL,
                 Driver_Rating DOUBLE PRECISION,
                 Passenger_Rating DOUBLE PRECISION,
                 Email VARCHAR,
                 Phone_Number VARCHAR,
+                Password VARCHAR,
                 CONSTRAINT user_id PRIMARY KEY (User_ID)
 );
+
+-- CREATE SEQUENCE role_id_seq;
+--
+-- CREATE TABLE public.Role_1 (
+--                Role_ID BIGINT NOT NULL default nextval('role_id_seq'),
+--                User_ID BIGINT NOT NULL,
+--                CONSTRAINT user_id PRIMARY KEY (Role_ID)
+-- );
 
 
 CREATE SEQUENCE review_id_seq;
@@ -63,6 +79,7 @@ CREATE TABLE public.Review (
                 User_ID BIGINT NOT NULL,
                 CONSTRAINT review_pk PRIMARY KEY (Review_ID)
 );
+
 
 CREATE SEQUENCE notification_id_seq;
 CREATE TABLE public.Notification (
