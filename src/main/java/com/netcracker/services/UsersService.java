@@ -27,13 +27,7 @@ public class UsersService {
     @Autowired
     private CityRepository cityRepository;
 
-    /**
-     *
-     * @param fio
-     * @param email
-     * @param phoneNumber
-     * @return
-     */
+
     public Long createNewUser(String fio, String email, String phoneNumber, City city, String password, String securityRole){
         LOG.debug("[ createUser(fio : {}, email : {}, phoneNumber : {}", fio, email, phoneNumber);
 
@@ -53,11 +47,6 @@ public class UsersService {
         return user.getUserId();
     }
 
-    /**
-     *
-     * @param email
-     * @return
-     */
     public User getUserByEmail(String email){
         LOG.debug("[ getByEmail(email : {})", email);
 
@@ -82,34 +71,25 @@ public class UsersService {
     }
     public User getUserByFIO(String fio) {
         LOG.debug("getUserByUsername(username: {})", fio);
-        User user = usersRepository.findUserByFio(fio);
-        return user;
+        return usersRepository.findUserByFio(fio);
     }
 
     public Collection<Group> getUserGroup(Long userId) {
         Optional<User> possible_user = usersRepository.findById(userId);
-        return possible_user.isPresent() ? possible_user.get().getGroups() : null;
+        return possible_user.map(User::getGroups).orElse(null);
     }
     public Collection<Route> getUserRoute(Long userId) {
         Optional<User> possible_user = usersRepository.findById(userId);
-        return possible_user.isPresent() ?
-                    possible_user.get().getRoutes() :
-                    null;
+        return possible_user.map(User::getRoutes).orElse(null);
     }
 
     public Double getRating(Long userId, Boolean isPassenger) {
         Optional<User> possible_user = usersRepository.findById(userId);
-        return possible_user.isPresent() ?
-                isPassenger ?
-                        possible_user.get().getPassengerRating() :
-                        possible_user.get().getDriverRating() :
-                null;
+        return possible_user.map(user -> isPassenger ?
+                user.getPassengerRating() :
+                user.getDriverRating()).orElse(null);
     }
 
-    /**
-     *
-     * @return
-     */
     public Iterable<User> getAllUsers(){
         LOG.debug("[ getAllUsers");
 
@@ -121,7 +101,7 @@ public class UsersService {
     public User getUserById(Long userId) {
         System.out.println("`2223");
         Optional<User> user = usersRepository.findById(userId);
-        return user.isPresent() ? user.get() : null;
+        return user.orElse(null);
     }
 
 
