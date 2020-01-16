@@ -4,19 +4,18 @@ import com.netcracker.dto.UserDto;
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
+import com.netcracker.entities.User;
 import com.netcracker.repositories.CityRepository;
-import com.netcracker.security.SecurityRole;
-import org.omg.CORBA.WStringSeqHelper;
+import com.netcracker.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.netcracker.entities.User;
-import com.netcracker.repositories.UserRepository;
-import sun.rmi.runtime.Log;
-
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class UsersService {
