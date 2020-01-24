@@ -1,4 +1,4 @@
-package com.netcracker.Controllers;
+package com.netcracker.controllers;
 
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
