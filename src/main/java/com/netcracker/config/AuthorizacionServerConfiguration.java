@@ -33,7 +33,7 @@ public class AuthorizacionServerConfiguration  extends AuthorizationServerConfig
         clients.inMemory()
                 .withClient("client")
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
-                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT","USER")
+                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT","USER", "ADMIN")
                 .scopes("read","write")
                 .autoApprove(true)
                 .secret(passwordEncoder().encode("password"));

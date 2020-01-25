@@ -5,7 +5,7 @@ INSERT INTO User_1(User_ID, City_ID,Role_name, FIO, Email, Phone_Number, Passwor
 INSERT INTO User_1(User_ID, City_ID,Role_name, FIO, Email, Phone_Number, Password) VALUES (3, 47,'ROLE_USER', 'Jimmy Hendrix', 'jimmy@jimmy.com', '865745350', '$2a$04$7NuaVD3eF5gFmKJX0Pfpt.WEgFdpSXDNWXLRAAloHrUnK5KpH6Bnu');
 INSERT INTO User_1(User_ID, City_ID,Role_name, FIO, Email, Phone_Number, Password) VALUES (4, 47,'ROLE_USER', 'Bob Dylan', 'bob@bob.com', '865723250', '$2a$04$V3E6ghq86cpHmWIs7I41mucXkqG2/lWFGBSdiwuySGpfsSfmpUA96');
 INSERT INTO User_1(User_ID, City_ID,Role_name, FIO, Email, Phone_Number, Password) VALUES (5, 100,'ROLE_USER', 'Artemiy Artemiev', 'artemiy@artemiy.com', '840923452', '$2a$04$KIDfVNIrB3h/AQZLkHf8Ru4MqkXxKqK4EsPkWYGiEeInTyvjyQg5G');
-INSERT INTO User_1(User_ID, City_ID,Role_name, FIO, Email, Phone_Number, Password) VALUES (6, 100,'ROLE_USER', 'Artemiy Artemov', 'artemov@artemov.com', '840923452', '$2a$04$lexjoWkJLmk4pttvByM09Ofe/J2gxlRYsJhFpRFVNurcxMTlieg3a');
+INSERT INTO User_1(User_ID, City_ID,Role_name, FIO, Email, Phone_Number, Password) VALUES (6, 100,'ROLE_ADMIN', 'Artemiy Artemov', 'artemov@artemov.com', '840923452', '$2a$04$lexjoWkJLmk4pttvByM09Ofe/J2gxlRYsJhFpRFVNurcxMTlieg3a');
 
 INSERT INTO Driver_Rating(User_ID, Average_Mark) VALUES (1, 0);
 INSERT INTO Driver_Rating(User_ID, Average_Mark) VALUES (2, 0);

@@ -60,28 +60,28 @@
 				</execution>
 			</executions>
 		</plugin>
-<!--		<plugin>-->
-<!--			<groupId>com.googlecode.flyway</groupId>-->
-<!--			<artifactId>flyway-maven-plugin</artifactId>-->
-<!--			<version>1.6.1</version>-->
-<!--			<configuration>-->
-<!--				<user>postgres</user>-->
-<!--				<password>root</password>-->
-<!--				<driver>org.postgresql.Driver</driver>-->
-<!--				<url>jdbc:postgresql://localhost:5432/folktaxi</url>-->
-<!--				<baseDir>db/migration</baseDir>-->
-<!--			</configuration>-->
-<!--			<executions>-->
-<!--				<execution>-->
-<!--					<id>flyway database migration</id>-->
-<!--					<phase>compile</phase>-->
-<!--					<goals>-->
-<!--						<goal>clean</goal>-->
-<!--						<goal>migrate</goal>-->
-<!--					</goals>-->
-<!--				</execution>-->
-<!--			</executions>-->
-<!--		</plugin>-->
+		<plugin>
+			<groupId>com.googlecode.flyway</groupId>
+			<artifactId>flyway-maven-plugin</artifactId>
+			<version>1.6.1</version>
+			<configuration>
+				<user>postgres</user>
+				<password>root</password>
+				<driver>org.postgresql.Driver</driver>
+				<url>jdbc:postgresql://localhost:5432/folktaxi</url>
+				<baseDir>db/migration</baseDir>
+			</configuration>
+			<executions>
+				<execution>
+					<id>flyway database migration</id>
+					<phase>compile</phase>
+					<goals>
+						<goal>clean</goal>
+						<goal>migrate</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
   	</plugins>
   </build>
   <dependencies>
@@ -90,19 +90,19 @@
 		  <artifactId>flyway-core</artifactId>
 		  <version>1.5</version>
 	  </dependency>
-      <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-web</artifactId>
-      </dependency>
+<!--      <dependency>-->
+<!--          <groupId>org.springframework.boot</groupId>-->
+<!--          <artifactId>spring-boot-starter-web</artifactId>-->
+<!--      </dependency>-->
       <dependency>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-data-jpa</artifactId>
       </dependency>
-      <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-test</artifactId>
-          <scope>test</scope>
-      </dependency>
+<!--      <dependency>-->
+<!--          <groupId>org.springframework.boot</groupId>-->
+<!--          <artifactId>spring-boot-starter-test</artifactId>-->
+<!--          <scope>test</scope>-->
+<!--      </dependency>-->
 <!--	  <dependency>-->
 <!--		  <groupId>org.flywaydb</groupId>-->
 <!--		  <artifactId>flyway-core</artifactId>-->
@@ -114,10 +114,10 @@
 		  <artifactId>spring-boot-starter-security</artifactId>
 	  </dependency>
 
-	  <dependency>
-		  <groupId>org.springframework.boot</groupId>
-		  <artifactId>spring-boot-starter-web</artifactId>
-	  </dependency>
+<!--	  <dependency>-->
+<!--		  <groupId>org.springframework.boot</groupId>-->
+<!--		  <artifactId>spring-boot-starter-web</artifactId>-->
+<!--	  </dependency>-->
 	  <dependency>
 		  <groupId>org.springframework.cloud</groupId>
 		  <artifactId>spring-cloud-starter-oauth2</artifactId>
@@ -128,17 +128,17 @@
 		  <artifactId>spring-security-test</artifactId>
 		  <scope>test</scope>
 	  </dependency>
-	  <dependency>
-		  <groupId>org.springframework.boot</groupId>
-		  <artifactId>spring-boot-starter-test</artifactId>
-		  <scope>test</scope>
-		  <exclusions>
-			  <exclusion>
-				  <groupId>org.junit.vintage</groupId>
-				  <artifactId>junit-vintage-engine</artifactId>
-			  </exclusion>
-		  </exclusions>
-	  </dependency>
+<!--	  <dependency>-->
+<!--		  <groupId>org.springframework.boot</groupId>-->
+<!--		  <artifactId>spring-boot-starter-test</artifactId>-->
+<!--		  <scope>test</scope>-->
+<!--		  <exclusions>-->
+<!--			  <exclusion>-->
+<!--				  <groupId>org.junit.vintage</groupId>-->
+<!--				  <artifactId>junit-vintage-engine</artifactId>-->
+<!--			  </exclusion>-->
+<!--		  </exclusions>-->
+<!--	  </dependency>-->
 
 	  <dependency>
 		  <groupId>org.springframework.boot</groupId>
