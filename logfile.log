@@ -1,0 +1,136 @@
+2020-01-25 14:49:24.072  WARN 1204 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16h49m23s12ms578µs100ns).
+2020-01-25 15:17:18.687  WARN 1204 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=13m23s937ms799µs600ns).
+2020-01-25 15:42:29.517  WARN 1204 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=12m10s794ms801µs).
+2020-01-25 15:53:12.014 DEBUG 1204 --- [http-nio-9091-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/swagger-ui.html", parameters={}
+2020-01-25 15:53:12.117 DEBUG 1204 --- [http-nio-9091-exec-5] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/", "classpath:/resources/", "classpath:/static/", "classpath:/public/", "/"]
+2020-01-25 15:53:12.140 DEBUG 1204 --- [http-nio-9091-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.346 DEBUG 1204 --- [http-nio-9091-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.352 DEBUG 1204 --- [http-nio-9091-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.496 DEBUG 1204 --- [http-nio-9091-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/css/typography.css", parameters={}
+2020-01-25 15:53:12.501 DEBUG 1204 --- [http-nio-9091-exec-3] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.508 DEBUG 1204 --- [http-nio-9091-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/css/reset.css", parameters={}
+2020-01-25 15:53:12.508 DEBUG 1204 --- [http-nio-9091-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.507 DEBUG 1204 --- [http-nio-9091-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/css/screen.css", parameters={}
+2020-01-25 15:53:12.513 DEBUG 1204 --- [http-nio-9091-exec-10] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.519 DEBUG 1204 --- [http-nio-9091-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.521 DEBUG 1204 --- [http-nio-9091-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.524 DEBUG 1204 --- [http-nio-9091-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.522 DEBUG 1204 --- [http-nio-9091-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.520 DEBUG 1204 --- [http-nio-9091-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/lib/jquery-1.8.0.min.js", parameters={}
+2020-01-25 15:53:12.525 DEBUG 1204 --- [http-nio-9091-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.531 DEBUG 1204 --- [http-nio-9091-exec-2] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.532 DEBUG 1204 --- [http-nio-9091-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.531 DEBUG 1204 --- [http-nio-9091-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.532 DEBUG 1204 --- [http-nio-9091-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.532 DEBUG 1204 --- [http-nio-9091-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/lib/backbone-min.js", parameters={}
+2020-01-25 15:53:12.539 DEBUG 1204 --- [http-nio-9091-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.534 DEBUG 1204 --- [http-nio-9091-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/lib/jquery.slideto.min.js", parameters={}
+2020-01-25 15:53:12.537 DEBUG 1204 --- [http-nio-9091-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.537 DEBUG 1204 --- [http-nio-9091-exec-9] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.543 DEBUG 1204 --- [http-nio-9091-exec-7] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.543 DEBUG 1204 --- [http-nio-9091-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.544 DEBUG 1204 --- [http-nio-9091-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.544 DEBUG 1204 --- [http-nio-9091-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.544 DEBUG 1204 --- [http-nio-9091-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.557 DEBUG 1204 --- [http-nio-9091-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/lib/jquery.ba-bbq.min.js", parameters={}
+2020-01-25 15:53:12.572 DEBUG 1204 --- [http-nio-9091-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.563 DEBUG 1204 --- [http-nio-9091-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.574 DEBUG 1204 --- [http-nio-9091-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.563 DEBUG 1204 --- [http-nio-9091-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/lib/jquery.wiggle.min.js", parameters={}
+2020-01-25 15:53:12.560 DEBUG 1204 --- [http-nio-9091-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/swagger-ui.min.js", parameters={}
+2020-01-25 15:53:12.577 DEBUG 1204 --- [http-nio-9091-exec-4] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.578 DEBUG 1204 --- [http-nio-9091-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.574 DEBUG 1204 --- [http-nio-9091-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.577 DEBUG 1204 --- [http-nio-9091-exec-2] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.584 DEBUG 1204 --- [http-nio-9091-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.584 DEBUG 1204 --- [http-nio-9091-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.585 DEBUG 1204 --- [http-nio-9091-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.581 DEBUG 1204 --- [http-nio-9091-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/lib/handlebars-2.0.0.js", parameters={}
+2020-01-25 15:53:12.588 DEBUG 1204 --- [http-nio-9091-exec-8] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.588 DEBUG 1204 --- [http-nio-9091-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/lib/highlight.7.3.pack.js", parameters={}
+2020-01-25 15:53:12.589 DEBUG 1204 --- [http-nio-9091-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.591 DEBUG 1204 --- [http-nio-9091-exec-7] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.591 DEBUG 1204 --- [http-nio-9091-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.598 DEBUG 1204 --- [http-nio-9091-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.599 DEBUG 1204 --- [http-nio-9091-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/lib/underscore-min.js", parameters={}
+2020-01-25 15:53:12.599 DEBUG 1204 --- [http-nio-9091-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.600 DEBUG 1204 --- [http-nio-9091-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.600 DEBUG 1204 --- [http-nio-9091-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.600 DEBUG 1204 --- [http-nio-9091-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.600 DEBUG 1204 --- [http-nio-9091-exec-3] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.600 DEBUG 1204 --- [http-nio-9091-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.600 DEBUG 1204 --- [http-nio-9091-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.600 DEBUG 1204 --- [http-nio-9091-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.601 DEBUG 1204 --- [http-nio-9091-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.601 DEBUG 1204 --- [http-nio-9091-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.602 DEBUG 1204 --- [http-nio-9091-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.607 DEBUG 1204 --- [http-nio-9091-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.607 DEBUG 1204 --- [http-nio-9091-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/lib/jsoneditor.min.js", parameters={}
+2020-01-25 15:53:12.608 DEBUG 1204 --- [http-nio-9091-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.609 DEBUG 1204 --- [http-nio-9091-exec-10] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.609 DEBUG 1204 --- [http-nio-9091-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.614 DEBUG 1204 --- [http-nio-9091-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/lib/marked.js", parameters={}
+2020-01-25 15:53:12.615 DEBUG 1204 --- [http-nio-9091-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/springfox.js", parameters={}
+2020-01-25 15:53:12.615 DEBUG 1204 --- [http-nio-9091-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.615 DEBUG 1204 --- [http-nio-9091-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.615 DEBUG 1204 --- [http-nio-9091-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/lib/swagger-oauth.js", parameters={}
+2020-01-25 15:53:12.615 DEBUG 1204 --- [http-nio-9091-exec-6] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.616 DEBUG 1204 --- [http-nio-9091-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.616 DEBUG 1204 --- [http-nio-9091-exec-5] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.616 DEBUG 1204 --- [http-nio-9091-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.616 DEBUG 1204 --- [http-nio-9091-exec-9] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.617 DEBUG 1204 --- [http-nio-9091-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.619 DEBUG 1204 --- [http-nio-9091-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/css/print.css", parameters={}
+2020-01-25 15:53:12.620 DEBUG 1204 --- [http-nio-9091-exec-4] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.620 DEBUG 1204 --- [http-nio-9091-exec-5] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.621 DEBUG 1204 --- [http-nio-9091-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.622 DEBUG 1204 --- [http-nio-9091-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.622 DEBUG 1204 --- [http-nio-9091-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.622 DEBUG 1204 --- [http-nio-9091-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.624 DEBUG 1204 --- [http-nio-9091-exec-9] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.625 DEBUG 1204 --- [http-nio-9091-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.626 DEBUG 1204 --- [http-nio-9091-exec-4] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.627 DEBUG 1204 --- [http-nio-9091-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.724 DEBUG 1204 --- [http-nio-9091-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/images/logo_small.png", parameters={}
+2020-01-25 15:53:12.725 DEBUG 1204 --- [http-nio-9091-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/fonts/DroidSans-Bold.ttf", parameters={}
+2020-01-25 15:53:12.725 DEBUG 1204 --- [http-nio-9091-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.725 DEBUG 1204 --- [http-nio-9091-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.725 DEBUG 1204 --- [http-nio-9091-exec-2] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.726 DEBUG 1204 --- [http-nio-9091-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/webjars/springfox-swagger-ui/fonts/DroidSans.ttf", parameters={}
+2020-01-25 15:53:12.726 DEBUG 1204 --- [http-nio-9091-exec-8] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler ["classpath:/META-INF/resources/webjars/"]
+2020-01-25 15:53:12.728 DEBUG 1204 --- [http-nio-9091-exec-1] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.728 DEBUG 1204 --- [http-nio-9091-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.734 DEBUG 1204 --- [http-nio-9091-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.734 DEBUG 1204 --- [http-nio-9091-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.736 DEBUG 1204 --- [http-nio-9091-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/configuration/ui", parameters={}
+2020-01-25 15:53:12.737 DEBUG 1204 --- [http-nio-9091-exec-8] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.738 DEBUG 1204 --- [http-nio-9091-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.738 DEBUG 1204 --- [http-nio-9091-exec-2] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.738 DEBUG 1204 --- [http-nio-9091-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 304 NOT_MODIFIED
+2020-01-25 15:53:12.748 DEBUG 1204 --- [http-nio-9091-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger.web.ApiResourceController#uiConfiguration()
+2020-01-25 15:53:12.749 DEBUG 1204 --- [http-nio-9091-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.852 DEBUG 1204 --- [http-nio-9091-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/javascript, */*;q=0.01] and supported [application/json, application/*+json, application/json, application/*+json]
+2020-01-25 15:53:12.859 DEBUG 1204 --- [http-nio-9091-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [springfox.documentation.swagger.web.UiConfiguration@5d6470d9]
+2020-01-25 15:53:12.887 DEBUG 1204 --- [http-nio-9091-exec-7] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.887 DEBUG 1204 --- [http-nio-9091-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-01-25 15:53:12.907 DEBUG 1204 --- [http-nio-9091-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/swagger-resources", parameters={}
+2020-01-25 15:53:12.908 DEBUG 1204 --- [http-nio-9091-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger.web.ApiResourceController#swaggerResources()
+2020-01-25 15:53:12.908 DEBUG 1204 --- [http-nio-9091-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.919 DEBUG 1204 --- [http-nio-9091-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/javascript, */*;q=0.01] and supported [application/json, application/*+json, application/json, application/*+json]
+2020-01-25 15:53:12.920 DEBUG 1204 --- [http-nio-9091-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[springfox.documentation.swagger.web.SwaggerResource@57087923]]
+2020-01-25 15:53:12.930 DEBUG 1204 --- [http-nio-9091-exec-3] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:12.930 DEBUG 1204 --- [http-nio-9091-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-01-25 15:53:12.960 DEBUG 1204 --- [http-nio-9091-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/v2/api-docs?group=public-api", parameters={masked}
+2020-01-25 15:53:12.962 DEBUG 1204 --- [http-nio-9091-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)
+2020-01-25 15:53:12.962 DEBUG 1204 --- [http-nio-9091-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:13.251 DEBUG 1204 --- [http-nio-9091-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json;charset=utf-8', given [application/json;charset=utf-8, */*] and supported [application/json, application/hal+json]
+2020-01-25 15:53:13.251 DEBUG 1204 --- [http-nio-9091-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [springfox.documentation.spring.web.json.Json@713b336f]
+2020-01-25 15:53:13.258 DEBUG 1204 --- [http-nio-9091-exec-10] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:13.258 DEBUG 1204 --- [http-nio-9091-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2020-01-25 15:53:13.506 DEBUG 1204 --- [http-nio-9091-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/configuration/security", parameters={}
+2020-01-25 15:53:13.507 DEBUG 1204 --- [http-nio-9091-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to springfox.documentation.swagger.web.ApiResourceController#securityConfiguration()
+2020-01-25 15:53:13.507 DEBUG 1204 --- [http-nio-9091-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Opening JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:13.510 DEBUG 1204 --- [http-nio-9091-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/javascript, */*;q=0.01] and supported [application/json, application/*+json, application/json, application/*+json]
+2020-01-25 15:53:13.510 DEBUG 1204 --- [http-nio-9091-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [springfox.documentation.swagger.web.SecurityConfiguration@4d395283]
+2020-01-25 15:53:13.514 DEBUG 1204 --- [http-nio-9091-exec-6] o.j.s.OpenEntityManagerInViewInterceptor : Closing JPA EntityManager in OpenEntityManagerInViewInterceptor
+2020-01-25 15:53:13.514 DEBUG 1204 --- [http-nio-9091-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
