@@ -30,7 +30,7 @@ public class UserSpringDetailsService implements UserDetailsService {
         }
         //сюда нужно добавить все поля нашего класса
         User user = new User(
-                storedUser.getFio(),
+                storedUser.getEmail(),
                 storedUser.getPassword(),
                 Collections.singleton(SR)
         );
