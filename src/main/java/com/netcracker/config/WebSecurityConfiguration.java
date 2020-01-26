@@ -44,14 +44,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/helloUser").permitAll()
                 .antMatchers("/webprivado").authenticated()
                 .antMatchers("/webprivado", "/users/User").hasRole("USER")
-                .antMatchers("/webadmin", "/users/Admin").hasRole("ADMIN");
+                .antMatchers("/webadmin", "/users/Admin").hasRole("ADMIN")
 //                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout() // Metodo get pues he desabilitado CSRF
-//                .permitAll();
+//                .rememberMe();
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .logout() // Metodo get pues he desabilitado CSRF
+                .permitAll();
     }
 
 

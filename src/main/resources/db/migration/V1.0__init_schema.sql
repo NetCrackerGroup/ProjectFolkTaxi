@@ -44,7 +44,8 @@ CREATE TABLE public.City (
 --                 Role_ID BIGINT NOT NULL,
 --                 Role_name anyenum NOT NULL
 -- );
-CREATE SEQUENCE user_id_seq;
+CREATE SEQUENCE user_id_seq
+start with 7;
 
 CREATE TYPE Role_names AS ENUM ( 'ROLE_ADMIN', 'ROLE_USER');
 CREATE TABLE public.User_1 (

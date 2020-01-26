@@ -1,27 +1,24 @@
 package com.netcracker.Controllers;
 
-        import com.netcracker.dto.UserDto;
-        import com.netcracker.entities.City;
-        import com.netcracker.entities.Group;
-        import com.netcracker.entities.Route;
-        import com.netcracker.security.SecurityRole;
-        import org.slf4j.Logger;
-        import org.slf4j.LoggerFactory;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-        import org.springframework.security.crypto.password.PasswordEncoder;
-        import org.springframework.web.bind.annotation.*;
+import com.netcracker.dto.UserDto;
+import com.netcracker.entities.City;
+import com.netcracker.entities.Group;
+import com.netcracker.entities.Route;
+import com.netcracker.entities.User;
+import com.netcracker.services.UsersService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
-        import com.netcracker.services.UsersService;
-        import com.netcracker.entities.User;
-
-        import java.util.Collection;
-        import java.util.List;
-        import java.util.Map;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("users")
-//@CrossOrigin(origins = { "http://localhost:4200" }, maxAge = 3000)
 public class UsersController {
 
     private static final Logger LOG = LoggerFactory.getLogger(UsersController.class);
@@ -29,7 +26,8 @@ public class UsersController {
     @Autowired
     private UsersService usersService;
 
-
+    @Autowired
+    private PasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("")
     public Long createNewUser(@RequestParam String fio,
@@ -101,19 +99,25 @@ public class UsersController {
     }
     @PostMapping("/sign-up")
     public void signUp(@RequestBody UserDto user) {
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersService.saveNewUser(user);
     }
     @GetMapping("/helloUser")
-    public String helloUser() {
-        return "hello user world";
+    public ResponseEntity helloUser() {
+        Map<Object, Object> response = new HashMap<>();
+        response.put("hello", "hello user world");
+        return ResponseEntity.ok(response);
     }
     @GetMapping("/User")
-    public String helloUserContr() {
-        return "hello helloUserContr world";
+    public ResponseEntity helloUserContr() {
+        Map<Object, Object> response = new HashMap<>();
+        response.put("hello", "hello User");
+        return ResponseEntity.ok(response);
     }
     @GetMapping("/Admin")
-    public String helloAdmin() {
-        return "hello Admin world";
+    public ResponseEntity helloAdmin() {
+        Map<Object, Object> response = new HashMap<>();
+        response.put("hello", "hello Admin");
+        return  ResponseEntity.ok(response);
     }
 }
