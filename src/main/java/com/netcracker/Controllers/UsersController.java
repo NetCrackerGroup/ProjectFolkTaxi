@@ -26,8 +26,8 @@ public class UsersController {
     @Autowired
     private UsersService usersService;
 
-    @Autowired
-    private PasswordEncoder bCryptPasswordEncoder;
+//    @Autowired
+//    private PasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("")
     public Long createNewUser(@RequestParam String fio,
@@ -99,7 +99,7 @@ public class UsersController {
     }
     @PostMapping("/sign-up")
     public void signUp(@RequestBody UserDto user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersService.saveNewUser(user);
     }
     @GetMapping("/helloUser")
