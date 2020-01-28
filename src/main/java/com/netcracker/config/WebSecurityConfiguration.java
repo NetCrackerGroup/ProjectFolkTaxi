@@ -45,8 +45,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/webprivado").authenticated()
                 .antMatchers("/webprivado", "/users/User").hasRole("USER")
                 .antMatchers("/webadmin", "/users/Admin").hasRole("ADMIN")
-//                .and()
-//                .rememberMe();
+//                .and().rememberMe();
                 .and()
                 .formLogin()
                 .loginPage("/login")

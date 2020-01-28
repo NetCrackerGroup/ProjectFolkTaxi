@@ -12,14 +12,5 @@ public class Application {
         ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
 
     }
-//    @Bean
-//    public PasswordEncoder getPasswordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
-//    @Autowired
-//    UserSpringDetailsService userSpringDetailsService;
-//    @Autowired
-//    public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository userRepository) throws Exception {
-//        builder.userDetailsService(userSpringDetailsService);
-//    }
+
 }
