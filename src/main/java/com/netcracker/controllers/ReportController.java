@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("reports")
 public class ReportController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UsersController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ReportController.class);
 
     @Autowired
     private ReportService reportService;
