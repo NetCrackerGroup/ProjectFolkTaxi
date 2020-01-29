@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-@Service
+@Service("userDetailsService")
 public class UserSpringDetailsService implements UserDetailsService {
     private static final Logger LOG = LoggerFactory.getLogger(UserSpringDetailsService.class);
 
@@ -34,11 +34,6 @@ public class UserSpringDetailsService implements UserDetailsService {
                 storedUser.getPassword(),
                 Collections.singleton(SR)
         );
-
-        if (user == null) {
-            LOG.error("User doesn't exist!");
-            throw new UsernameNotFoundException("User doesn't exist!");
-        }
 
 
         LOG.trace("] (user : {})", user);
