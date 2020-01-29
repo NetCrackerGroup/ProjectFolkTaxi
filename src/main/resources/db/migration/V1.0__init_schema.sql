@@ -10,14 +10,11 @@ CREATE TABLE public.Moderator (
                 CONSTRAINT moderator_pk PRIMARY KEY (Moderator_ID)
 );
 
-
-
 CREATE TABLE public.Driver_Rating (
                 User_ID BIGINT NOT NULL,
                 Average_Mark NUMERIC,
                 CONSTRAINT driver_rating_pk PRIMARY KEY (User_ID)
 );
-
 
 
 CREATE SEQUENCE group_id_seq;
@@ -51,7 +48,6 @@ CREATE TABLE public.User_1 (
                 Phone_Number VARCHAR,
                 CONSTRAINT user_id PRIMARY KEY (User_ID)
 );
-
 
 CREATE SEQUENCE review_id_seq;
 

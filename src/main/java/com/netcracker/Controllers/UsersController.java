@@ -88,6 +88,7 @@ public class UsersController {
         LOG.info("] return : {}", map);
         return map;
     }
+
     @GetMapping("/{id}/rating/{isPassenger}")
     public Double getRating(@PathVariable(name = "id") Long id, @PathVariable(name = "isPassenger") Boolean isPassenger) {
         LOG.info("[getUserRoutesGroupes : {} {}",id,  isPassenger);

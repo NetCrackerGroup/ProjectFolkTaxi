@@ -23,6 +23,11 @@ public class Group {
     }
 
 
+    public Group(String groupName, String cityLink) {
+        this.groupName = groupName;
+        this.cityLink = cityLink;
+    }
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "User_In_Group",
@@ -34,4 +39,28 @@ public class Group {
     @Column(name = "Link")
     private String cityLink;
 
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getCityLink() {
+        return cityLink;
+    }
+
+    public void setCityLink(String cityLink) {
+        this.cityLink = cityLink;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
 }
