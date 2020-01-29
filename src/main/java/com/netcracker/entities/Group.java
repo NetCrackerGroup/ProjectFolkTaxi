@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Group_1")
+@Table(name = "User_Groups")
 public class Group {
 
     @Id

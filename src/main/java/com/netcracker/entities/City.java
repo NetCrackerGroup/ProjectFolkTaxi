@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "city")
+@Table(name = "Cities")
 @Component
 public class City {
 	

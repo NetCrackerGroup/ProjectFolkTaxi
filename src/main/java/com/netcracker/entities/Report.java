@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
-@Table
+@Table(name="Reports")
 public class Report {
 
     @Id

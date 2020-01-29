@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Route")
+@Table(name = "Routes")
 public class Route {
 
     @Id
