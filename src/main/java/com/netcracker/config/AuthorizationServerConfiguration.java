@@ -31,10 +31,10 @@ public class AuthorizationServerConfiguration  extends AuthorizationServerConfig
     @Autowired
     private DataSource dataSource;
 
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.checkTokenAccess("isAuthenticated()").tokenKeyAccess("permitAll()");
-    }
+//    @Override
+//    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+//        security.checkTokenAccess("isAuthenticated()").tokenKeyAccess("permitAll()");
+//    }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
