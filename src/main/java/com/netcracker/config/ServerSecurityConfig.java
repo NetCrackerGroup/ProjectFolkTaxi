@@ -1,34 +1,43 @@
 package com.netcracker.config;
 
 import com.netcracker.security.services.UserSpringDetailsService;
+import io.jsonwebtoken.io.Encoders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Configuration
 @EnableWebSecurity
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+@Order(SecurityProperties.BASIC_AUTH_ORDER)
+@Import(Encoders.class)
+class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
+    @Autowired
+    private UserSpringDetailsService userDetailsService;
+
+    @Autowired
+    private PasswordEncoder userPasswordEncoder;
+
     @Override
+    @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
-    @Autowired
-    private UserSpringDetailsService userSpringDetailsService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userSpringDetailsService).passwordEncoder(passwordEncoder);
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(userPasswordEncoder);
     }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -47,6 +56,4 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout() // Metodo get pues he desabilitado CSRF
                 .permitAll();
     }
-
-
 }

@@ -1,46 +1,51 @@
-CREATE TABLE oauth_client_details (
-                                      client_id VARCHAR(256) PRIMARY KEY,
-                                      resource_ids VARCHAR(256),
-                                      client_secret VARCHAR(256),
-                                      scope VARCHAR(256),
-                                      authorized_grant_types VARCHAR(256),
-                                      web_server_redirect_uri VARCHAR(256),
-                                      authorities VARCHAR(256),
-                                      access_token_validity INTEGER,
-                                      refresh_token_validity INTEGER,
-                                      additional_information VARCHAR(4096),
-                                      autoapprove VARCHAR(256)
+CREATE TABLE OAUTH_CLIENT_DETAILS (
+                                      CLIENT_ID VARCHAR(255) PRIMARY KEY,
+                                      RESOURCE_IDS VARCHAR(255),
+                                      CLIENT_SECRET VARCHAR(255),
+                                      SCOPE VARCHAR(255),
+                                      AUTHORIZED_GRANT_TYPES VARCHAR(255),
+                                      WEB_SERVER_REDIRECT_URI VARCHAR(255),
+                                      AUTHORITIES VARCHAR(255),
+                                      ACCESS_TOKEN_VALIDITY INTEGER,
+                                      REFRESH_TOKEN_VALIDITY INTEGER,
+                                      ADDITIONAL_INFORMATION VARCHAR(4096),
+                                      AUTOAPPROVE VARCHAR(255)
 );
-ALTER TABLE oauth_client_details OWNER TO postgres;
 
-CREATE TABLE oauth_client_token (
-                                    token_id VARCHAR(256),
-                                    token bytea,
-                                    authentication_id VARCHAR(256),
-                                    user_name VARCHAR(256),
-                                    client_id VARCHAR(256)
+CREATE TABLE OAUTH_CLIENT_TOKEN (
+                                    TOKEN_ID VARCHAR(255),
+                                    TOKEN bytea,
+                                    AUTHENTICATION_ID VARCHAR(255) PRIMARY KEY,
+                                    USER_NAME VARCHAR(255),
+                                    CLIENT_ID VARCHAR(255)
 );
-ALTER TABLE oauth_client_token OWNER TO postgres;
 
-CREATE TABLE oauth_access_token (
-                                    token_id VARCHAR(256),
-                                    token bytea,
-                                    authentication_id VARCHAR(256),
-                                    user_name VARCHAR(256),
-                                    client_id VARCHAR(256),
-                                    authentication bytea,
-                                    refresh_token VARCHAR(256)
+CREATE TABLE OAUTH_ACCESS_TOKEN (
+                                    TOKEN_ID VARCHAR(255),
+                                    TOKEN bytea,
+                                    AUTHENTICATION_ID VARCHAR(255) PRIMARY KEY,
+                                    USER_NAME VARCHAR(255),
+                                    CLIENT_ID VARCHAR(255),
+                                    AUTHENTICATION bytea,
+                                    REFRESH_TOKEN VARCHAR(255)
 );
-ALTER TABLE oauth_access_token OWNER TO postgres;
 
-CREATE TABLE oauth_refresh_token (
-                                     token_id VARCHAR(256),
-                                     token bytea,
-                                     authentication bytea
+CREATE TABLE OAUTH_REFRESH_TOKEN (
+                                     TOKEN_ID VARCHAR(255),
+                                     TOKEN bytea,
+                                     AUTHENTICATION bytea
 );
-ALTER TABLE oauth_refresh_token OWNER TO postgres;
 
-CREATE TABLE oauth_code (
-                            code VARCHAR(256), authentication bytea
+CREATE TABLE OAUTH_CODE (
+                            CODE VARCHAR(255),
+                            AUTHENTICATION bytea
 );
-ALTER TABLE oauth_code OWNER TO postgres;
+
+CREATE TABLE OAUTH_APPROVALS (
+                                 USERID VARCHAR(255),
+                                 CLIENTID VARCHAR(255),
+                                 SCOPE VARCHAR(255),
+                                 STATUS VARCHAR(10),
+                                 EXPIRESAT TIMESTAMP,
+                                 LASTMODIFIEDAT TIMESTAMP
+);
