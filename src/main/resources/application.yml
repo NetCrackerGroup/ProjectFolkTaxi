@@ -24,12 +24,5 @@ security:
       scope: read,write
       auto-approve-scopes: '.*'
 
-servicesmgmt:
-  authorities: uaa.resource,oauth.service,clients.read,clients.write,clients.secret
-  authorized-grant-types: authorization_code,client_credentials,password,implicit
-  autoapprove: true
-  override: true
-  redirect-uri: http://servicesmgmt.10.244.0.34.xip.io/auth/cloudfoundry/callback
-  scope: openid,cloud_controller.read,cloud_controller.write
-  secret: servicesmgmt-secret
+
 
