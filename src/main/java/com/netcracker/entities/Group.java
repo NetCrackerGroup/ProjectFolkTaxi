@@ -1,6 +1,7 @@
 package com.netcracker.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Entity
@@ -16,16 +17,23 @@ public class Group {
     @Column(name = "Group_Name")
     private String groupName;
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn (name = "Type_Group_ID")
+    private TypeGroup typeGroup;
+
     public Group() {
     }
     public Group(String groupName) {
         this.groupName = groupName;
     }
 
-
-    public Group(String groupName, String cityLink) {
+    public Group(   String groupName,
+                    String cityLink,
+                    TypeGroup typeGroup) {
         this.groupName = groupName;
         this.cityLink = cityLink;
+        this.typeGroup = typeGroup;
     }
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -62,5 +70,21 @@ public class Group {
 
     public void setGroupId(Long groupId) {
         this.groupId = groupId;
+    }
+
+    public TypeGroup getTypeGroup() {
+        return typeGroup;
+    }
+
+    public void setTypeGroup(TypeGroup typeGroup) {
+        this.typeGroup = typeGroup;
+    }
+
+    public Collection<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Collection<User> users) {
+        this.users = users;
     }
 }

@@ -1,0 +1,1 @@
+ALTER TABLE User_Groups ADD CONSTRAINT ak_Group_Name UNIQUE (Group_Name);

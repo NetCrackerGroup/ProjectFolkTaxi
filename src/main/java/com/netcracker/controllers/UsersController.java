@@ -74,6 +74,7 @@ public class UsersController {
         LOG.info("] return : {}", group);
         return group;
     }
+
     @GetMapping("/{id}/routes")
     public Collection<Route> getUserRoutes(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserRoutes : {}", id);

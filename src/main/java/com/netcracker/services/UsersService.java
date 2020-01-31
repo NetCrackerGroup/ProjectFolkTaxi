@@ -69,6 +69,7 @@ public class UsersService {
         Optional<User> possible_user = usersRepository.findById(userId);
         return possible_user.isPresent() ? possible_user.get().getGroups() : null;
     }
+
     public Collection<Route> getUserRoute(Long userId) {
         Optional<User> possible_user = usersRepository.findById(userId);
         return possible_user.isPresent() ?
