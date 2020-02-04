@@ -1,5 +1,6 @@
 package com.netcracker.services;
 
+import com.netcracker.DTO.UserDto;
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
@@ -17,8 +18,15 @@ import java.util.*;
 public class UsersService {
     private static final Logger LOG = LoggerFactory.getLogger(UsersService.class);
 
-    @Autowired
     private UserRepository usersRepository;
+    private UserMapper userMapper;
+
+    @Autowired
+    public UsersService(    UserRepository usersRepository,
+                            UserMapper userMapper) {
+        this.usersRepository = usersRepository;
+        this.userMapper = userMapper;
+    }
 
     /**
      *
@@ -42,13 +50,13 @@ public class UsersService {
      * @param email
      * @return
      */
-    public User getUserByEmail(String email){
+    public UserDto getUserByEmail(String email){
         LOG.debug("[ getByEmail(email : {})", email);
 
         User user = usersRepository.findUserByEmail(email);
 
         LOG.debug("] (return : {})", user);
-        return user;
+        return userMapper.toDto(user);
     }
 
     public Map<Class, Collection<?>> getGroupAndRoute(Long userId) {
@@ -98,9 +106,9 @@ public class UsersService {
         LOG.debug("] (return : {})", users);
         return users;
     }
-    public User getUserById(Long userId) {
+    public UserDto getUserById(Long userId) {
         System.out.println("`2223");
         Optional<User> user = usersRepository.findById(userId);
-        return user.isPresent() ? user.get() : null;
+        return user.isPresent() ? userMapper.toDto(user.get()) : null;
     }
 }

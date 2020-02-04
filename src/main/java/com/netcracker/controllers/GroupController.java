@@ -1,5 +1,6 @@
 package com.netcracker.controllers;
 
+import com.netcracker.DTO.GroupDto;
 import com.netcracker.entities.Group;
 import com.netcracker.services.GroupService;
 import com.netcracker.services.TypeGroupService;
@@ -28,28 +29,28 @@ public class GroupController {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
     }
     @GetMapping ("")
-    public Iterable<Group> getAllGroups ()
+    public Iterable<GroupDto> getAllGroups ()
     {
         LOG.debug("get All Groups!");
 
-        Iterable<Group> groups = groupService.getAllGroups();
+        Iterable<GroupDto> groups = groupService.getAllGroups();
 
         return groups;
     }
 
     @GetMapping("/{id}")
-    public Group getGroupById (@PathVariable(name = "id") String id) {
+    public GroupDto getGroupById (@PathVariable(name = "id") String id) {
 
-        Group group = groupService.getGroupById( Long.decode(id));
+        GroupDto group = groupService.getGroupById( Long.decode(id));
 
         return group;
     }
 
     @PostMapping(value = "")
-    public Group createGroup (@RequestParam(name = "name") String name,
+    public GroupDto createGroup (@RequestParam(name = "name") String name,
                               @RequestParam(name = "link") String link)
     {
-        Group group = groupService.createGroup(name, link);
+        GroupDto group = groupService.createGroup(name, link);
 
         LOG.debug("get group with id - {}", group.getGroupId());
 

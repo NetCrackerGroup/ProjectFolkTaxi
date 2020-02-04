@@ -1,5 +1,6 @@
 package com.netcracker.services;
 
+import com.netcracker.DTO.GroupDto;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.TypeGroup;
 import com.netcracker.repositories.GroupRepository;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Optional;
 
 
@@ -18,13 +21,20 @@ public class GroupService {
 
     private static final Logger LOG = LoggerFactory.getLogger(GroupService.class);
 
-    @Autowired
     private GroupRepository groupRepository;
+    private TypeGroupService typeGroupService;
+    private GroupMapper groupMapper;
 
     @Autowired
-    private TypeGroupService typeGroupService;
+    public GroupService(    GroupRepository groupRepository,
+                            TypeGroupService typeGroupService,
+                            GroupMapper groupMapper) {
+        this.groupRepository = groupRepository;
+        this.typeGroupService = typeGroupService;
+        this.groupMapper = groupMapper;
+    }
 
-    public Group createGroup( String name, String nameType ) {
+    public GroupDto createGroup(String name, String nameType ) {
         SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
         byte[] digest = digestSHA3.digest(name.getBytes());
         String link = Hex.toHexString(digest);
@@ -33,24 +43,28 @@ public class GroupService {
         LOG.debug("create group - name : \'{}\' , link :  \'{}\'", name, link);
         Group group = new Group(name, link, typeGroup);
         groupRepository.save(group);
-
-        return group;
+        GroupDto groupDto = groupMapper.toDto(group);
+        return groupDto;
     }
 
-    public Group getGroupById(Long id) {
+    public GroupDto getGroupById(Long id) {
         LOG.debug("Get group by id {}", id);
 
         Optional<Group> possible = groupRepository.findById(id);
 
         LOG.debug("Group - {}", possible.get());
-        return possible.isPresent() ? possible.get() : null;
+        return possible.isPresent() ? groupMapper.toDto(possible.get()) : null;
     }
 
-    public Iterable<Group> getAllGroups() {
+    public Iterable<GroupDto> getAllGroups() {
         LOG.debug("Get groups");
 
         Iterable<Group> groups = groupRepository.findAll();
+        Collection<GroupDto> groupDtos = new LinkedList<GroupDto>();
+        for (Group group: groups) {
+            groupDtos.add(groupMapper.toDto(group));
+        }
 
-        return groups;
+        return groupDtos;
     }
 }

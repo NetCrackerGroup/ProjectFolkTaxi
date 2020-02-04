@@ -1,21 +1,18 @@
 package com.netcracker.controllers;
 
+import com.netcracker.DTO.UserDto;
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.netcracker.services.UsersService;
 import com.netcracker.entities.User;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +23,15 @@ public class UsersController {
 
     private static final Logger LOG = LoggerFactory.getLogger(UsersController.class);
 
-    @Autowired
+    @Autowired  
     private UsersService usersService;
+
+    @ModelAttribute
+    public void setResponseHeader(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods" , "GET, PUT, POST, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    }
 
     @PostMapping("")
     public Long createNewUser(@RequestParam  String fio, @RequestParam  String email, @RequestParam  String phoneNumber, @RequestParam City city){
@@ -39,10 +43,10 @@ public class UsersController {
     }
 
     @GetMapping("/email/{email}")
-    public User getUserByEmail(@PathVariable(value="email") String email){
+    public UserDto getUserByEmail(@PathVariable(value="email") String email){
         LOG.info("[ getUserByEmail : {}", email);
 
-        User user = usersService.getUserByEmail(email);
+        UserDto user = usersService.getUserByEmail(email);
 
         LOG.info("] return : {}", user);
         return user;
@@ -59,10 +63,10 @@ public class UsersController {
     }
 
     @GetMapping("/{id}")
-    public User getUserByid(@PathVariable(name = "id") Long id) {
+    public UserDto getUserByid(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserByid : {}", id);
         System.out.println("`123123");
-        User user = usersService.getUserById(id);
+        UserDto user = usersService.getUserById(id);
         LOG.info("] return : {}", user);
         return user;
     }
