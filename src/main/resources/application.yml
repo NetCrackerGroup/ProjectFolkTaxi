@@ -1,4 +1,4 @@
-server.port: 1337
+server.port:
 
 logging:
   level:
@@ -10,5 +10,5 @@ spring.datasource:
     connectionTimeout: 20000
     maximumPoolSize: 5
   url: jdbc:postgresql://localhost:5432/folktaxi
-  username: postgres
-  password: root
+  username:
+  password: 
