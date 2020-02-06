@@ -2,7 +2,7 @@ package com.netcracker.DTO;
 
 import com.netcracker.entities.City;
 import com.netcracker.entities.User;
-import com.netcracker.security.SecurityRole;
+
 
 public class UserDto {
 

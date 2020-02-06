@@ -1,6 +1,7 @@
 package com.netcracker.services;
 
 import com.netcracker.DTO.UserDto;
+
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
@@ -50,7 +51,6 @@ public class UsersService {
         Optional<City> city = cityRepository.findById((long) userDto.getCityId());
         User user = userDto.toUser(city.get());
         usersRepository.save(user);
-
         LOG.debug("] (userId : {})", user.getUserId());
         return user.getUserId();
     }
