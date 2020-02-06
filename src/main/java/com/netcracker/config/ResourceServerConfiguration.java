@@ -14,15 +14,16 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+
         http
                 .authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser",  "/users/sign-up").permitAll();
 //			 .anyRequest().authenticated();
         http.requestMatchers().antMatchers( "/users/User" )
                 .and().authorizeRequests()
-                .antMatchers( "/users/User").access("hasRole('USER')")
+                .antMatchers( "/users/User").access("hasAnyRole('USER', 'ADMIN')")
                 .and().requestMatchers().antMatchers( "/users/Admin")
                 .and().authorizeRequests()
                 .antMatchers("/users/Admin").access("hasRole('ADMIN')");
-    }
+   }
 
 }

@@ -1,15 +1,15 @@
 CREATE TABLE OAUTH_CLIENT_DETAILS (
-                                      CLIENT_ID VARCHAR(255) PRIMARY KEY,
-                                      RESOURCE_IDS VARCHAR(255),
-                                      CLIENT_SECRET VARCHAR(255),
-                                      SCOPE VARCHAR(255),
-                                      AUTHORIZED_GRANT_TYPES VARCHAR(255),
-                                      WEB_SERVER_REDIRECT_URI VARCHAR(255),
-                                      AUTHORITIES VARCHAR(255),
-                                      ACCESS_TOKEN_VALIDITY INTEGER,
-                                      REFRESH_TOKEN_VALIDITY INTEGER,
-                                      ADDITIONAL_INFORMATION VARCHAR(4096),
-                                      AUTOAPPROVE VARCHAR(255)
+                                      client_id  VARCHAR(255) PRIMARY KEY,
+                                      resource_ids  VARCHAR(255),
+                                      client_secret  VARCHAR(255),
+                                      scope  VARCHAR(255),
+                                      authorized_grant_types  VARCHAR(255),
+                                      web_server_redirect_uri  VARCHAR(255),
+                                      authorities  VARCHAR(255),
+                                      access_token_validity  BIGINT,
+                                      refresh_token_validity  BIGINT,
+                                      additional_information  VARCHAR(4096),
+                                      autoapprove VARCHAR(255)
 );
 
 CREATE TABLE OAUTH_CLIENT_TOKEN (

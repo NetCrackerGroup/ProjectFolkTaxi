@@ -9,6 +9,7 @@ import com.netcracker.services.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,9 @@ public class UsersController {
     @Autowired
     private UsersService usersService;
 
-//    @Autowired
-//    private PasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    @Lazy
+    private PasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("")
     public Long createNewUser(@RequestParam String fio,
@@ -99,7 +101,7 @@ public class UsersController {
     }
     @PostMapping("/sign-up")
     public void signUp(@RequestBody UserDto user) {
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersService.saveNewUser(user);
     }
     @GetMapping("/helloUser")

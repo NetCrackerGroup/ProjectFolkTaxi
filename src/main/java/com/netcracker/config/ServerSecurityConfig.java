@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -43,10 +42,6 @@ class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/users/helloUser").permitAll()
-                .antMatchers().authenticated()
-                .antMatchers( "/users/User").hasRole("USER")
-                .antMatchers( "/users/Admin").hasRole("ADMIN")
                 .and().rememberMe()
                 .and()
                 .formLogin()
@@ -55,5 +50,7 @@ class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout() // Metodo get pues he desabilitado CSRF
                 .permitAll();
+
     }
+
 }
