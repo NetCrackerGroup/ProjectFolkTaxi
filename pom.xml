@@ -6,6 +6,29 @@
    <name>Maven Quick Start Archetype</name>
   <url>http://maven.apache.org</url>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -18,24 +41,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-  		<!-- plugin>
-	      	<groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-checkstyle-plugin</artifactId>
-	        <version>2.7</version>
-	        	<configuration>
-			     <encoding>UTF-8</encoding>
-			     <consoleOutput>true</consoleOutput>
-			     <failsOnError>true</failsOnError>
-			     <linkXRef>false</linkXRef>
-			   </configuration>
-			   <executions>
-			    	<execution>
-            			<goals>
-                			<goal>check</goal>
-           			 	</goals>
-        			</execution>
-			   </executions>
-      </plugin -->
+
 
   		<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
