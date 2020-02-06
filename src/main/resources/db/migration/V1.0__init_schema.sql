@@ -10,11 +10,14 @@ CREATE TABLE public.Moderator (
                 CONSTRAINT moderator_pk PRIMARY KEY (Moderator_ID)
 );
 
+
+
 CREATE TABLE public.Driver_Rating (
                 User_ID BIGINT NOT NULL,
                 Average_Mark NUMERIC,
                 CONSTRAINT driver_rating_pk PRIMARY KEY (User_ID)
 );
+
 
 
 CREATE SEQUENCE group_id_seq;
@@ -36,18 +39,30 @@ CREATE TABLE public.City (
 );
 
 
-CREATE SEQUENCE user_id_seq;
 
+-- CREATE TABLE public.Role_1 (
+--                 Role_ID BIGINT NOT NULL,
+--                 Role_name anyenum NOT NULL
+-- );
+CREATE SEQUENCE user_id_seq
+start with 7;
+
+CREATE TYPE Role_names AS ENUM ( 'ROLE_ADMIN', 'ROLE_USER');
 CREATE TABLE public.User_1 (
                 User_ID BIGINT NOT NULL default nextval('user_id_seq'),
                 City_ID BIGINT NOT NULL,
+                Role_name VARCHAR NOT NULL,
                 FIO VARCHAR NOT NULL,
                 Driver_Rating DOUBLE PRECISION,
                 Passenger_Rating DOUBLE PRECISION,
                 Email VARCHAR,
                 Phone_Number VARCHAR,
+                Password VARCHAR,
                 CONSTRAINT user_id PRIMARY KEY (User_ID)
 );
+
+
+
 
 CREATE SEQUENCE review_id_seq;
 
@@ -59,6 +74,7 @@ CREATE TABLE public.Review (
                 User_ID BIGINT NOT NULL,
                 CONSTRAINT review_pk PRIMARY KEY (Review_ID)
 );
+
 
 CREATE SEQUENCE notification_id_seq;
 CREATE TABLE public.Notification (
