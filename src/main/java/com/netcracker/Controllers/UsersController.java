@@ -67,30 +67,46 @@ public class UsersController {
         return user;
     }
 
-    @GetMapping("/{id}/groups")
+    @GetMapping("/groups/{id}")
     public Collection<Group> getUserGroup(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserGroup : {}", id);
         Collection<Group> group = usersService.getUserGroup(id);
         LOG.info("] return : {}", group);
         return group;
     }
-    @GetMapping("/{id}/routes")
+    @GetMapping("/routes/{id}")
     public Collection<Route> getUserRoutes(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserRoutes : {}", id);
         Collection<Route> routes = usersService.getUserRoute(id);
         LOG.info("] return : {}", routes);
         return routes;
     }
-    @GetMapping("/{id}/routesAndGroups")
+    
+    @GetMapping("/groupsByEmail/{mail}")
+    public Collection<Group> getUserGroupsByEmail(@PathVariable(value = "mail") String mail) {
+        LOG.info("[getUserGroupByEmail : {}", mail);
+        Collection<Group> groups = usersService.getUserGroupsByEmail(mail);
+        LOG.info("] return : {}", groups);
+        return groups;
+    }
+    @GetMapping("/routesByEmail/{mail}")
+    public Collection<Route> getUserRoutesByEmail(@PathVariable(value = "mail") String mail) {
+        LOG.info("[getUserGroupByEmail : {}", mail);
+        Collection<Route> routes = usersService.getUserRoutesByEmail(mail);
+        LOG.info("] return : {}", routes);
+        return routes;
+    }
+    
+    @GetMapping("/routesAndGroups/{id}")
     public Map<Class, Collection<?>> getUserRoutesGroupes(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserRoutesGroupes : {}", id);
         Map<Class, Collection<?>> map = usersService.getGroupAndRoute(id);
         LOG.info("] return : {}", map);
         return map;
     }
-    @GetMapping("/{id}/rating/{isPassenger}")
+  /*  @GetMapping("/{id}/rating/{isPassenger}")
     public Double getRating(@PathVariable(name = "id") Long id, @PathVariable(name = "isPassenger") Boolean isPassenger) {
         LOG.info("[getUserRoutesGroupes : {} {}",id,  isPassenger);
         return usersService.getRating(id, isPassenger);
-    }
+    } */
 }

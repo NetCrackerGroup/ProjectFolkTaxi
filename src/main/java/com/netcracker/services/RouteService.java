@@ -20,8 +20,9 @@ public class RouteService {
 	
     public ArrayList<Route> getRoutesByCityId(Long cityId){
 
-        ArrayList<Route> routes = routeRepository.findRouteByCity(cityId);
+        ArrayList<Route> routes = null;  // routeRepository.findRouteByCityId(cityId);
 
         return routes;
     }
+    
 }

@@ -76,6 +76,15 @@ public class UsersService {
                     null;
     }
 
+    public Collection<Group> getUserGroupsByEmail(String userEmail) {
+        User possible_user = usersRepository.findUserByEmail(userEmail);
+        return possible_user != null ? possible_user.getGroups() : null;
+    }
+    public Collection<Route> getUserRoutesByEmail(String userEmail) {
+        User possible_user = usersRepository.findUserByEmail(userEmail);
+        return possible_user != null ? possible_user.getRoutes() : null;
+    }
+    
     public Double getRating(Long userId, Boolean isPassenger) {
         Optional<User> possible_user = usersRepository.findById(userId);
         return possible_user.isPresent() ?

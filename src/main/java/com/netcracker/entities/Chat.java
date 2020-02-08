@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "Chat")
+@Table(name = "Chats")
 public class Chat {
 
 	@Id

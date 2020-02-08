@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Journey")
+@Table(name = "Journeys")
 public class Journey {
 
     @Id

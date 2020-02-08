@@ -30,9 +30,9 @@ public class RouteController {
         return "routes";
     }
 	
-    @GetMapping("/route/{id}")
-    public ArrayList<Route> getRoutesById(@PathVariable(value="id") Long id){
-        LOG.info("[ getRoutesById : {}", id);
+    @GetMapping("/route/byCity/{id}")
+    public ArrayList<Route> getRoutesByCityId(@PathVariable(value="id") Long id){
+        LOG.info("[ getRoutesByCityId : {}", id);
 
         ArrayList<Route> routes = routeService.getRoutesByCityId(id);
 
