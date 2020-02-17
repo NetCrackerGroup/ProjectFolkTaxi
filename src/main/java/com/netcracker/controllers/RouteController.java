@@ -38,10 +38,21 @@ public class RouteController {
 
     @PostMapping("/add")
     public void saveNewRoute(@RequestBody RouteDto routeDto) {
-        LOG.info("[ getUserDetails : price  {}, routeBegin {}, routeEnd {}",
+        LOG.info("[ saveNewRoute : price  {}, routeBegin {}, routeEnd {}",
                 routeDto.getPrice(), routeDto.getRouteBegin(), routeDto.getRouteEnd());
-        LOG.debug("] (getUserDetails )");
+        LOG.debug("] (saveNewRoute )");
         routeService.saveNewRoute(routeDto);
     }
+    @GetMapping("/{id}")
+    public Route getRoutes(@PathVariable(value="id") Long id){
+        LOG.info("[ getRoutesById : {}", id);
+
+        Route routes = routeService.getRoutesBy(id);
+
+        LOG.info("] return : {}", routes.toString());
+        return routes;
+    }
+
+
     
 }

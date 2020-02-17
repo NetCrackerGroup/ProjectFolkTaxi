@@ -117,8 +117,8 @@ CREATE SEQUENCE route_id_seq;
 CREATE TABLE public.Route (
                 Route_ID BIGINT NOT NULL default nextval('route_id_seq'),
                 City_ID BIGINT NOT NULL,
-                Route_Begin VARCHAR NOT NULL,
-                Route_End VARCHAR NOT NULL,
+                Route_Begin geography NOT NULL,
+                Route_End geography NOT NULL,
                 Price NUMERIC,
                 Driver_ID BIGINT NOT NULL,
                 CONSTRAINT route_pk PRIMARY KEY (Route_ID)

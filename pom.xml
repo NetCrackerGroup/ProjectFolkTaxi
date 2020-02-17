@@ -36,28 +36,28 @@
                       </execution>
                  </executions>
         </plugin -->
-<!--			<plugin>-->
-<!--					<groupId>com.googlecode.flyway</groupId>-->
-<!--					<artifactId>flyway-maven-plugin</artifactId>-->
-<!--					<version>1.6.1</version>-->
-<!--					<configuration>-->
-<!--						<user>postgres</user>-->
-<!--						<password>root</password>-->
-<!--						<driver>org.postgresql.Driver</driver>-->
-<!--						<url>jdbc:postgresql://localhost:5432/folktaxi</url>-->
-<!--						<baseDir>db/migration</baseDir>-->
-<!--					</configuration>-->
-<!--					<executions>-->
-<!--						<execution>-->
-<!--							<id>flyway database migration</id>-->
-<!--							<phase>compile</phase>-->
-<!--							<goals>-->
-<!--								<goal>clean</goal>-->
-<!--								<goal>migrate</goal>-->
-<!--							</goals>-->
-<!--						</execution>-->
-<!--					</executions>-->
-<!--				</plugin>-->
+			<plugin>
+					<groupId>com.googlecode.flyway</groupId>
+					<artifactId>flyway-maven-plugin</artifactId>
+					<version>1.6.1</version>
+					<configuration>
+						<user>postgres</user>
+						<password>root</password>
+						<driver>org.postgresql.Driver</driver>
+						<url>jdbc:postgresql://localhost:5432/folktaxi</url>
+						<baseDir>db/migration</baseDir>
+					</configuration>
+					<executions>
+						<execution>
+							<id>flyway database migration</id>
+							<phase>compile</phase>
+							<goals>
+								<goal>clean</goal>
+								<goal>migrate</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -249,16 +249,16 @@
 			<version>2.3</version>
 			<scope>compile</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.8.6</version>
-		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-spatial</artifactId>
-			<version>5.2.12.Final</version>
+			<version>5.4.5.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.orbisgis</groupId>
+			<artifactId>h2gis</artifactId>
+			<version>1.4.0</version>
 		</dependency>
 
 	</dependencies>

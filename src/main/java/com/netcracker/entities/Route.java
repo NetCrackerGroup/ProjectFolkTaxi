@@ -1,5 +1,8 @@
 package com.netcracker.entities;
 
+import org.hibernate.validator.constraints.Range;
+import org.locationtech.jts.geom.Point;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,15 +24,13 @@ public class Route {
     @JoinColumn(name = "city_id")
     private City city;
 
-    @NotNull
-    @Size(min = 1, max = 20)
+    //убрал @Range(min=0, max=90) и заработало, почему?
     @Column(name = "route_begin")
-    private String routeBegin;
+    private Point routeBegin;
 
-    @NotNull
-    @Size(min = 1, max = 20)
+    //убрал @Range(min=0, max=90) и заработало, почему?
     @Column(name = "route_end")
-    private String routeEnd;
+    private Point routeEnd;
 
     @Column(name = "price")
     private BigDecimal price;
@@ -48,9 +49,9 @@ public class Route {
 
     public Route() {
     }
-
-    public Route(@NotNull @Size(min = 1, max = 20) String routeBegin,
-                 @NotNull @Size(min = 1, max = 20) String routeEnd,
+    //убрал @Range(min=0, max=90) и заработало, почему?
+    public Route(  Point routeBegin,
+                   Point routeEnd,
                  BigDecimal price) {
         this.routeBegin = routeBegin;
         this.routeEnd = routeEnd;
@@ -74,19 +75,19 @@ public class Route {
         this.city = city;
     }
 
-    public String getRouteBegin() {
+    public Point getRouteBegin() {
         return routeBegin;
     }
 
-    public void setRouteBegin(String routeBegin) {
+    public void setRouteBegin(Point routeBegin) {
         this.routeBegin = routeBegin;
     }
 
-    public String getRouteEnd() {
+    public Point getRouteEnd() {
         return routeEnd;
     }
 
-    public void setRouteEnd(String routeEnd) {
+    public void setRouteEnd(Point routeEnd) {
         this.routeEnd = routeEnd;
     }
 
