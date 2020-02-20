@@ -1,23 +1,26 @@
 package com.netcracker.Controllers;
-
+import com.netcracker.DTO.UserDto;
+import com.netcracker.DTO.UserSecDto;
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
+import com.netcracker.entities.User;
+import com.netcracker.services.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.netcracker.services.UsersService;
 import com.netcracker.entities.User;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -29,20 +32,35 @@ public class UsersController {
     @Autowired
     private UsersService usersService;
 
+    @ModelAttribute
+    public void setResponseHeader(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods" , "GET, PUT, POST, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    }
+
+    @Autowired
+    @Lazy
+    private PasswordEncoder bCryptPasswordEncoder;
+
     @PostMapping("")
-    public Long createNewUser(@RequestParam  String fio, @RequestParam  String email, @RequestParam  String phoneNumber, @RequestParam City city){
+    public Long createNewUser(@RequestParam String fio,
+                              @RequestParam String email,
+                              @RequestParam String phoneNumber,
+                              @RequestParam City city,
+                              @RequestParam String password){
         LOG.debug("[ createUser(fio : {}, email : {}, phoneNumber : {}", fio, email, phoneNumber);
-        Long userId = usersService.createNewUser(fio, email, phoneNumber, city);
+        Long userId = usersService.createNewUser(fio, email, phoneNumber, city, password, "ROLE_USER");
 
         LOG.debug("] (userId : {})", userId);
         return userId;
     }
 
     @GetMapping("/email/{email}")
-    public User getUserByEmail(@PathVariable(value="email") String email){
+    public UserDto getUserByEmail(@PathVariable(value="email") String email){
         LOG.info("[ getUserByEmail : {}", email);
 
-        User user = usersService.getUserByEmail(email);
+        UserDto user = usersService.getUserByEmail(email);
 
         LOG.info("] return : {}", user);
         return user;
@@ -59,10 +77,10 @@ public class UsersController {
     }
 
     @GetMapping("/{id}")
-    public User getUserByid(@PathVariable(name = "id") Long id) {
+    public UserDto getUserByid(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserByid : {}", id);
         System.out.println("`123123");
-        User user = usersService.getUserById(id);
+        UserDto user = usersService.getUserById(id);
         LOG.info("] return : {}", user);
         return user;
     }
@@ -74,6 +92,7 @@ public class UsersController {
         LOG.info("] return : {}", group);
         return group;
     }
+
     @GetMapping("/routes/{id}")
     public Collection<Route> getUserRoutes(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserRoutes : {}", id);
@@ -104,9 +123,33 @@ public class UsersController {
         LOG.info("] return : {}", map);
         return map;
     }
-  /*  @GetMapping("/{id}/rating/{isPassenger}")
+
+    @GetMapping("/{id}/rating/{isPassenger}")
     public Double getRating(@PathVariable(name = "id") Long id, @PathVariable(name = "isPassenger") Boolean isPassenger) {
         LOG.info("[getUserRoutesGroupes : {} {}",id,  isPassenger);
         return usersService.getRating(id, isPassenger);
-    } */
+    }
+    @PostMapping("/sign-up")
+    public void signUp(@RequestBody UserSecDto user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        usersService.saveNewUser(user);
+    }
+    @GetMapping("/helloUser")
+    public ResponseEntity helloUser() {
+        Map<Object, Object> response = new HashMap<>();
+        response.put("hello", "hello user world");
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/User")
+    public ResponseEntity helloUserContr() {
+        Map<Object, Object> response = new HashMap<>();
+        response.put("hello", "hello User");
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/Admin")
+    public ResponseEntity helloAdmin() {
+        Map<Object, Object> response = new HashMap<>();
+        response.put("hello", "hello Admin");
+        return  ResponseEntity.ok(response);
+    }
 }

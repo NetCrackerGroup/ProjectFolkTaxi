@@ -1,0 +1,1 @@
+INSERT INTO User_In_Group (Group_ID, User_ID) VALUES (1, 1);

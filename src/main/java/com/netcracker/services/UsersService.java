@@ -1,36 +1,57 @@
 package com.netcracker.services;
 
+import com.netcracker.DTO.UserDto;
+import com.netcracker.DTO.UserSecDto;
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
+import com.netcracker.entities.User;
+import com.netcracker.repositories.CityRepository;
+import com.netcracker.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.netcracker.entities.User;
-import com.netcracker.repositories.UserRepository;
-
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class UsersService {
     private static final Logger LOG = LoggerFactory.getLogger(UsersService.class);
 
-    @Autowired
     private UserRepository usersRepository;
+    private UserMapper userMapper;
 
-    /**
-     *
-     * @param fio
-     * @param email
-     * @param phoneNumber
-     * @return
-     */
-    public Long createNewUser(String fio, String email, String phoneNumber, City city){
+    @Autowired
+    public UsersService(    UserRepository usersRepository,
+                            UserMapper userMapper) {
+        this.usersRepository = usersRepository;
+        this.userMapper = userMapper;
+    }
+
+    @Autowired
+    private CityRepository cityRepository;
+
+
+    public Long createNewUser(String fio, String email, String phoneNumber, City city, String password, String securityRole){
         LOG.debug("[ createUser(fio : {}, email : {}, phoneNumber : {}", fio, email, phoneNumber);
 
-        User user = new User(fio, email, phoneNumber, city);
+        User user = new User(fio, email, phoneNumber, city, password, securityRole);
+        usersRepository.save(user);
+
+        LOG.debug("] (userId : {})", user.getUserId());
+        return user.getUserId();
+    }
+
+    public Long saveNewUser(UserSecDto userDto) {
+        LOG.debug("[ saveNewUser(fio : {}", userDto);
+        Optional<City> city = cityRepository.findById((long) userDto.getCityId());
+        User user = userDto.toUser(city.get());
         usersRepository.save(user);
 
         LOG.debug("] (userId : {})", user.getUserId());
@@ -42,13 +63,13 @@ public class UsersService {
      * @param email
      * @return
      */
-    public User getUserByEmail(String email){
+    public UserDto getUserByEmail(String email){
         LOG.debug("[ getByEmail(email : {})", email);
 
         User user = usersRepository.findUserByEmail(email);
 
         LOG.debug("] (return : {})", user);
-        return user;
+        return userMapper.toDto(user);
     }
 
     public Map<Class, Collection<?>> getGroupAndRoute(Long userId) {
@@ -64,11 +85,16 @@ public class UsersService {
         }
         return map;
     }
+    public User getUserByFIO(String fio) {
+        LOG.debug("getUserByUsername(username: {})", fio);
+        return usersRepository.findUserByFio(fio);
+    }
 
     public Collection<Group> getUserGroup(Long userId) {
         Optional<User> possible_user = usersRepository.findById(userId);
         return possible_user.isPresent() ? possible_user.get().getGroups() : null;
     }
+
     public Collection<Route> getUserRoute(Long userId) {
         Optional<User> possible_user = usersRepository.findById(userId);
         return possible_user.isPresent() ?
@@ -106,9 +132,9 @@ public class UsersService {
         LOG.debug("] (return : {})", users);
         return users;
     }
-    public User getUserById(Long userId) {
+    public UserDto getUserById(Long userId) {
         System.out.println("`2223");
         Optional<User> user = usersRepository.findById(userId);
-        return user.isPresent() ? user.get() : null;
+        return user.isPresent() ? userMapper.toDto(user.get()) : null;
     }
 }

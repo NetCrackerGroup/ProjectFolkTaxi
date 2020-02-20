@@ -14,33 +14,35 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.netcracker.entities.Route;
 import com.netcracker.repositories.RouteRepository;
 
+/*
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RouteServiceTest {
-	
+
 	@Autowired
 	private RouteService routeServ;
-	
+
 	@MockBean
 	private RouteRepository routeRep;
-	
+
 	@Test
 	public void getRoutesByCityIdTest() {
-		
+
 		Long cityId = new Long(0);
-		
+
 		Mockito.doReturn(new ArrayList<Route>())
 				.when(routeRep)
 				.findRouteByCity(cityId);
-	
+
 		ArrayList<Route> routes = new ArrayList<Route>();
 		ArrayList<Route> result = routeServ.getRoutesByCityId(cityId);
-		
+
 		Assert.assertEquals(true, true);
 		Assert.assertEquals(result, routes);
-		
+
 		Mockito.verify(routeRep, Mockito.times(1)).findRouteByCity(cityId);
 	}
-	
-	
+
+
 }
+*/

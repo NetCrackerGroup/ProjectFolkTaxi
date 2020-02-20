@@ -1,0 +1,1 @@
+ALTER TABLE User_Groups ADD Type_Group_ID BIGINT NOT NULL default 1;

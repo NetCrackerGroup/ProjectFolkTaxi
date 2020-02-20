@@ -27,6 +27,5 @@ public class ReportService {
         Optional<Report> report = reportRepository.findById(id);
 
         return report.isPresent() ? report.get() : null;
-
     }
 }

@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("reports")
+//@CrossOrigin(origins="*", maxAge=3600)
 public class ReportController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UsersController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ReportController.class);
 
     @Autowired
     private ReportService reportService;

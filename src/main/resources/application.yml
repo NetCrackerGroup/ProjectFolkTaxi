@@ -1,4 +1,7 @@
-server.port: 9090
+server.port: 1337
+security.jwt.token:
+  secret-key: very-long-secret-key-to-avoid-problems-with-jwt-security-lib
+  expire-length: 3600000 #one hour
 
 logging:
   level:
@@ -9,7 +12,17 @@ spring.datasource:
   hikari:
     connectionTimeout: 20000
     maximumPoolSize: 5
-  url: jdbc:postgresql://localhost:5432/folktaxi
+  url: jdbc:postgresql://localhost:5432/postgres
   username: postgres
-  password: root
+  password: Palienko22
+
+security:
+  oauth2:
+    client:
+      client-id: cliente
+      client-secret: password
+      scope: read,write
+      auto-approve-scopes: '.*'
+
+
 
