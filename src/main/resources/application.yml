@@ -23,6 +23,3 @@ security:
       client-secret: password
       scope: read,write
       auto-approve-scopes: '.*'
-
-
-

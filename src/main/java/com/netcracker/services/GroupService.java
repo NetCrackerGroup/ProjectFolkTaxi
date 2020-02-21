@@ -43,16 +43,13 @@ public class GroupService {
         LOG.debug("create group - name : \'{}\' , link :  \'{}\'", name, link);
         Group group = new Group(name, link, typeGroup);
         groupRepository.save(group);
-        GroupDto groupDto = groupMapper.toDto(group);
-        return groupDto;
+        LOG.debug("{}", group.toString());
+        return getGroupById(group.getGroupId());
     }
 
     public GroupDto getGroupById(Long id) {
         LOG.debug("Get group by id {}", id);
-
         Optional<Group> possible = groupRepository.findById(id);
-
-        LOG.debug("Group - {}", possible.get());
         return possible.isPresent() ? groupMapper.toDto(possible.get()) : null;
     }
 

@@ -18,7 +18,7 @@ public class User {
 	@SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", allocationSize = 1)
 	@Column(name = "user_id")
 	private Long userId;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "city_id")
 	private City cityId;

@@ -3,6 +3,7 @@ package com.netcracker.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.LinkedList;
 
 @Entity
 @Table(name = "User_Groups")
@@ -34,9 +35,11 @@ public class Group {
         this.groupName = groupName;
         this.cityLink = cityLink;
         this.typeGroup = typeGroup;
+        users = new LinkedList<>();
     }
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @NotNull
     @JoinTable(
             name = "User_In_Group",
             joinColumns = { @JoinColumn(name = "Group_ID") },
@@ -86,5 +89,16 @@ public class Group {
 
     public void setUsers(Collection<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "groupId=" + groupId +
+                ", groupName='" + groupName + '\'' +
+                ", typeGroup=" + typeGroup +
+                ", users=" + users +
+                ", cityLink='" + cityLink + '\'' +
+                '}';
     }
 }
