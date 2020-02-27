@@ -112,7 +112,8 @@ CREATE TABLE public.Group_Moderator (
                 CONSTRAINT group_moderator_pk PRIMARY KEY (User_ID)
 );
 
-CREATE SEQUENCE route_id_seq;
+CREATE SEQUENCE route_id_seq
+start with 6;
 
 CREATE TABLE public.Route (
                 Route_ID BIGINT NOT NULL default nextval('route_id_seq'),

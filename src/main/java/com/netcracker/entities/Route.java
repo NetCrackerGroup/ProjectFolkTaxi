@@ -39,6 +39,9 @@ public class Route {
     @JoinColumn(name = "driver_id")
     private User driverId;
 
+    @Column(name = "count_of_places")
+    private Integer countOfPlaces;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "passenger_in_route",
@@ -49,13 +52,24 @@ public class Route {
 
     public Route() {
     }
+
+    public void setCountOfPlaces(Integer countOfPlaces) {
+        this.countOfPlaces = countOfPlaces;
+    }
+
+    public Integer getCountOfPlaces() {
+        return countOfPlaces;
+    }
+
     //убрал @Range(min=0, max=90) и заработало, почему?
     public Route(  Point routeBegin,
                    Point routeEnd,
-                 BigDecimal price) {
+                 BigDecimal price,
+                   Integer countOfPlaces) {
         this.routeBegin = routeBegin;
         this.routeEnd = routeEnd;
         this.price = price;
+        this.countOfPlaces = countOfPlaces;
     }
 
     public Long getRouteId() {

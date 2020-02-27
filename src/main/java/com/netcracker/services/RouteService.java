@@ -3,7 +3,9 @@ package com.netcracker.services;
 import java.util.ArrayList;
 
 import com.netcracker.DTO.RouteDto;
+import com.netcracker.entities.Schedule;
 import com.netcracker.entities.User;
+import com.netcracker.repositories.ScheduleRepository;
 import com.netcracker.repositories.UserRepository;
 //import com.vividsolutions.jts.geom.Coordinate;
 //import com.vividsolutions.jts.geom.Point;
@@ -30,6 +32,9 @@ public class RouteService {
     private RouteRepository routeRepository;
 
     @Autowired
+    private ScheduleRepository scheduleRepository;
+
+    @Autowired
     private UserRepository userRepository;
 	
     public ArrayList<Route> getRoutesByCityId(Long cityId){
@@ -40,23 +45,18 @@ public class RouteService {
 
         return routeRepository.findRouteByRouteId(routeId);
     }
-    public void saveNewRoute(RouteDto routeDto) {
-        LOG.info("[ saveNewRoute : {}", routeDto);
+    public void saveNewRoute(Route route, Schedule schedule) {
+        LOG.info("[ saveNewRoute : {}", route);
+
         // получение данных о сессии
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetail = (UserDetails) auth.getPrincipal();
         User user = userRepository.findUserByEmail(userDetail.getUsername());
 
-        GeometryFactory geometryFactory = new GeometryFactory();
-        Coordinate coordBegin = new Coordinate(routeDto.getRouteBegin()[0], routeDto.getRouteBegin()[1]);
-        Coordinate coordEnd = new Coordinate(routeDto.getRouteEnd()[0], routeDto.getRouteEnd()[1]);
-        Point pointBegin = geometryFactory.createPoint(coordBegin);
-        Point pointEnd = geometryFactory.createPoint(coordEnd);
-
-        Route route = new Route(pointBegin, pointEnd, routeDto.getPrice());
-
         route.setDriverId(user);
         route.setCity(user.getCityId());
+        schedule.setRouteId(route);
         routeRepository.save(route);
+        scheduleRepository.save(schedule);
     }
 }
