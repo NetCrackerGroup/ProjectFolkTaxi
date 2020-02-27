@@ -1,21 +1,22 @@
 package com.netcracker.controllers;
 
+import com.google.gson.Gson;
 import com.netcracker.DTO.RouteDto;
-import com.netcracker.DTO.UserDto;
+import com.netcracker.DTO.ScheduleDto;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.Schedule;
 import com.netcracker.services.RouteMapper;
 import com.netcracker.services.RouteService;
+import com.netcracker.services.ScheduleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.spring.web.json.Json;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 
 @RestController
 @RequestMapping("routes")
@@ -26,6 +27,9 @@ public class RouteController {
 
 	@Autowired
 	private RouteMapper routeMapper;
+
+	@Autowired
+    private ScheduleMapper scheduleMapper;
 
     @Autowired
     private RouteService routeService;
@@ -47,16 +51,21 @@ public class RouteController {
     }
 
     @PostMapping("/add")
-    public void saveNewRoute(@RequestBody RouteDto routeDto) throws ParseException {
+    public void saveNewRoute(@RequestParam(name = "postUser") String routeDto2, @RequestParam(name = "selectedDays") String scheduleDto2) throws ParseException {
+        Gson gson = new Gson();
+        RouteDto routeDto = gson.fromJson(routeDto2, RouteDto.class);
+        ScheduleDto scheduleDto = gson.fromJson(scheduleDto2, ScheduleDto.class);
+
+
         LOG.info("[ saveNewRoute : price  {}, routeBegin {}, routeEnd {}",
                 routeDto.getPrice(), routeDto.getRouteBegin(), routeDto.getRouteEnd());
         Route route =  routeMapper.toEntity(routeDto);
         //доделать расписание , посмотреть как сделать время, по возможности раздилить dto
         SimpleDateFormat sfd = new SimpleDateFormat("HH:mm");
-        Schedule schedule = new Schedule();
-        schedule.setTimeOfJourney(sfd.parse(routeDto.getTime()));
+        Schedule schedule = scheduleMapper.toEntity(scheduleDto);
+        schedule.setTimeOfJourney(sfd.parse(scheduleDto.getTime()));
         StringBuilder builder = new StringBuilder();
-        for(int s : routeDto.getSelectedDays()) {
+        for(int s : scheduleDto.getSelectedDays()) {
             builder.append(s);
         }
         String str = builder.toString();

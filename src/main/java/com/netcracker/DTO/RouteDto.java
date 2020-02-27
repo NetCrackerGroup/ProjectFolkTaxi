@@ -10,22 +10,10 @@ public class RouteDto {
     private double[] routeBegin;
     private double[] routeEnd;
     private BigDecimal price;
+
     private Integer countOfPlaces;
-    private int[] selectedDays;
-    private String time;
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setSelectedDays(int[] selectedDays) { this.selectedDays = selectedDays; }
 
 
-    public int[] getSelectedDays() { return selectedDays; }
 
     public void setRouteBegin(double[] routeBegin) { this.routeBegin = routeBegin; }
 
