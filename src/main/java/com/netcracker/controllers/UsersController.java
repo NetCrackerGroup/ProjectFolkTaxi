@@ -1,5 +1,6 @@
 package com.netcracker.controllers;
-
+import com.netcracker.DTO.GroupDto;
+import com.netcracker.DTO.RouteDto;
 import com.netcracker.DTO.UserDto;
 import com.netcracker.DTO.UserSecDto;
 import com.netcracker.entities.City;
@@ -86,7 +87,7 @@ public class UsersController {
         return user;
     }
 
-    @GetMapping("/groups/{id}")
+    @GetMapping("/{id}/groups")
     public Collection<Group> getUserGroup(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserGroup : {}", id);
         Collection<Group> group = usersService.getUserGroup(id);
@@ -94,7 +95,7 @@ public class UsersController {
         return group;
     }
 
-    @GetMapping("/routes/{id}")
+    @GetMapping("/{id}/routes")
     public Collection<Route> getUserRoutes(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserRoutes : {}", id);
         Collection<Route> routes = usersService.getUserRoute(id);
@@ -102,22 +103,7 @@ public class UsersController {
         return routes;
     }
     
-    @GetMapping("/groupsByEmail/{mail}")
-    public Collection<Group> getUserGroupsByEmail(@PathVariable(value = "mail") String mail) {
-        LOG.info("[getUserGroupByEmail : {}", mail);
-        Collection<Group> groups = usersService.getUserGroupsByEmail(mail);
-        LOG.info("] return : {}", groups);
-        return groups;
-    }
-    @GetMapping("/routesByEmail/{mail}")
-    public Collection<Route> getUserRoutesByEmail(@PathVariable(value = "mail") String mail) {
-        LOG.info("[getUserGroupByEmail : {}", mail);
-        Collection<Route> routes = usersService.getUserRoutesByEmail(mail);
-        LOG.info("] return : {}", routes);
-        return routes;
-    }
-    
-    @GetMapping("/routesAndGroups/{id}")
+    @GetMapping("/{id}/routesAndGroups")
     public Map<Class, Collection<?>> getUserRoutesGroupes(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserRoutesGroupes : {}", id);
         Map<Class, Collection<?>> map = usersService.getGroupAndRoute(id);
@@ -130,27 +116,49 @@ public class UsersController {
         LOG.info("[getUserRoutesGroupes : {} {}",id,  isPassenger);
         return usersService.getRating(id, isPassenger);
     }
+    
     @PostMapping("/sign-up")
     public void signUp(@RequestBody UserSecDto user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersService.saveNewUser(user);
     }
+    
     @GetMapping("/helloUser")
     public ResponseEntity helloUser() {
         Map<Object, Object> response = new HashMap<>();
         response.put("hello", "hello user world");
         return ResponseEntity.ok(response);
     }
+    
     @GetMapping("/User")
     public ResponseEntity helloUserContr() {
         Map<Object, Object> response = new HashMap<>();
         response.put("hello", "hello User");
         return ResponseEntity.ok(response);
     }
+    
     @GetMapping("/Admin")
     public ResponseEntity helloAdmin() {
         Map<Object, Object> response = new HashMap<>();
         response.put("hello", "hello Admin");
         return  ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/routesByEmail/{email}")
+    public Collection<RouteDto> getRoutesByEmail(@PathVariable(name = "email") String email) {
+    	LOG.info("[getRoutesByEmail : {}",email);
+    	return usersService.getUserRoutesByEmail(email);
+    }
+    
+    @GetMapping("/groupsByEmail/{email}")
+    public Collection<GroupDto> getsGroupsByEmail(@PathVariable(name = "email") String email) {
+    	LOG.info("[getRoutesByEmail : {}",email);
+    	return usersService.getUserGroupsByEmail(email);
+    }
+    
+    @GetMapping("/getUserEmail")
+    public String getUserEmail() {
+    	LOG.info("[getUserEmail");
+    	return usersService.getUserEmail();
     }
 }

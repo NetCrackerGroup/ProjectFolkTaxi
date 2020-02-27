@@ -1,19 +1,17 @@
 package com.netcracker.controllers;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
+import com.netcracker.DTO.RouteDto;
+import com.netcracker.entities.Route;
+import com.netcracker.services.RouteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.netcracker.entities.Route;
-import com.netcracker.entities.User;
-import com.netcracker.services.ReportService;
-import com.netcracker.services.RouteService;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.GregorianCalendar;
 
 @RestController
 @RequestMapping("routes")
@@ -24,42 +22,51 @@ public class RouteController {
 
     @Autowired
     private RouteService routeService;
-    
+
     @GetMapping ("")
     String home ()
     {
         return "routes";
     }
 	
-    @GetMapping("/routeByCity/{id}")
-    public ArrayList<Route> getRoutesByCityId(@PathVariable(value="id") Long id){
-        LOG.info("[ getRoutesByCityId : {}", id);
+    @GetMapping("/route/{id}")
+    public ArrayList<Route> getRoutesById(@PathVariable(value="id") Long id){
+        LOG.info("[ getRoutesById : {}", id);
 
         ArrayList<Route> routes = routeService.getRoutesByCityId(id);
 
         LOG.info("] return : {}", routes.toString());
         return routes;
     }
-    
-    /*
-     * adress - coordinates of departure point (Xcord:YCord)
-     * radius - maximum distance between passenger and departure point
-     * departure - departure tine (Hours:Minutes)
-     */
-    @GetMapping("/closestRoutes/{adress}/{radius}/{departure}")
-    public ArrayList<Route> getClosestRoutes(@PathVariable(value="adress") String adress, 
-    										 @PathVariable(value="radius") Integer radius,
-    										 @PathVariable(value="departure") String depart){
-				
-    	Double Xcord = Double.parseDouble(adress.split(":")[0]);
-    	Double Ycord = Double.parseDouble(adress.split(":")[1]);
-    	
-    	Calendar dep = new GregorianCalendar();
-    	dep.set(Calendar.HOUR_OF_DAY, Integer.parseInt(depart.split(":")[0]));
-    	dep.set(Calendar.MINUTE, Integer.parseInt(depart.split(":")[1]));
-    	
-    	return routeService.getClosestRoutes(Xcord, Ycord, radius, dep);
-    	
+
+    @PostMapping("/add")
+    public void saveNewRoute(@RequestBody RouteDto routeDto) {
+        LOG.info("[ saveNewRoute : price  {}, routeBegin {}, routeEnd {}",
+                routeDto.getPrice(), routeDto.getRouteBegin(), routeDto.getRouteEnd());
+        LOG.debug("] (saveNewRoute )");
+        routeService.saveNewRoute(routeDto);
     }
+    @GetMapping("/{id}")
+    public Route getRoutes(@PathVariable(value="id") Long id){
+        LOG.info("[ getRoutesById : {}", id);
+
+        Route routes = routeService.getRoutesBy(id);
+
+        LOG.info("] return : {}", routes.toString());
+        return routes;
+    }
+    
+    @GetMapping("/closestRoutes/{address}/{radius}/{departure}")
+    public Collection<RouteDto> getClosestRoutes(@PathVariable(value="address") String address,
+    											 @PathVariable(value="radius") Integer radius,
+    											 @PathVariable(value="departure") String departure){
+    	
+    	Calendar cal = new GregorianCalendar();
+    	cal.set(Calendar.HOUR, Integer.parseInt(departure.split(":")[0]));
+    	cal.set(Calendar.MINUTE, Integer.parseInt(departure.split(":")[1]));
+    	return routeService.getClosestRoutes(Double.parseDouble(address.split(" ")[0]), 
+    										 Double.parseDouble(address.split(" ")[1]), radius, cal);
+    }
+    
     
 }

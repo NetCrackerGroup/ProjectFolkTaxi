@@ -1,4 +1,4 @@
-package com.netcracker.services;
+package com.netcracker.DTO.mappers;
 
 
 import com.netcracker.DTO.GroupDto;

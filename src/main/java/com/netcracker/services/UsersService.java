@@ -1,7 +1,12 @@
 package com.netcracker.services;
 
+import com.netcracker.DTO.GroupDto;
+import com.netcracker.DTO.RouteDto;
 import com.netcracker.DTO.UserDto;
 import com.netcracker.DTO.UserSecDto;
+import com.netcracker.DTO.mappers.GroupMapper;
+import com.netcracker.DTO.mappers.RouteMapper;
+import com.netcracker.DTO.mappers.UserMapper;
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
@@ -11,10 +16,14 @@ import com.netcracker.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +35,9 @@ public class UsersService {
 
     private UserRepository usersRepository;
     private UserMapper userMapper;
-
+    private RouteMapper routeMapper;
+    private GroupMapper groupMapper;
+    
     @Autowired
     public UsersService(    UserRepository usersRepository,
                             UserMapper userMapper) {
@@ -102,13 +113,33 @@ public class UsersService {
                     null;
     }
 
-    public Collection<Group> getUserGroupsByEmail(String userEmail) {
-        User possible_user = usersRepository.findUserByEmail(userEmail);
-        return possible_user != null ? possible_user.getGroups() : null;
+    public Collection<GroupDto> getUserGroupsByEmail(String userEmail) {
+        User possibleUser = usersRepository.findUserByEmail(userEmail);
+        ArrayList<GroupDto> res = new ArrayList<GroupDto>();
+        
+        if(possibleUser != null) {
+        	Collection<Group> groups = possibleUser.getGroups();
+        	
+        	for(Group gr: groups) {
+        		res.add(groupMapper.toDto(gr));
+        	}
+        	return res;
+        }
+        return null;
     }
-    public Collection<Route> getUserRoutesByEmail(String userEmail) {
-        User possible_user = usersRepository.findUserByEmail(userEmail);
-        return possible_user != null ? possible_user.getRoutes() : null;
+    public Collection<RouteDto> getUserRoutesByEmail(String userEmail) {
+        User possibleUser = usersRepository.findUserByEmail(userEmail);
+        ArrayList<RouteDto> res = new ArrayList<RouteDto>();
+        
+        if(possibleUser != null) {
+        	Collection<Route> routes = possibleUser.getRoutes();
+        	
+        	for(Route rt: routes) {
+        		res.add(routeMapper.toDto(rt));
+        	}
+        	return res;
+        }
+        return null;
     }
     
     public Double getRating(Long userId, Boolean isPassenger) {
@@ -136,5 +167,14 @@ public class UsersService {
         System.out.println("`2223");
         Optional<User> user = usersRepository.findById(userId);
         return user.isPresent() ? userMapper.toDto(user.get()) : null;
+    }
+    
+    public String getUserEmail() {
+    	
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        User user = usersRepository.findUserByEmail(userDetail.getUsername());
+    	
+        return user.getEmail();
     }
 }
