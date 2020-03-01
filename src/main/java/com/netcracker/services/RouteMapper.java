@@ -9,6 +9,10 @@ import org.modelmapper.TypeMap;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 @Component
 public class RouteMapper extends AbstractMapper<Route, RouteDto> {
@@ -19,6 +23,7 @@ public class RouteMapper extends AbstractMapper<Route, RouteDto> {
 
     @PostConstruct
     public void setupMapper() {
+
         TypeMap<double[], Point> rateDTORateTypeMap = mapper.getTypeMap(double[].class, Point.class);
         if(rateDTORateTypeMap == null) {
             rateDTORateTypeMap = mapper.createTypeMap(double[].class, Point.class);
@@ -29,6 +34,16 @@ public class RouteMapper extends AbstractMapper<Route, RouteDto> {
             Coordinate coordsBegin = new Coordinate(source[0], source[1]);
             return geometryFactory.createPoint(coordsBegin);
         });
+        TypeMap<Point, double[]> rateDTORateTypeMap2 = mapper.getTypeMap(Point.class, double[].class);
+
+        if(rateDTORateTypeMap2 == null) {
+            rateDTORateTypeMap2 = mapper.createTypeMap(Point.class, double[].class);
+        }
+        rateDTORateTypeMap2.setProvider(request -> {
+            Point source = Point.class.cast(request.getSource());
+            return new double[] {source.getCoordinate().getX(), source.getCoordinate().getY()};
+        });
+
 
         mapper.createTypeMap(RouteDto.class, Route.class).addMapping(RouteDto::getRouteBegin, Route::setRouteBegin).setPostConverter(
                 context -> {
@@ -52,15 +67,27 @@ public class RouteMapper extends AbstractMapper<Route, RouteDto> {
                     return route;
                 }
         );
-//        mapper.createTypeMap(double[].class, Point.class).setPostConverter(context -> {
-//            LOG.debug("Double to Point");
-//            double[] coordsDto = context.getSource();
-//            Point coors = context.getDestination();
-//            GeometryFactory geometryFactory = new GeometryFactory();
-//            Coordinate coordsBegin = new Coordinate(coordsDto[0], coordsDto[1]);
-//            coors = geometryFactory.createPoint(coordsBegin);
-//            return context.getDestination();
-//        });
+
+        mapper.createTypeMap(Route.class, RouteDto.class).addMapping(Route::getRouteBegin, RouteDto::setRouteBegin).setPostConverter(
+                context -> {
+                    Route route = context.getSource();
+                    RouteDto routeDto = context.getDestination();
+                    Point point =  route.getRouteBegin();
+                    double[] startPoint = new double[] {point.getCoordinate().getX(), point.getCoordinate().getY()};
+                    routeDto.setRouteBegin(startPoint);
+                    return routeDto;
+                }
+        ).addMapping(Route::getRouteEnd, RouteDto::setRouteEnd).setPostConverter(
+                context -> {
+                    Route route = context.getSource();
+                    RouteDto routeDto = context.getDestination();
+                    Point point = route.getRouteEnd();
+                    double[] endPoint = new double[] {point.getCoordinate().getX(), point.getCoordinate().getY()};
+                    routeDto.setRouteEnd(endPoint);
+                    return routeDto;
+                }
+        );
+
 
     }
 }

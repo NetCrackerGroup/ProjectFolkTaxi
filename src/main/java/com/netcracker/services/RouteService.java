@@ -59,4 +59,13 @@ public class RouteService {
         routeRepository.save(route);
         scheduleRepository.save(schedule);
     }
+    public void saveNewOneRoute(Route route) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        User user = userRepository.findUserByEmail(userDetail.getUsername());
+
+        route.setDriverId(user);
+        route.setCity(user.getCityId());
+        routeRepository.save(route);
+    }
 }

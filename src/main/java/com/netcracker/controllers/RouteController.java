@@ -8,6 +8,7 @@ import com.netcracker.entities.Schedule;
 import com.netcracker.services.RouteMapper;
 import com.netcracker.services.RouteService;
 import com.netcracker.services.ScheduleMapper;
+import org.locationtech.jts.geom.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,12 +52,10 @@ public class RouteController {
     }
 
     @PostMapping("/add")
-    public void saveNewRoute(@RequestParam(name = "postUser") String routeDto2, @RequestParam(name = "selectedDays") String scheduleDto2) throws ParseException {
+    public void saveNewRoute(@RequestParam(name = "postUser") String routeDto2, @RequestParam(required = false, name = "selectedDays") String scheduleDto2) throws ParseException {
         Gson gson = new Gson();
         RouteDto routeDto = gson.fromJson(routeDto2, RouteDto.class);
         ScheduleDto scheduleDto = gson.fromJson(scheduleDto2, ScheduleDto.class);
-
-
         LOG.info("[ saveNewRoute : price  {}, routeBegin {}, routeEnd {}",
                 routeDto.getPrice(), routeDto.getRouteBegin(), routeDto.getRouteEnd());
         Route route =  routeMapper.toEntity(routeDto);
@@ -69,18 +68,25 @@ public class RouteController {
             builder.append(s);
         }
         String str = builder.toString();
-        schedule.setScheduleDay(str);
+        schedule.setScheduleDay(Integer.parseInt(str, 2));
         routeService.saveNewRoute(route, schedule);
         LOG.debug("] (saveNewRoute )");
     }
+    @PostMapping("/addOne")
+    public void saveOneRoute(@RequestBody RouteDto routeDto) {
+        Route route = routeMapper.toEntity(routeDto);
+        routeService.saveNewOneRoute(route);
+
+    }
     @GetMapping("/{id}")
-    public Route getRoutes(@PathVariable(value="id") Long id){
+    public RouteDto getRoutes(@PathVariable(value="id") int id){
         LOG.info("[ getRoutesById : {}", id);
 
-        Route routes = routeService.getRoutesBy(id);
+        Route route = routeService.getRoutesBy((long) id);
 
-        LOG.info("] return : {}", routes.toString());
-        return routes;
+        LOG.info("] return : {}", route.toString());
+
+        return routeMapper.toDto(route);
     }
 
 

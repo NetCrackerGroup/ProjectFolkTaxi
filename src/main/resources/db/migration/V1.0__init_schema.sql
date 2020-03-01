@@ -129,7 +129,6 @@ CREATE SEQUENCE schedule_id_seq;
 
 CREATE TABLE public.Schedule (
                 Schedule_ID BIGINT NOT NULL default nextval('schedule_id_seq'),
-                Schedule_Day BIGINT[] NOT NULL,
                 Route_ID BIGINT NOT NULL,
                 Time_Of_Journey TIME,
                 CONSTRAINT schedule_pk PRIMARY KEY (Schedule_ID)

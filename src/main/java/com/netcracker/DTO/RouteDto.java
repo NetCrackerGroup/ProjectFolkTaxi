@@ -5,11 +5,21 @@ import com.netcracker.entities.City;
 import java.awt.*;
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Date;
 
 public class RouteDto {
     private double[] routeBegin;
     private double[] routeEnd;
     private BigDecimal price;
+    private Date startDate;
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
 
     private Integer countOfPlaces;
 

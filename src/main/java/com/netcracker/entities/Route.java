@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -50,6 +51,9 @@ public class Route {
     )
     Collection<User> users;
 
+    @Column(name = "start_day")
+    private Date startDate;
+
     public Route() {
     }
 
@@ -61,15 +65,25 @@ public class Route {
         return countOfPlaces;
     }
 
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
     //убрал @Range(min=0, max=90) и заработало, почему?
     public Route(  Point routeBegin,
                    Point routeEnd,
                  BigDecimal price,
+                   Date startDate,
                    Integer countOfPlaces) {
         this.routeBegin = routeBegin;
         this.routeEnd = routeEnd;
         this.price = price;
         this.countOfPlaces = countOfPlaces;
+        this.startDate = startDate;
     }
 
     public Long getRouteId() {
