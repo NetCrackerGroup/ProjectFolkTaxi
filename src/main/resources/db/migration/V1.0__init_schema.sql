@@ -39,11 +39,6 @@ CREATE TABLE public.City (
 );
 
 
-
--- CREATE TABLE public.Role_1 (
---                 Role_ID BIGINT NOT NULL,
---                 Role_name anyenum NOT NULL
--- );
 CREATE SEQUENCE user_id_seq
 start with 7;
 
@@ -63,7 +58,6 @@ CREATE TABLE public.User_1 (
 
 
 
-
 CREATE SEQUENCE review_id_seq;
 
 CREATE TABLE public.Review (
@@ -74,7 +68,6 @@ CREATE TABLE public.Review (
                 User_ID BIGINT NOT NULL,
                 CONSTRAINT review_pk PRIMARY KEY (Review_ID)
 );
-
 
 CREATE SEQUENCE notification_id_seq;
 CREATE TABLE public.Notification (
@@ -143,13 +136,15 @@ CREATE TABLE public.Chat (
                 CONSTRAINT chat_pk PRIMARY KEY (Chat_ID)
 );
 
-CREATE SEQUENCE message_id_seq;
+CREATE SEQUENCE message_id_seq
+start with 15;
 
 CREATE TABLE public.Message (
                 Message_ID BIGINT NOT NULL default nextval('message_id_seq'),
                 Text VARCHAR,
                 Date_Of_Sending TIMESTAMP NOT NULL,
                 Chat_ID BIGINT NOT NULL,
+                User_Message_ID BIGINT NOT NULL,
                 CONSTRAINT message_pk PRIMARY KEY (Message_ID)
 );
 
@@ -306,16 +301,18 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE public.Message ADD CONSTRAINT chat_message_fk
-FOREIGN KEY (Chat_ID)
-REFERENCES public.Chat (Chat_ID)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
-
 ALTER TABLE public.Passenger_in_Journey ADD CONSTRAINT journey_passenger_in_journey_fk
 FOREIGN KEY (Journey_ID)
 REFERENCES public.Journey (Journey_ID)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
+
+ALTER TABLE public.Message ADD CONSTRAINT user_message_fk
+FOREIGN KEY (User_Message_ID)
+REFERENCES public.User_1 (User_ID)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+
