@@ -18,6 +18,7 @@ import springfox.documentation.spring.web.json.Json;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @RestController
 @RequestMapping("routes")
@@ -60,24 +61,17 @@ public class RouteController {
                 routeDto.getPrice(), routeDto.getRouteBegin(), routeDto.getRouteEnd());
         Route route =  routeMapper.toEntity(routeDto);
         //доделать расписание , посмотреть как сделать время, по возможности раздилить dto
-        SimpleDateFormat sfd = new SimpleDateFormat("HH:mm");
         Schedule schedule = scheduleMapper.toEntity(scheduleDto);
-        schedule.setTimeOfJourney(sfd.parse(scheduleDto.getTime()));
-        StringBuilder builder = new StringBuilder();
-        for(int s : scheduleDto.getSelectedDays()) {
-            builder.append(s);
-        }
-        String str = builder.toString();
-        schedule.setScheduleDay(Integer.parseInt(str, 2));
+
         routeService.saveNewRoute(route, schedule);
         LOG.debug("] (saveNewRoute )");
     }
-    @PostMapping("/addOne")
-    public void saveOneRoute(@RequestBody RouteDto routeDto) {
-        Route route = routeMapper.toEntity(routeDto);
-        routeService.saveNewOneRoute(route);
-
-    }
+//    @PostMapping("/addOne")
+//    public void saveOneRoute(@RequestBody RouteDto routeDto) {
+//        Route route = routeMapper.toEntity(routeDto);
+//        routeService.saveNewOneRoute(route);
+//
+//    }
     @GetMapping("/{id}")
     public RouteDto getRoutes(@PathVariable(value="id") int id){
         LOG.info("[ getRoutesById : {}", id);
@@ -88,6 +82,7 @@ public class RouteController {
 
         return routeMapper.toDto(route);
     }
+
 
 
     
