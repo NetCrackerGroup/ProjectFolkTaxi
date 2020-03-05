@@ -47,13 +47,13 @@ public class GroupService {
         return groupDto;
     }
 
-    public GroupDto getGroupById(Long id) {
+    public Group getGroupById(Long id) {
         LOG.debug("Get group by id {}", id);
 
         Optional<Group> possible = groupRepository.findById(id);
 
         LOG.debug("Group - {}", possible.get());
-        return possible.isPresent() ? groupMapper.toDto(possible.get()) : null;
+        return possible.isPresent() ? possible.get() : null;
     }
 
     public Iterable<GroupDto> getAllGroups() {
