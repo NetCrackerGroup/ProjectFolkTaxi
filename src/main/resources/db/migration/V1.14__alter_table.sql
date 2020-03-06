@@ -1,0 +1,1 @@
+ALTER TABLE group_moderators DROP COLUMN fio;

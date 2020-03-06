@@ -11,6 +11,9 @@ import com.netcracker.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,12 +29,15 @@ public class UsersService {
 
     private UserRepository usersRepository;
     private UserMapper userMapper;
+    private AuthUserComponent authUserComponent;
 
     @Autowired
     public UsersService(    UserRepository usersRepository,
-                            UserMapper userMapper) {
+                            UserMapper userMapper,
+                            AuthUserComponent authUserComponent) {
         this.usersRepository = usersRepository;
         this.userMapper = userMapper;
+        this.authUserComponent = authUserComponent;
     }
 
     @Autowired
@@ -90,9 +96,18 @@ public class UsersService {
         return usersRepository.findUserByFio(fio);
     }
 
-    public Collection<Group> getUserGroup(Long userId) {
-        Optional<User> possible_user = usersRepository.findById(userId);
-        return possible_user.isPresent() ? possible_user.get().getGroups() : null;
+    public Collection<Group> getUserGroup() {
+
+        User user = authUserComponent.getUser();
+
+        return user.getGroups();
+    }
+
+    public Collection<Group> getUserAsAdminGroup() {
+
+        User user = authUserComponent.getUser();
+
+        return user.getGroups();
     }
 
     public Collection<Route> getUserRoute(Long userId) {

@@ -1,12 +1,13 @@
 package com.netcracker.config;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+//@EnableAuthorizationServer
 @EnableResourceServer
 @RestController
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
@@ -15,15 +16,23 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
 
-        http
-                .authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser",  "/users/sign-up").permitAll();
+        /*http
+                .authorizeRequests()
+                .antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser",  "/users/sign-up")
+                .permitAll();
 //			 .anyRequest().authenticated();
-        http.requestMatchers().antMatchers( "/users/User" )
+        http.requestMatchers()
+                .antMatchers( "/users/User", "/group",  "/group/", "/group/entergroup/*", "/group/useringroup/")
                 .and().authorizeRequests()
-                .antMatchers( "/users/User").access("hasAnyRole('USER', 'ADMIN')")
+                .antMatchers( "/users/User", "/group", "/group/", "/group/entergroup/*", "/group/useringroup/" )
+                .access(
+                        "hasAnyRole('USER', 'ADMIN')")
                 .and().requestMatchers().antMatchers( "/users/Admin")
                 .and().authorizeRequests()
-                .antMatchers("/users/Admin").access("hasRole('ADMIN')");
-   }
+                .antMatchers("/users/Admin").access("hasRole('ADMIN')");*/
+        http.authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser",  "/users/sign-up", "/users/")
+                .permitAll().and().authorizeRequests().anyRequest().fullyAuthenticated()
+        ;
+    }
 
 }

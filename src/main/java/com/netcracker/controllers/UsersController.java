@@ -85,13 +85,6 @@ public class UsersController {
         return user;
     }
 
-    @GetMapping("/{id}/groups")
-    public Collection<Group> getUserGroup(@PathVariable(name = "id") Long id) {
-        LOG.info("[getUserGroup : {}", id);
-        Collection<Group> group = usersService.getUserGroup(id);
-        LOG.info("] return : {}", group);
-        return group;
-    }
 
     @GetMapping("/{id}/routes")
     public Collection<Route> getUserRoutes(@PathVariable(name = "id") Long id) {
@@ -130,6 +123,7 @@ public class UsersController {
         response.put("hello", "hello User");
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/Admin")
     public ResponseEntity helloAdmin() {
         Map<Object, Object> response = new HashMap<>();

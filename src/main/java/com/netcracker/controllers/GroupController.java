@@ -2,6 +2,7 @@ package com.netcracker.controllers;
 
 import com.netcracker.DTO.GroupDto;
 import com.netcracker.entities.Group;
+import com.netcracker.services.GroupMapper;
 import com.netcracker.services.GroupService;
 import com.netcracker.services.TypeGroupService;
 import org.slf4j.Logger;
@@ -9,7 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+
 
 
 @RestController
@@ -20,6 +27,8 @@ public class GroupController {
 
     @Autowired
     private GroupService groupService;
+    @Autowired
+    private GroupMapper groupMapper;
 
 
     @ModelAttribute
@@ -28,32 +37,97 @@ public class GroupController {
         response.setHeader("Access-Control-Allow-Methods" , "GET, PUT, POST, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
     }
+
+
     @GetMapping ("")
     public Iterable<GroupDto> getAllGroups ()
     {
         LOG.debug("get All Groups!");
 
-        Iterable<GroupDto> groups = groupService.getAllGroups();
-
-        return groups;
+        Iterable<Group> groups = groupService.getAllGroups();
+        Collection<GroupDto> groupsDto = new LinkedList<>()  ;
+        for ( Group group : groups ) {
+            groupsDto.add(groupMapper.toDto(group));
+        }
+        return groupsDto;
     }
 
-    @GetMapping("/{id}")
-    public GroupDto getGroupById (@PathVariable(name = "id") String id) {
 
-        GroupDto group = groupService.getGroupById( Long.decode(id));
+    @GetMapping("/{id}")
+    public GroupDto getGroupById (@PathVariable(name = "id") Long id) {
+
+        GroupDto group = groupService.getGroupById( id);
 
         return group;
+    }
+
+
+    @GetMapping("/entergroup/{link}")
+    public Map<String, GroupDto> addUserInGroup(@PathVariable("link") String link) {
+
+        Group group = groupService.addUserInGroup(link);
+        GroupDto groupDto = null;
+        if (group != null ) {
+            groupDto = groupMapper.toDto(group);
+        }
+        GroupDto finalGroupDto = groupDto;
+        Map<String, GroupDto> json = new HashMap<String, GroupDto>();
+        json.put("result", finalGroupDto);
+        return json;
     }
 
     @PostMapping(value = "")
-    public GroupDto createGroup (@RequestParam(name = "name") String name,
-                              @RequestParam(name = "link") String link)
+    public Map<String, Long> createGroup (  @RequestParam(name = "name") String name,
+                                            @RequestParam(name = "link") String typeGroup,
+                                            final HttpServletResponse response)
     {
-        GroupDto group = groupService.createGroup(name, link);
+        GroupDto group = groupService.createGroup(name, typeGroup);
+       // LOG.debug("get group with id - {}", group.getGroupId());
 
-        LOG.debug("get group with id - {}", group.getGroupId());
+        Long id;
+        if (group == null) {
+            id = null;
+        }
+        else {
+            id = group.getGroupId();
+        }
+        LOG.debug(" ********** sfsdfsdfdsf");
+        Map<String, Long> test2 = new HashMap<String, Long>() {{
+            put("group_id", id);
+        }};
+        return test2;
+    }
 
-        return group;
+    @PostMapping("/useringroup")
+    public Map<String, Boolean> checkUserIsInvolved(@RequestParam(name = "group_id") Long groupId) {
+        LOG.debug("#### checkUserIsInvolved #####");
+        Boolean userInGroup = groupService.checkUserIsInvolvedInGroup(groupId);
+
+        Map<String, Boolean>  response = new HashMap<String, Boolean>() {{
+            put("isInvolved", userInGroup);
+        }};
+        return response;
+    }
+
+    @PostMapping("/act")
+    public Map<String, GroupDto> actGroup(@RequestParam(name="groupId") Long groupId ,
+                                    @RequestParam(name="essence") String essence)
+    {
+        LOG.debug("Entry controller ");
+        Map<String, GroupDto> response = new HashMap<String, GroupDto>() ;
+        Group group;
+        switch (essence) {
+            case "leave":
+                group = groupService.deleteUserInGroup(groupId);
+                LOG.debug("Delete : {}" , group);
+                response.put("group", groupMapper.toDto(group));
+                break;
+            case "connect":
+                group = groupService.addUserInGroup(groupId);
+                LOG.debug("Connect end :  {}", group);
+                response.put("group", groupMapper.toDto(group));
+                break;
+        }
+        return response;
     }
 }
