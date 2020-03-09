@@ -17,9 +17,8 @@ public class Schedule {
 	private Long scheduleId;
 	
 	@NotNull
-	@Size(min = 1, max = 20)
 	@Column(name = "schedule_day")
-	private String scheduleDay;
+	private Integer scheduleDay;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "route_id")
@@ -35,7 +34,7 @@ public class Schedule {
 	
 	public Schedule(@NotNull
 					@Size(min = 1, max = 20)
-					String scheduleDay,
+							Integer scheduleDay,
 					Date timeOfJourney) {
 		this.scheduleDay = scheduleDay;
 		this.timeOfJourney = timeOfJourney;
@@ -50,11 +49,11 @@ public class Schedule {
 		this.scheduleId = scheduleId;
 	}
 
-	public String getScheduleDay() {
+	public Integer getScheduleDay() {
 		return scheduleDay;
 	}
 
-	public void setScheduleDay(String scheduleDay) {
+	public void setScheduleDay(Integer scheduleDay) {
 		this.scheduleDay = scheduleDay;
 	}
 
