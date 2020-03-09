@@ -62,6 +62,7 @@ public class RouteController {
         Route route =  routeMapper.toEntity(routeDto);
         //доделать расписание , посмотреть как сделать время, по возможности раздилить dto
         Schedule schedule = scheduleMapper.toEntity(scheduleDto);
+        schedule.setScheduleDay(Integer.parseInt(scheduleDto.getScheduleDay(), 2));
 
         routeService.saveNewRoute(route, schedule);
         LOG.debug("] (saveNewRoute )");
@@ -81,6 +82,11 @@ public class RouteController {
         LOG.info("] return : {}", route.toString());
 
         return routeMapper.toDto(route);
+    }
+    @PostMapping("/join")
+    public boolean joinToRoute(@RequestParam(name = "id") String id) {
+        LOG.info("[ joinToRoute : {}", id);
+        return routeService.joinToRoute(Long.parseLong(id));
     }
 
 

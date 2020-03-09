@@ -1,27 +1,27 @@
 package com.netcracker.services;
 
-import java.util.ArrayList;
-
-import com.netcracker.DTO.RouteDto;
+import com.netcracker.entities.Route;
 import com.netcracker.entities.Schedule;
 import com.netcracker.entities.User;
+import com.netcracker.repositories.RouteRepository;
 import com.netcracker.repositories.ScheduleRepository;
 import com.netcracker.repositories.UserRepository;
-//import com.vividsolutions.jts.geom.Coordinate;
-//import com.vividsolutions.jts.geom.Point;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.geom.GeometryFactory;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.provider.HibernateUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.netcracker.entities.Route;
-import com.netcracker.repositories.RouteRepository;
+import javax.management.Query;
+import java.util.ArrayList;
+import java.util.Collection;
+
+//import com.vividsolutions.jts.geom.Coordinate;
+//import com.vividsolutions.jts.geom.Point;
 
 @Service
 public class RouteService {
@@ -59,7 +59,9 @@ public class RouteService {
         routeRepository.save(route);
         scheduleRepository.save(schedule);
     }
+
     public void saveNewOneRoute(Route route) {
+        LOG.info("[ saveNewOneRoute : {}", route);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetail = (UserDetails) auth.getPrincipal();
         User user = userRepository.findUserByEmail(userDetail.getUsername());
@@ -67,5 +69,23 @@ public class RouteService {
         route.setDriverId(user);
         route.setCity(user.getCityId());
         routeRepository.save(route);
+    }
+    public boolean joinToRoute(long id) {
+        LOG.info("[ joinToRoute : {}", id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        User user = userRepository.findUserByEmail(userDetail.getUsername());
+
+        Route route =  routeRepository.findRouteByRouteId(id);
+        if (route.getCountOfPlaces() == 0) {
+            return false;
+        } else {
+            route.setCountOfPlaces(route.getCountOfPlaces() - 1);
+            Collection<User> usersInGroup =  route.getUsers();
+            usersInGroup.add(user);
+            route.setUsers(usersInGroup);
+            routeRepository.save(route);
+            return true;
+        }
     }
 }

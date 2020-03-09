@@ -2,14 +2,14 @@ package com.netcracker.DTO;
 
 public class ScheduleDto {
     private String timeOfJourney;
-    public String selectedDays;
+    private String scheduleDay;
 
-    public void setSelectedDays(String selectedDays) {
-        this.selectedDays = selectedDays;
+    public void setScheduleDay(String scheduleDay) {
+        this.scheduleDay = scheduleDay;
     }
 
-    public String getSelectedDays() {
-        return selectedDays;
+    public String getScheduleDay() {
+        return scheduleDay;
     }
 
     public void setTimeOfJourney(String timeOfJourney) {

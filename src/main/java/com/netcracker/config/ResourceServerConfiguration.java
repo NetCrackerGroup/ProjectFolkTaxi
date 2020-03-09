@@ -15,15 +15,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
 
-        http
-                .authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser",  "/users/sign-up").permitAll();
-//			 .anyRequest().authenticated();
-        http.requestMatchers().antMatchers( "/users/User", "/routes/add", "/routes/addOne", "/routes/**", "/schedule/**" )
-                .and().authorizeRequests()
-                .antMatchers( "/users/User", "/routes/add", "/routes/addOne", "/routes/**", "/schedule/**").access("hasAnyRole('USER', 'ADMIN')")
-                .and().requestMatchers().antMatchers( "/users/Admin")
-                .and().authorizeRequests()
-                .antMatchers("/users/Admin").access("hasRole('ADMIN')");
-   }
+        http.authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser", "/users/sign-up", "/users/")
+                .permitAll();
+                http.authorizeRequests().anyRequest().fullyAuthenticated();
+    }
 
 }

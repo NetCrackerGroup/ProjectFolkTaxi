@@ -20,11 +20,12 @@ public class ScheduleMapper extends AbstractMapper<Schedule, ScheduleDto> {
 
     @PostConstruct
     public void setupMapper() {
-        mapper.createTypeMap(ScheduleDto.class, Schedule.class).addMapping(ScheduleDto::getSelectedDays, Schedule::setScheduleDay).setPostConverter(
+        mapper.createTypeMap(ScheduleDto.class, Schedule.class).addMapping(ScheduleDto::getScheduleDay, Schedule::setScheduleDay).setPostConverter(
                 context -> {
+                    LOG.debug("ScheduleDTO Convert");
                     ScheduleDto scheduleDto = context.getSource();
                     Schedule schedule = context.getDestination();
-                    schedule.setScheduleDay(Integer.parseInt(scheduleDto.getSelectedDays(), 2));
+                    schedule.setScheduleDay(Integer.parseInt(scheduleDto.getScheduleDay(), 2));
                     return schedule;
                 }
         ).addMapping(ScheduleDto::getTimeOfJourney, Schedule::setTimeOfJourney).setPostConverter(
@@ -52,6 +53,13 @@ public class ScheduleMapper extends AbstractMapper<Schedule, ScheduleDto> {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            return context.getDestination();
+        });
+        mapper.createTypeMap(String.class, Integer.class).setPostConverter(context -> {
+            LOG.debug("String in Integer");
+            Integer integer = context.getDestination();
+            String string = context.getSource();
+            integer = Integer.parseInt(string, 2);
             return context.getDestination();
         });
     }

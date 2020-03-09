@@ -40,10 +40,18 @@ public class Route {
     @JoinColumn(name = "driver_id")
     private User driverId;
 
+    public void setUsers(Collection<User> users) {
+        this.users = users;
+    }
+
+    public Collection<User> getUsers() {
+        return users;
+    }
+
     @Column(name = "count_of_places")
     private Integer countOfPlaces;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY )
     @JoinTable(
             name = "passenger_in_route",
             joinColumns = { @JoinColumn(name = "route_id") },
