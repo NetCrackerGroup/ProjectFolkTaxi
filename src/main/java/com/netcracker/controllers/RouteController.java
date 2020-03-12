@@ -80,8 +80,9 @@ public class RouteController {
         Route route = routeService.getRoutesBy((long) id);
 
         LOG.info("] return : {}", route.toString());
-
-        return routeMapper.toDto(route);
+        RouteDto routeDto = routeMapper.toDto(route);
+        //routeDto.setDriverRating(routeService.getDriverRatingById(id));
+        return routeDto;
     }
     @PostMapping("/join")
     public boolean joinToRoute(@RequestParam(name = "id") String id) {

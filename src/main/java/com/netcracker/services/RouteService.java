@@ -88,4 +88,8 @@ public class RouteService {
             return true;
         }
     }
+    public Double getDriverRatingById(long id) {
+        Route route = routeRepository.findRouteByRouteId(id);
+        return route.getDriverId().getDriverRating();
+    }
 }

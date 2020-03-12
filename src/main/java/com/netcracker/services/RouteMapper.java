@@ -1,18 +1,17 @@
 package com.netcracker.services;
 
 import com.netcracker.DTO.RouteDto;
+import com.netcracker.DTO.UserRouteDto;
 import com.netcracker.entities.Route;
+import com.netcracker.entities.User;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.modelmapper.TypeMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 @Component
 public class RouteMapper extends AbstractMapper<Route, RouteDto> {
@@ -20,6 +19,10 @@ public class RouteMapper extends AbstractMapper<Route, RouteDto> {
     public RouteMapper() {
         super(Route.class, RouteDto.class);
     }
+
+
+    @Autowired
+    private UserRouteMapper userRouteMapper;
 
     @PostConstruct
     public void setupMapper() {
@@ -84,6 +87,15 @@ public class RouteMapper extends AbstractMapper<Route, RouteDto> {
                     Point point = route.getRouteEnd();
                     double[] endPoint = new double[] {point.getCoordinate().getX(), point.getCoordinate().getY()};
                     routeDto.setRouteEnd(endPoint);
+                    return routeDto;
+                }
+        ).addMapping(Route::getDriverId, RouteDto::setUserRouteDto).setPostConverter(
+                context -> {
+                    Route route = context.getSource();
+                    RouteDto routeDto = context.getDestination();
+                    User user = route.getDriverId();
+                    UserRouteDto userRouteDto = userRouteMapper.toDto(user);
+                    routeDto.setUserRouteDto(userRouteDto);
                     return routeDto;
                 }
         );

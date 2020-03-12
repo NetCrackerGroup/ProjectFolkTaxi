@@ -1,4 +1,5 @@
 package com.netcracker.DTO;
+import com.netcracker.entities.DriverRating;
 import org.locationtech.jts.geom.Point;
 import com.netcracker.entities.City;
 
@@ -12,6 +13,12 @@ public class RouteDto {
     private double[] routeEnd;
     private BigDecimal price;
     private Date startDate;
+    private Integer countOfPlaces;
+    private UserRouteDto userDto;
+
+    public void setUserRouteDto(UserRouteDto userDto) { this.userDto = userDto; }
+
+    public UserRouteDto getUserRouteDto() { return userDto; }
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
@@ -20,10 +27,6 @@ public class RouteDto {
     public Date getStartDate() {
         return startDate;
     }
-
-    private Integer countOfPlaces;
-
-
 
     public void setRouteBegin(double[] routeBegin) { this.routeBegin = routeBegin; }
 
