@@ -1,5 +1,6 @@
 package com.netcracker.services;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import com.netcracker.entities.Route;
 import com.netcracker.repositories.RouteRepository;
 import com.netcracker.rootsearch.BasicRouteFinder;
+import com.netcracker.rootsearch.SecondRouteFinder;
 
 @Service
 public class RouteService {
@@ -36,7 +38,10 @@ public class RouteService {
     @Autowired
     private UserRepository userRepository;
 	
-    private RouteMapper routeMapper;
+    @Autowired
+    private SecondRouteFinder srf;
+    
+    
     
     public ArrayList<Route> getRoutesByCityId(Long cityId){
 
@@ -69,18 +74,10 @@ public class RouteService {
         routeRepository.save(route);
     }
     
-    public ArrayList<RouteDto> getClosestRoutes(Double Xcord, Double Ycord, Integer radius, Calendar dep){
-    
-    	BasicRouteFinder brf = new BasicRouteFinder();
-    	Collection<Route> routes = brf.findRoutes(Xcord, Ycord, radius, dep);
-    	ArrayList<RouteDto> res = new ArrayList<RouteDto>();
+    public Collection<Route> getClosestRoutes(Double Xcord, Double Ycord, Integer radius, Calendar dep){
+    	Collection<Route> routes = srf.findRoutes(Xcord, Ycord, radius, dep);
     	
-    	for(Route rt: routes) {
-    		res.add(routeMapper.toDto(rt));
-    	}
-    	return res;
-    	
-    	
+    	return routes;  
     }
     
 }

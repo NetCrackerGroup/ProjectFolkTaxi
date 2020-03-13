@@ -1,6 +1,7 @@
 package com.netcracker.controllers;
 
 import com.netcracker.DTO.RouteDto;
+import com.netcracker.DTO.mappers.RouteMapper;
 import com.netcracker.entities.Route;
 import com.netcracker.services.RouteService;
 import org.slf4j.Logger;
@@ -23,6 +24,9 @@ public class RouteController {
     @Autowired
     private RouteService routeService;
 
+    @Autowired
+    RouteMapper routeMapper;
+	
     @GetMapping ("")
     String home ()
     {
@@ -64,8 +68,15 @@ public class RouteController {
     	Calendar cal = new GregorianCalendar();
     	cal.set(Calendar.HOUR, Integer.parseInt(departure.split(":")[0]));
     	cal.set(Calendar.MINUTE, Integer.parseInt(departure.split(":")[1]));
-    	return routeService.getClosestRoutes(Double.parseDouble(address.split(" ")[0]), 
+    	
+    	
+    	Collection<Route> routes = routeService.getClosestRoutes(Double.parseDouble(address.split(" ")[0]), 
     										 Double.parseDouble(address.split(" ")[1]), radius, cal);
+    	Collection<RouteDto> res = new ArrayList<RouteDto>();
+    	for(Route rt: routes) {
+    		res.add(routeMapper.toDto(rt));
+    	}
+    	return res;
     }
     
     

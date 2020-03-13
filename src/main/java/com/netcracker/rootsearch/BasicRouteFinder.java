@@ -9,21 +9,73 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.netcracker.entities.Route;
-import com.netcracker.hibernate.utils.HibernateSessionFactory;
 
+@Repository
 public class BasicRouteFinder implements FindRoute {
+	
+	@PersistenceContext
+    private EntityManager entityManager;
+	
+	
+	public static Double distFrom(Double lat1, Double lng1, Double lat2, Double lng2) {
+	    Double earthRadius = new Double(6371); // (6371.0 kilometers)
+	    Double dLat = Math.toRadians(lat2-lat1);
+	    Double dLng = Math.toRadians(lng2-lng1);
+	    Double sindLat = Math.sin(dLat / 2);
+	    Double sindLng = Math.sin(dLng / 2);
+	    Double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
+	            * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+	    Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	    Double dist = earthRadius * c;
 
+	    return dist;
+	} 
+	
 	@Override
-	public ArrayList<Route> findRoutes(Double Xcord, Double Ycord, Integer radius, Calendar depart) {
+	public List<Route> findRoutes(Double Xcord, Double Ycord, Integer radius, Calendar depart) {
 		
-		//return new ArrayList<Route>();
-		 
+		ArrayList<Route> all = new ArrayList<Route>(entityManager.createQuery("from  Route", Route.class).getResultList());
+		Double rad = new Double(radius);
+		rad /= 1000;
+		ArrayList<Route> res = new ArrayList<Route>();
 		
-		Session session = HibernateSessionFactory.getSessionFactory().openSession();
+		for(Route rt: all) {
+			if(distFrom(Xcord, Ycord, rt.getRouteBegin().getX(), rt.getRouteBegin().getY()) <= rad) {
+				res.add(rt);
+			}
+		}
+		
+		return res;
+	//	return new ArrayList<Route>();
+	/*
+		String req = ""
+				+ "from  Route "
+				+ "where routeId = cos(0)";
+		
+		return entityManager.createQuery(req, Route.class).getResultList();
+		
+		
+		/*
+		return entityManager.createQuery(""
+				+ "from  Route r"
+				+ "where sqrt( (r.routeBegin.getX() - :Xparam) * (r.routeBegin.getX() - :Xparam) "
+				+ "          + (r.routeBegin.getY() - :Yparam) * (r.routeBegin.getY() - :Yparam) ) <= :Radparam",
+				Route.class).getResultList();
+	    
+		
+		
+	/*	
+		Session session = sessionFactory.openSession();
 		
 		session.beginTransaction();
 		
@@ -38,6 +90,7 @@ public class BasicRouteFinder implements FindRoute {
 		qr.setParameter("Radparam", rad.toString());
 		
 		ArrayList<Route> res = new ArrayList<Route>(qr.list());
+		
 		
 		return res;
 		
