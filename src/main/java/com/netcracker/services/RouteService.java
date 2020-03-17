@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.management.Query;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 //import com.vividsolutions.jts.geom.Coordinate;
 //import com.vividsolutions.jts.geom.Point;
@@ -77,6 +78,10 @@ public class RouteService {
         User user = userRepository.findUserByEmail(userDetail.getUsername());
 
         Route route =  routeRepository.findRouteByRouteId(id);
+        for (Route item:
+             user.getRoutes()) {
+            if (item.getRouteId() == id) return false;
+        }
         if (route.getCountOfPlaces() == 0) {
             return false;
         } else {
@@ -91,5 +96,9 @@ public class RouteService {
     public Double getDriverRatingById(long id) {
         Route route = routeRepository.findRouteByRouteId(id);
         return route.getDriverId().getDriverRating();
+    }
+
+    public Collection<User> getAllUserRoute(long id) {
+        return routeRepository.findRouteByRouteId(id).getUsers();
     }
 }
