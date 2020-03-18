@@ -3,11 +3,14 @@ package com.netcracker.controllers;
 import com.google.gson.Gson;
 import com.netcracker.DTO.RouteDto;
 import com.netcracker.DTO.ScheduleDto;
+import com.netcracker.DTO.UserDto;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.Schedule;
+import com.netcracker.entities.User;
 import com.netcracker.services.RouteMapper;
 import com.netcracker.services.RouteService;
 import com.netcracker.services.ScheduleMapper;
+import com.netcracker.services.UserMapper;
 import org.locationtech.jts.geom.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +21,9 @@ import springfox.documentation.spring.web.json.Json;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("routes")
@@ -35,6 +40,9 @@ public class RouteController {
 
     @Autowired
     private RouteService routeService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @GetMapping ("")
     String home ()
@@ -80,14 +88,27 @@ public class RouteController {
         Route route = routeService.getRoutesBy((long) id);
 
         LOG.info("] return : {}", route.toString());
-
-        return routeMapper.toDto(route);
+        RouteDto routeDto = routeMapper.toDto(route);
+        //routeDto.setDriverRating(routeService.getDriverRatingById(id));
+        return routeDto;
     }
     @PostMapping("/join")
     public boolean joinToRoute(@RequestParam(name = "id") String id) {
         LOG.info("[ joinToRoute : {}", id);
         return routeService.joinToRoute(Long.parseLong(id));
     }
+    @GetMapping("/users/{id}")
+    public Collection<UserDto> getAllUserRoute(@PathVariable(name = "id") long id) {
+        LOG.info("[ joinToRoute : {}", id);
+        Collection<User> users = routeService.getAllUserRoute(id);
+        Collection<UserDto> usersDTO = new ArrayList<>();
+        for (User user:
+             users) {
+            usersDTO.add(userMapper.toDto(user));
+        }
+        return usersDTO;
+    }
+
 
 
 
