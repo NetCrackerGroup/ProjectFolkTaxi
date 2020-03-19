@@ -5,23 +5,23 @@ import com.netcracker.DTO.UserSecDto;
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
-import com.netcracker.entities.User;
 import com.netcracker.repositories.CityRepository;
-import com.netcracker.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import com.netcracker.entities.User;
+import com.netcracker.repositories.UserRepository;
+
+import java.util.*;
 
 @Service
 public class UsersService {
@@ -118,6 +118,7 @@ public class UsersService {
         return routes;
     }
 
+
     public Double getRating(Long userId, Boolean isPassenger) {
         Optional<User> possible_user = usersRepository.findById(userId);
         return possible_user.isPresent() ?
@@ -144,4 +145,5 @@ public class UsersService {
         Optional<User> user = usersRepository.findById(userId);
         return user.isPresent() ? userMapper.toDto(user.get()) : null;
     }
+
 }

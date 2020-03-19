@@ -1,6 +1,7 @@
 package com.netcracker.entities;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,6 +17,9 @@ public class Message {
     @Column(name = "Message_ID")
     private Long messageId;
 
+	public Message() {
+	}
+
 	@Column(name = "Text")
     private String text;
 	
@@ -26,6 +30,33 @@ public class Message {
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Chat_ID")
     private Chat chat;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "User_Message_ID")
+	private User user;
+
+	public Message(String text, @NotNull LocalDate dateOfSending, Chat chat) {
+		this.text = text;
+		this.dateOfSending = dateOfSending;
+		this.chat = chat;
+
+	}
+	public static final Comparator<Message> comparatordate =
+			(Message a, Message b) -> (comparer(a,b));
+
+	public static  int comparer(Message a,Message b){
+		java.time.LocalDate a1 = a.getDateOfSending();
+		java.time.LocalDate b1 = b.getDateOfSending();
+		int rezult;
+		if (a1.isBefore(b1)) {
+			rezult = 1;
+		}
+		if(a1.isAfter((b1))){
+			rezult = -1;
+		}
+		else rezult = 0;
+		return rezult;
+	}
 
 	public Long getMessageId() {
 		return messageId;
@@ -49,6 +80,14 @@ public class Message {
 
 	public void setDateOfSending(LocalDate dateOfSending) {
 		this.dateOfSending = dateOfSending;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Chat getChat() {
@@ -101,5 +140,13 @@ public class Message {
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Message{" +
+				"messageId=" + messageId +
+				", chat=" + chat +
+				", user=" + user +
+				'}';
+	}
 }

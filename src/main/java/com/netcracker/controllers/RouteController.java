@@ -1,3 +1,4 @@
+
 package com.netcracker.controllers;
 
 import com.google.gson.Gson;
@@ -7,10 +8,7 @@ import com.netcracker.DTO.UserDto;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.Schedule;
 import com.netcracker.entities.User;
-import com.netcracker.services.RouteMapper;
-import com.netcracker.services.RouteService;
-import com.netcracker.services.ScheduleMapper;
-import com.netcracker.services.UserMapper;
+import com.netcracker.services.*;
 import org.locationtech.jts.geom.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +41,9 @@ public class RouteController {
 
     @Autowired
     private UserMapper userMapper;
+  
+    @Autowired
+    private ChatsService chatsService;
 
     @GetMapping ("")
     String home ()
@@ -73,6 +74,7 @@ public class RouteController {
         schedule.setScheduleDay(Integer.parseInt(scheduleDto.getScheduleDay(), 2));
 
         routeService.saveNewRoute(route, schedule);
+        chatsService.createNewChat(route, null);
         LOG.debug("] (saveNewRoute )");
     }
 //    @PostMapping("/addOne")
@@ -114,3 +116,4 @@ public class RouteController {
 
     
 }
+

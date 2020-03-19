@@ -14,4 +14,5 @@ public interface GroupRepository extends CrudRepository<Group, Long> {
     Optional<Group> findGroupByGroupName(String groupName);
     Optional<Group> findGroupByCityLink(String link);
     //Collection<Group> findGroupsByModeratorsIn(Collection<User> admins);
+
 }

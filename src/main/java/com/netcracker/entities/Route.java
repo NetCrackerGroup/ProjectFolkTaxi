@@ -1,5 +1,6 @@
 package com.netcracker.entities;
 
+
 import org.hibernate.validator.constraints.Range;
 import org.locationtech.jts.geom.Point;
 
@@ -9,6 +10,12 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
+
+import javax.persistence.*;
+
+import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -51,6 +58,7 @@ public class Route {
     @Column(name = "count_of_places")
     private Integer countOfPlaces;
 
+
     @ManyToMany(fetch = FetchType.LAZY )
     @JoinTable(
             name = "passenger_in_route",
@@ -84,7 +92,7 @@ public class Route {
     //убрал @Range(min=0, max=90) и заработало, почему?
     public Route(  Point routeBegin,
                    Point routeEnd,
-                 BigDecimal price,
+                   BigDecimal price,
                    Date startDate,
                    Integer countOfPlaces) {
         this.routeBegin = routeBegin;

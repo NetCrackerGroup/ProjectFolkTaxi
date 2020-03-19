@@ -1,4 +1,4 @@
-package com.netcracker.controllers;
+package com.netcracker.Controllers;
 
 import com.netcracker.DTO.GroupDto;
 import com.netcracker.entities.Group;
@@ -35,6 +35,8 @@ public class GroupController {
     @Autowired
     private NotificationService notificationService;
 
+
+
     @ModelAttribute
     public void setResponseHeader(HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -59,10 +61,12 @@ public class GroupController {
     @GetMapping("/{id}")
     public GroupDto getGroupById (@PathVariable(name = "id") Long id) {
 
-        Group group = groupService.getGroupById( id);
-        GroupDto groupDto = groupMapper.toDto(group);
 
-        return groupDto;
+        Group group = groupService.getGroupById(id);
+        //MessageDto messageDto = messageMapper.toDto(message);
+        GroupDto groupDTo = groupMapper.toDto(group);
+
+        return groupDTo;
     }
 
     @GetMapping("/entergroup/{link}")
@@ -70,7 +74,7 @@ public class GroupController {
 
         Group group = groupService.addUserInGroup(link);
         GroupDto groupDto = null;
-        if (group != null ) {
+        if (group != null) {
             groupDto = groupMapper.toDto(group);
         }
         GroupDto finalGroupDto = groupDto;
@@ -78,6 +82,8 @@ public class GroupController {
         json.put("result", finalGroupDto);
         return json;
     }
+
+
 
     @PostMapping(value = "")
     public Map<String, Long> createGroup (  @RequestParam(name = "name") String name,

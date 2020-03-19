@@ -1,3 +1,4 @@
+
 package com.netcracker.DTO;
 
 public class ScheduleDto {
@@ -20,3 +21,4 @@ public class ScheduleDto {
         return timeOfJourney;
     }
 }
+

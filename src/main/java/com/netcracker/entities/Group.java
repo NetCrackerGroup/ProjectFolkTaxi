@@ -1,5 +1,7 @@
 package com.netcracker.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
@@ -12,7 +14,7 @@ public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "group_id_generator")
-	@SequenceGenerator(name = "group_id_generator", sequenceName = "group_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "group_id_generator", sequenceName = "group_id_seq", allocationSize = 1)
     @Column(name = "Group_ID")
     private Long groupId;
 
@@ -40,6 +42,7 @@ public class Group {
         this.moderators = new LinkedList<>();
     }
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @NotNull
     @JoinTable(
@@ -109,17 +112,6 @@ public class Group {
         this.moderators = moderators;
     }
 
-    @Override
-    public String toString() {
-        return "Group{" +
-                "groupId=" + groupId +
-                ", groupName='" + groupName + '\'' +
-                ", typeGroup=" + typeGroup +
-                ", users=" + users +
-                ", moderators=" + moderators +
-                ", cityLink='" + cityLink + '\'' +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -137,5 +129,17 @@ public class Group {
     @Override
     public int hashCode() {
         return Objects.hash(getGroupId(), getGroupName(), getTypeGroup(), getUsers(), getModerators(), getCityLink());
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "groupId=" + groupId +
+                ", groupName='" + groupName + '\'' +
+                ", typeGroup=" + typeGroup +
+                ", users=" + users +
+                ", moderators=" + moderators +
+                ", cityLink='" + cityLink + '\'' +
+                '}';
     }
 }

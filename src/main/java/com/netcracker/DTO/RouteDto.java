@@ -1,3 +1,4 @@
+
 package com.netcracker.DTO;
 import com.netcracker.entities.DriverRating;
 import org.locationtech.jts.geom.Point;
@@ -64,3 +65,4 @@ public class RouteDto {
                 '}';
     }
 }
+
