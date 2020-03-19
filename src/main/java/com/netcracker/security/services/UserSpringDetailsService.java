@@ -38,7 +38,6 @@ public class UserSpringDetailsService implements UserDetailsService {
                 Collections.singleton(SR)
         );
 
-
         LOG.trace("] (user : {})", user);
         //это я вляется jwt юсером тоемть переделанным
         return user;

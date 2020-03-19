@@ -1,4 +1,5 @@
 package com.netcracker.controllers;
+import com.netcracker.DTO.GroupDto;
 import com.netcracker.DTO.UserDto;
 import com.netcracker.DTO.UserSecDto;
 import com.netcracker.entities.City;
@@ -7,6 +8,7 @@ import com.netcracker.entities.Route;
 import com.netcracker.entities.User;
 import com.netcracker.repositories.RouteRepository;
 import com.netcracker.services.RouteService;
+import com.netcracker.services.GroupMapper;
 import com.netcracker.services.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,9 @@ import java.util.*;
 public class UsersController {
 
     private static final Logger LOG = LoggerFactory.getLogger(UsersController.class);
+
+    @Autowired
+    private GroupMapper groupMapper;
 
     @Autowired
     private UsersService usersService;
@@ -88,13 +93,6 @@ public class UsersController {
         return user;
     }
 
-    @GetMapping("/{id}/groups")
-    public Collection<Group> getUserGroup(@PathVariable(name = "id") Long id) {
-        LOG.info("[getUserGroup : {}", id);
-        Collection<Group> group = usersService.getUserGroup(id);
-        LOG.info("] return : {}", group);
-        return group;
-    }
 
     @GetMapping("/routes")
     public Collection<Long> getUserRoutes() {
@@ -109,6 +107,18 @@ public class UsersController {
         LOG.info("] return : {}", routes);
         return ids;
     }
+
+    @GetMapping("/groups")
+    public Collection<GroupDto> getGroups() {
+
+        Collection<Group> groups = usersService.getUserGroup();
+        Collection<GroupDto> groupDtos = new LinkedList<GroupDto>();
+        for (Group group : groups) {
+            groupDtos.add(groupMapper.toDto(group));
+        }
+        return groupDtos;
+    }
+
     @GetMapping("/{id}/routesAndGroups")
     public Map<Class, Collection<?>> getUserRoutesGroupes(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserRoutesGroupes : {}", id);
@@ -128,4 +138,23 @@ public class UsersController {
         usersService.saveNewUser(user);
     }
 
+    @GetMapping("/helloUser")
+    public ResponseEntity helloUser() {
+        Map<Object, Object> response = new HashMap<>();
+        response.put("hello", "hello user world");
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/User")
+    public ResponseEntity helloUserContr() {
+        Map<Object, Object> response = new HashMap<>();
+        response.put("hello", "hello User");
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/Admin")
+    public ResponseEntity helloAdmin() {
+        Map<Object, Object> response = new HashMap<>();
+        response.put("hello", "hello Admin");
+        return  ResponseEntity.ok(response);
+    }
 }
