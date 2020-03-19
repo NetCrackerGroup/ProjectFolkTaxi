@@ -1,7 +1,8 @@
-package com.netcracker.controllers;
+package com.netcracker.Controllers;
 
 import com.netcracker.DTO.GroupDto;
 import com.netcracker.entities.Group;
+import com.netcracker.services.GroupMapper;
 import com.netcracker.services.GroupService;
 import com.netcracker.services.TypeGroupService;
 import org.slf4j.Logger;
@@ -20,6 +21,9 @@ public class GroupController {
 
     @Autowired
     private GroupService groupService;
+
+    @Autowired
+    private GroupMapper groupMapper;
 
 
     @ModelAttribute
@@ -41,10 +45,14 @@ public class GroupController {
     @GetMapping("/{id}")
     public GroupDto getGroupById (@PathVariable(name = "id") String id) {
 
-        GroupDto group = groupService.getGroupById( Long.decode(id));
+        Group group = groupService.getGroupById(Long.decode(id));
+        //MessageDto messageDto = messageMapper.toDto(message);
+        GroupDto groupDTo = groupMapper.toDto(group);
 
-        return group;
+        return groupDTo;
     }
+
+
 
     @PostMapping(value = "")
     public GroupDto createGroup (@RequestParam(name = "name") String name,

@@ -1,3 +1,4 @@
+
 package com.netcracker.controllers;
 
 import com.google.gson.Gson;
@@ -43,6 +44,9 @@ public class RouteController {
 
     @Autowired
     private UserMapper userMapper;
+  
+    @Autowired
+    private ChatsService chatsService;
 
     @GetMapping ("")
     String home ()
@@ -73,6 +77,7 @@ public class RouteController {
         schedule.setScheduleDay(Integer.parseInt(scheduleDto.getScheduleDay(), 2));
 
         routeService.saveNewRoute(route, schedule);
+        chatsService.createNewChat(route, null);
         LOG.debug("] (saveNewRoute )");
     }
 //    @PostMapping("/addOne")
@@ -114,3 +119,4 @@ public class RouteController {
 
     
 }
+

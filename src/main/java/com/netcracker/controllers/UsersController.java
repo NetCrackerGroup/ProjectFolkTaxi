@@ -1,4 +1,5 @@
-package com.netcracker.controllers;
+package com.netcracker.Controllers;
+
 import com.netcracker.DTO.UserDto;
 import com.netcracker.DTO.UserSecDto;
 import com.netcracker.entities.City;
@@ -103,6 +104,7 @@ public class UsersController {
         Collection<Route> routes = usersService.getUserRoute();
         for (Route route:
              routes) {
+
             Long id = route.getRouteId();
             ids.add(id);
         }
@@ -129,3 +131,4 @@ public class UsersController {
     }
 
 }
+

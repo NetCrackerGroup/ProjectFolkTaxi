@@ -15,30 +15,30 @@ public class Schedule {
 	@SequenceGenerator(name = "schedule_id_generator", sequenceName = "schedule_id_seq", allocationSize = 1)
 	@Column(name = "schedule_id")
 	private Long scheduleId;
-	
+
 	@NotNull
 	@Column(name = "schedule_day")
 	private Integer scheduleDay;
-	
+
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "route_id")
 	private Route routeId;
-	
+
 	@Temporal(TemporalType.TIME)
 	@Column(name = "time_of_journey")
 	private Date timeOfJourney;
-	
+
 	public Schedule() {
-		
+
 	}
-	
+
 	public Schedule(@NotNull
 					@Size(min = 1, max = 20)
 							Integer scheduleDay,
 					Date timeOfJourney) {
 		this.scheduleDay = scheduleDay;
 		this.timeOfJourney = timeOfJourney;
-		
+
 	}
 
 	public Long getScheduleId() {
@@ -73,7 +73,7 @@ public class Schedule {
 		this.timeOfJourney = timeOfJourney;
 	}
 
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(scheduleId);
@@ -81,22 +81,22 @@ public class Schedule {
 
 	@Override
 	public boolean equals(Object obj) {
-		 if (this == obj) return true;
-		 if (obj == null || getClass() != obj.getClass()) return false;
-		 Schedule schedule = (Schedule) obj;
-		 return scheduleId.equals(schedule.scheduleId);
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+		Schedule schedule = (Schedule) obj;
+		return scheduleId.equals(schedule.scheduleId);
 	}
 
 	@Override
 	public String toString() {
 		return "Schedule{" +
-				"scheduleId=" + scheduleId + 
-				", scheduleDay=" + scheduleDay + 
+				"scheduleId=" + scheduleId +
+				", scheduleDay=" + scheduleDay +
 				", routeId=" + routeId +
-				", time=" + timeOfJourney + 
+				", time=" + timeOfJourney +
 				"}";
 	}
-	
-	
-	
+
+
+
 }

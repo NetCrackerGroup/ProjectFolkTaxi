@@ -1,3 +1,4 @@
+
 package com.netcracker.services;
 
 import com.netcracker.DTO.UserDto;
@@ -14,3 +15,4 @@ public class UserRouteMapper extends AbstractMapper<User, UserRouteDto> {
     }
 
 }
+
