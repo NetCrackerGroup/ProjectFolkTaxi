@@ -16,7 +16,7 @@ public class MessageDto {
     private Long messageId;
     private String text;
     private LocalDate dateOfSending;
-    private Chat chat;
+    private ChatDto chat;
     private UserDto user;
 
    public MessageDto(){
@@ -47,11 +47,11 @@ public class MessageDto {
         this.dateOfSending = dateOfSending;
     }
 
-    public Chat getChat() {
+    public ChatDto getChat() {
         return chat;
     }
 
-    public void setChat(Chat chat) {
+    public void setChat(ChatDto chat) {
         this.chat = chat;
     }
 

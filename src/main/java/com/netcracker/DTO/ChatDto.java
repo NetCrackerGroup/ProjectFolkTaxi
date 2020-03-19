@@ -1,6 +1,5 @@
 package com.netcracker.DTO;
 
-import com.netcracker.entities.Route;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,5 +39,14 @@ public class ChatDto {
 
     public void setGroup(GroupDto group) {
         this.group = group;
+    }
+
+    @Override
+    public String toString() {
+        return "ChatDto{" +
+                "chatId=" + chatId +
+                ", route=" + route +
+                ", group=" + group +
+                '}';
     }
 }
