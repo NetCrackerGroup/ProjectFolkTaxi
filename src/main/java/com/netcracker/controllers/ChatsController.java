@@ -33,14 +33,14 @@ public class ChatsController {
 
 
     @PostMapping("")
-    public Long createNewChat(@RequestParam Route route,
+    public void createNewChat(@RequestParam Route route,
                                @RequestParam Group group
                                ) {
         LOG.debug("[ createChat(route: {}, group : {}", route,group);
 
-        Long chatId = chatsService.createNewChat(route, group);
-        LOG.debug("] (chatId:{})", chatId);
-        return chatId;
+         chatsService.createNewChat(route, group);
+
+
     }
 
     @GetMapping("/{id}")
@@ -93,22 +93,19 @@ public class ChatsController {
     }
 
 
-    /*@GetMapping("/{id}")
-    public List<Message> getMessages(@PathVariable(value="id") Long chatId){
-        LOG.info("[ getMessages : {}", chatId);
-        List<Message> messages;
-        messages = chatsService.getMessages(chatId);
-        LOG.info("] return : {}", messages);
-        return messages;
-    }*/
-    /*@PostMapping("/send/{id}")
-    public  Message sendMessage(@PathVariable(value="id")Long chatId,@PathVariable(value="text")String text){
-        LOG.info("[ sendMessage : {}", chatId);
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/findRouteChat/{routeId}")
+    public ChatDto getChatByRoute(@PathVariable(value = "routeId")String routeId){
+        LOG.info("[getChatByRoute : {}", routeId);
 
-       Message message= chatsService.sendMessage(chatId,text);
-        LOG.info("] return : {}", message);
-        return message;
+        Chat chat = chatsService.findChatByRoute(Long.decode(routeId));
 
-    }*/
+        ChatDto chatDto = chatMapper.toDto(chat);
+        LOG.info("] return : {}", chat);
+
+        return chatDto;
+    }
+
+
 
 }
