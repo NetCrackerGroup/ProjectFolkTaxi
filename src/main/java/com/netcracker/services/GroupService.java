@@ -4,21 +4,17 @@ import com.netcracker.DTO.GroupDto;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.TypeGroup;
 import com.netcracker.entities.User;
+import com.netcracker.models.CategoryNotification;
 import com.netcracker.repositories.GroupRepository;
 import com.netcracker.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
+import javax.mail.MessagingException;
 import java.util.Optional;
 
 
@@ -29,29 +25,16 @@ public class GroupService {
 
     private GroupRepository groupRepository;
     private TypeGroupService typeGroupService;
-    private GroupMapper groupMapper;
-    private UserRepository usersRepository;
-    private UsersService usersService;
     private AuthUserComponent authUserComponent;
-    private EmailServiceImpl emailService;
-
 
     @Autowired
     public GroupService(GroupRepository groupRepository,
                         TypeGroupService typeGroupService,
-                        GroupMapper groupMapper,
-                        UserRepository usersRepository,
-                        UsersService usersService,
-                        AuthUserComponent authUserComponent,
-                        EmailServiceImpl emailService
+                        AuthUserComponent authUserComponent
     ) {
         this.groupRepository = groupRepository;
         this.typeGroupService = typeGroupService;
-        this.groupMapper = groupMapper;
-        this.usersRepository = usersRepository;
-        this.usersService = usersService;
         this.authUserComponent = authUserComponent;
-        this.emailService = emailService;
     }
 
 
@@ -59,7 +42,7 @@ public class GroupService {
     *Если существует группа с переданным именем, то метод вернет null
     *В ином случае вернет группу.
      */
-    public GroupDto createGroup(String name, String nameType ) {
+    public Group createGroup(String name, String nameType ) throws MessagingException {
         LOG.debug("Мы тут");
         if ( groupRepository.findGroupByGroupName(name).isPresent() ) {
             LOG.debug("Сюда ?");
@@ -79,14 +62,13 @@ public class GroupService {
 
 
         User user = authUserComponent.getUser();
-
-        emailService.sendSimpleMessage( user.getEmail(), "Create group", "group create" );
+        LOG.debug("----Notificate");
         Group group = new Group(name, link, typeGroup);
         group.getUsers().add(user);// Добавление создателя в группу, в качестве участника
         group.getModerators().add(user); // Добавление создателя в модераторы
         groupRepository.save(group);
         LOG.debug("{}", group.toString());
-        return getGroupById(group.getGroupId());
+        return group;
     }
 
 
@@ -101,10 +83,10 @@ public class GroupService {
         return group.get();
     }
 
-    public GroupDto getGroupById(Long id) {
+    public Group getGroupById(Long id) {
         LOG.debug("Get group by id {}", id);
         Optional<Group> possible = groupRepository.findById(id);
-        return possible.isPresent() ? groupMapper.toDto(possible.get()) : null;
+        return possible.orElse(null);
     }
 
     public Iterable<Group> getAllGroups() {

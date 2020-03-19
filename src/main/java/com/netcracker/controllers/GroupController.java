@@ -2,15 +2,16 @@ package com.netcracker.controllers;
 
 import com.netcracker.DTO.GroupDto;
 import com.netcracker.entities.Group;
-import com.netcracker.services.GroupMapper;
-import com.netcracker.services.GroupService;
-import com.netcracker.services.TypeGroupService;
+import com.netcracker.entities.GroupNotification;
+import com.netcracker.models.CategoryNotification;
+import com.netcracker.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.HashMap;
@@ -29,7 +30,10 @@ public class GroupController {
     private GroupService groupService;
     @Autowired
     private GroupMapper groupMapper;
-
+    @Autowired
+    private GroupNotificationService groupNotificationService;
+    @Autowired
+    private NotificationService notificationService;
 
     @ModelAttribute
     public void setResponseHeader(HttpServletResponse response) {
@@ -52,15 +56,14 @@ public class GroupController {
         return groupsDto;
     }
 
-
     @GetMapping("/{id}")
     public GroupDto getGroupById (@PathVariable(name = "id") Long id) {
 
-        GroupDto group = groupService.getGroupById( id);
+        Group group = groupService.getGroupById( id);
+        GroupDto groupDto = groupMapper.toDto(group);
 
-        return group;
+        return groupDto;
     }
-
 
     @GetMapping("/entergroup/{link}")
     public Map<String, GroupDto> addUserInGroup(@PathVariable("link") String link) {
@@ -79,9 +82,10 @@ public class GroupController {
     @PostMapping(value = "")
     public Map<String, Long> createGroup (  @RequestParam(name = "name") String name,
                                             @RequestParam(name = "link") String typeGroup,
-                                            final HttpServletResponse response)
-    {
-        GroupDto group = groupService.createGroup(name, typeGroup);
+                                            final HttpServletResponse response) throws MessagingException {
+        Group group = groupService.createGroup(name, typeGroup);
+        GroupDto groupDto = groupMapper.toDto(group);
+        notificationService.notify( CategoryNotification.GROUP,"user_create_group", group);
        // LOG.debug("get group with id - {}", group.getGroupId());
 
         Long id;
@@ -130,4 +134,14 @@ public class GroupController {
         }
         return response;
     }
+
+    @GetMapping("/notifications")
+    public Iterable<GroupNotification> getGroupNotifications(@RequestParam(name = "groupId") Long groupId) {
+
+        Group group = groupService.getGroupById(groupId);
+        Iterable<GroupNotification> groupNotifications = groupNotificationService.getGroupNotificationsByGroup(group);
+
+        return groupNotifications;
+    }
+
 }

@@ -1,10 +1,12 @@
 package com.netcracker.controllers;
+import com.netcracker.DTO.GroupDto;
 import com.netcracker.DTO.UserDto;
 import com.netcracker.DTO.UserSecDto;
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.User;
+import com.netcracker.services.GroupMapper;
 import com.netcracker.services.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +21,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.text.CollationElementIterator;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 @RestController
@@ -28,6 +32,9 @@ import java.util.Map;
 public class UsersController {
 
     private static final Logger LOG = LoggerFactory.getLogger(UsersController.class);
+
+    @Autowired
+    private GroupMapper groupMapper;
 
     @Autowired
     private UsersService usersService;
@@ -93,6 +100,18 @@ public class UsersController {
         LOG.info("] return : {}", routes);
         return routes;
     }
+
+    @GetMapping("/groups")
+    public Collection<GroupDto> getGroups() {
+
+        Collection<Group> groups = usersService.getUserGroup();
+        Collection<GroupDto> groupDtos = new LinkedList<GroupDto>();
+        for (Group group : groups) {
+            groupDtos.add(groupMapper.toDto(group));
+        }
+        return groupDtos;
+    }
+
     @GetMapping("/{id}/routesAndGroups")
     public Map<Class, Collection<?>> getUserRoutesGroupes(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserRoutesGroupes : {}", id);

@@ -87,6 +87,7 @@
 			</plugin>
 		</plugins>
 	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -125,11 +126,6 @@
 
 
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcpkix-jdk15on</artifactId>
 			<version>1.56</version>
@@ -139,10 +135,7 @@
 			<artifactId>modelmapper</artifactId>
 			<version>2.3.2</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+
 		<!--      <dependency>-->
 		<!--          <groupId>org.springframework.boot</groupId>-->
 		<!--          <artifactId>spring-boot-starter-test</artifactId>-->
@@ -223,9 +216,6 @@
 			<version>0.10.7</version>
 			<scope>runtime</scope>
 		</dependency>
-
-
-
 
 
 		<dependency>
