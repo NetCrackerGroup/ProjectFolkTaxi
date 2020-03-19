@@ -1,7 +1,6 @@
 package com.netcracker.entities;
 
-import com.netcracker.security.SecurityRole;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -38,7 +37,8 @@ public class User {
 	@Column(name = "phone_number")
 	private String phoneNumber;
 	
-	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonBackReference
 	Collection<Route> routes;
   
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
@@ -47,18 +47,20 @@ public class User {
     @Column(name = "Passenger_Rating")
     private Double passengerRating;
 
-    @Column(name = "Password")
-	private String password;
+    @Column(name="Password")
+	   private String password;
 
-    @Column(name = "Role_name")
-	private String securityRole;
+    @Column(name ="Role_name")
+	 private String securityRole;
 
 
 
 	@Column(name = "Driver_Rating")
 	private Double driverRating;
 	
-	public User() {	}
+	public User() {
+		
+	}
 
 
 	public String getSecurityRole() {
@@ -75,7 +77,7 @@ public class User {
 				@NotNull City city,
 				@NotNull @Size(min = 1, max = 100) String password,
 				@NotNull String securityRole
-				) {
+	) {
 		this.fio = fio;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
@@ -84,7 +86,7 @@ public class User {
 		this.cityId = city;
 		this.password = password;
 		this.securityRole = securityRole;
-		
+
 	}
 
 	public Long getUserId() {
@@ -153,20 +155,20 @@ public class User {
 
 	@Override
 	public boolean equals(Object obj) {
-	    if (this == obj) return true;
-	    if (obj == null || getClass() != obj.getClass()) return false;
-	    User user = (User) obj;
-	    return userId.equals(user.userId);
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+		User user = (User) obj;
+		return userId.equals(user.userId);
 	}
 
 	@Override
 	public String toString() {
 		return "User{"+
-				"userId=" + userId + 
-				", cityId=" + cityId + 
-				", fio=" + fio + 
-				", email=" + email + 
-				", phoneNumber=" + phoneNumber + 
+				"userId=" + userId +
+				", cityId=" + cityId +
+				", fio=" + fio +
+				", email=" + email +
+				", phoneNumber=" + phoneNumber +
 				"}";
 	}
 }

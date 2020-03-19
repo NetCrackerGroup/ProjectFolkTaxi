@@ -1,11 +1,14 @@
 package com.netcracker.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 
 @Entity
 @Table(name = "Chats")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Chat {
 
 	@Id
@@ -22,6 +25,14 @@ public class Chat {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Group_ID")
     private Group group;
+
+	public Chat() {
+	}
+
+	public Chat(Route route, Group group) {
+		this.route = route;
+		this.group = group;
+	}
 
 	public Long getChatId() {
 		return chatId;
@@ -84,6 +95,12 @@ public class Chat {
 		return true;
 	}
 
-    
-    
+
+	@Override
+	public String toString() {
+		return "Chat{" +
+				"chatId=" + chatId +
+				", group=" + group +
+				'}';
+	}
 }
