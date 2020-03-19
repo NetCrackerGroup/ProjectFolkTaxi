@@ -103,7 +103,8 @@ public class UsersController {
         Collection<Long> ids = new ArrayList<Long>() {};
         Collection<Route> routes = usersService.getUserRoute();
         for (Route route:
-                routes) {
+             routes) {
+
             Long id = route.getRouteId();
             ids.add(id);
         }
@@ -130,3 +131,4 @@ public class UsersController {
     }
 
 }
+

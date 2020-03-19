@@ -17,4 +17,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
     List<User> findAllByGroups(Group group);
     User findUserByFio(String username);
     User findUserByUserId(Long userId);
+
 }

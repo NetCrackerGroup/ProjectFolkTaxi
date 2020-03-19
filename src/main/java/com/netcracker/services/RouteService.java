@@ -1,10 +1,9 @@
+
 package com.netcracker.services;
 
-import com.netcracker.entities.Chat;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.Schedule;
 import com.netcracker.entities.User;
-import com.netcracker.repositories.ChatRepository;
 import com.netcracker.repositories.RouteRepository;
 import com.netcracker.repositories.ScheduleRepository;
 import com.netcracker.repositories.UserRepository;
@@ -29,7 +28,7 @@ import java.util.List;
 @Service
 public class RouteService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RouteService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RouteService.class);
 
     @Autowired
     private RouteRepository routeRepository;
@@ -39,13 +38,7 @@ public class RouteService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private ChatsService chatsService;
-
-    @Autowired
-    private ChatRepository chatRepository;
-
+	
     public ArrayList<Route> getRoutesByCityId(Long cityId){
 
         return routeRepository.findRouteByCity(cityId);
@@ -67,7 +60,6 @@ public class RouteService {
         schedule.setRouteId(route);
         routeRepository.save(route);
         scheduleRepository.save(schedule);
-
     }
 
     public void saveNewOneRoute(Route route) {
@@ -88,7 +80,7 @@ public class RouteService {
 
         Route route =  routeRepository.findRouteByRouteId(id);
         for (Route item:
-                user.getRoutes()) {
+             user.getRoutes()) {
             if (item.getRouteId() == id) return false;
         }
         if (route.getCountOfPlaces() == 0) {
@@ -111,3 +103,4 @@ public class RouteService {
         return routeRepository.findRouteByRouteId(id).getUsers();
     }
 }
+

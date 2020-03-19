@@ -1,4 +1,5 @@
-package com.netcracker.Controllers;
+
+package com.netcracker.controllers;
 
 import com.google.gson.Gson;
 import com.netcracker.DTO.RouteDto;
@@ -7,13 +8,16 @@ import com.netcracker.DTO.UserDto;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.Schedule;
 import com.netcracker.entities.User;
-import com.netcracker.services.*;
-
+import com.netcracker.services.RouteMapper;
+import com.netcracker.services.RouteService;
+import com.netcracker.services.ScheduleMapper;
+import com.netcracker.services.UserMapper;
+import org.locationtech.jts.geom.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import springfox.documentation.spring.web.json.Json;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,12 +31,12 @@ import java.util.List;
 //@CrossOrigin(origins="*", maxAge=3600)
 public class RouteController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RouteController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RouteController.class);
 
-    @Autowired
-    private RouteMapper routeMapper;
+	@Autowired
+	private RouteMapper routeMapper;
 
-    @Autowired
+	@Autowired
     private ScheduleMapper scheduleMapper;
 
     @Autowired
@@ -40,6 +44,7 @@ public class RouteController {
 
     @Autowired
     private UserMapper userMapper;
+  
     @Autowired
     private ChatsService chatsService;
 
@@ -48,7 +53,7 @@ public class RouteController {
     {
         return "routes";
     }
-
+	
     @GetMapping("/route/{id}")
     public ArrayList<Route> getRoutesById(@PathVariable(value="id") Long id){
         LOG.info("[ getRoutesById : {}", id);
@@ -72,11 +77,10 @@ public class RouteController {
         schedule.setScheduleDay(Integer.parseInt(scheduleDto.getScheduleDay(), 2));
 
         routeService.saveNewRoute(route, schedule);
-        chatsService.createNewChat(route,null);
-
+        chatsService.createNewChat(route, null);
         LOG.debug("] (saveNewRoute )");
     }
-    //    @PostMapping("/addOne")
+//    @PostMapping("/addOne")
 //    public void saveOneRoute(@RequestBody RouteDto routeDto) {
 //        Route route = routeMapper.toEntity(routeDto);
 //        routeService.saveNewOneRoute(route);
@@ -104,7 +108,7 @@ public class RouteController {
         Collection<User> users = routeService.getAllUserRoute(id);
         Collection<UserDto> usersDTO = new ArrayList<>();
         for (User user:
-                users) {
+             users) {
             usersDTO.add(userMapper.toDto(user));
         }
         return usersDTO;
@@ -113,5 +117,6 @@ public class RouteController {
 
 
 
-
+    
 }
+

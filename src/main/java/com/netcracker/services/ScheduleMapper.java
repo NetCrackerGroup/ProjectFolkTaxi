@@ -1,3 +1,4 @@
+
 package com.netcracker.services;
 
 import com.netcracker.DTO.ScheduleDto;
@@ -65,3 +66,4 @@ public class ScheduleMapper extends AbstractMapper<Schedule, ScheduleDto> {
     }
 
 }
+

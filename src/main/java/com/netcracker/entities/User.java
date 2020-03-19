@@ -38,7 +38,6 @@ public class User {
 	private String phoneNumber;
 	
 	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonBackReference
 	Collection<Route> routes;
   
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)

@@ -1,3 +1,4 @@
+
 package com.netcracker.DTO;
 
 public class UserRouteDto {
@@ -19,4 +20,6 @@ public class UserRouteDto {
     public String getFio() {
         return fio;
     }
+
 }
+
