@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+
 @EnableResourceServer
 @RestController
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
@@ -14,16 +15,27 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-
+/*
         http
-                .authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser",  "/users/sign-up").permitAll();
-//			 .anyRequest().authenticated();
-        http.requestMatchers().antMatchers( "/users/User" )
+                .authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser", "/users/sign-up").permitAll()
+// .anyRequest().authenticated();
+                .and().requestMatchers().antMatchers( "/users/User" , "/Messages/send/{id}", "/users/routes" )
                 .and().authorizeRequests()
-                .antMatchers( "/users/User").access("hasAnyRole('USER', 'ADMIN')")
+                .antMatchers( "/users/User", "/Messages/send/{id}","/users/routes" ).access("hasAnyRole('USER', 'ADMIN')")
                 .and().requestMatchers().antMatchers( "/users/Admin")
                 .and().authorizeRequests()
-                .antMatchers("/users/Admin").access("hasRole('ADMIN')");
-   }
+                .antMatchers("/users/Admin").access("hasRole('ADMIN')")
+                .anyRequest().fullyAuthenticated()
+                .and()
+                .formLogin();
+*/
+
+
+            http.authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser", "/users/sign-up", "/users/")
+                    .permitAll();
+            http.authorizeRequests().anyRequest().fullyAuthenticated();
+
+
+    }
 
 }
