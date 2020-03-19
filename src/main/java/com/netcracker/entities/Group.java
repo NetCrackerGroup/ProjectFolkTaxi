@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "User_Groups")
-public class Group {
+public class Group extends Recipient{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "group_id_generator")

@@ -32,8 +32,6 @@ public class GroupController {
     private GroupMapper groupMapper;
     @Autowired
     private GroupNotificationService groupNotificationService;
-    @Autowired
-    private NotificationService notificationService;
 
     @ModelAttribute
     public void setResponseHeader(HttpServletResponse response) {
@@ -85,7 +83,6 @@ public class GroupController {
                                             final HttpServletResponse response) throws MessagingException {
         Group group = groupService.createGroup(name, typeGroup);
         GroupDto groupDto = groupMapper.toDto(group);
-        notificationService.notify( CategoryNotification.GROUP,"user_create_group", group);
        // LOG.debug("get group with id - {}", group.getGroupId());
 
         Long id;

@@ -1,12 +1,15 @@
 package com.netcracker.services;
 
 import com.netcracker.DTO.GroupDto;
+import com.netcracker.entities.Chat;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.TypeGroup;
 import com.netcracker.entities.User;
 import com.netcracker.models.CategoryNotification;
+import com.netcracker.repositories.ChatRepository;
 import com.netcracker.repositories.GroupRepository;
 import com.netcracker.repositories.UserRepository;
+import com.netcracker.services.Channels.ChatSenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,9 @@ public class GroupService {
     private GroupRepository groupRepository;
     private TypeGroupService typeGroupService;
     private AuthUserComponent authUserComponent;
+    private ChatRepository chatRepository;
+    private NotificationService notificationService;
+    private InfoContentService infoContentService;
 
     @Autowired
     public GroupService(GroupRepository groupRepository,
@@ -67,6 +73,18 @@ public class GroupService {
         group.getUsers().add(user);// Добавление создателя в группу, в качестве участника
         group.getModerators().add(user); // Добавление создателя в модераторы
         groupRepository.save(group);
+
+        Chat chat = new Chat();
+        chat.setGroup(group);
+        chatRepository.save(chat);
+
+        notificationService.notify(
+            infoContentService.getInfoContentByKey("user_create_group"),
+            new ChatSenderService(chat),
+            group
+        );
+
+
         LOG.debug("{}", group.toString());
         return group;
     }

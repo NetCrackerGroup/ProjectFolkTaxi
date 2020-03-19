@@ -1,9 +1,6 @@
 package com.netcracker.services;
 
-import com.netcracker.entities.Group;
-import com.netcracker.entities.GroupNotification;
-import com.netcracker.entities.InfoContent;
-import com.netcracker.entities.User;
+import com.netcracker.entities.*;
 import com.netcracker.repositories.GroupNotificationRepository;
 import com.netcracker.services.Channels.Deliverable;
 import org.slf4j.Logger;
@@ -16,7 +13,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Service
-public class GroupNotificationService implements Deliverable<Group> {
+public class GroupNotificationService implements Deliverable {
 
     private static final Logger LOG = LoggerFactory.getLogger(GroupNotificationService.class);
 
@@ -39,8 +36,7 @@ public class GroupNotificationService implements Deliverable<Group> {
     }
 
     @Override
-    public void deliver(InfoContent message, Group destination) throws MessagingException {
-        GroupNotification groupNotification = new GroupNotification(destination, message);
-        groupNotificationRepository.save(groupNotification);
+    public void deliver(InfoContent message, Recipient destination) throws MessagingException {
+
     }
 }
