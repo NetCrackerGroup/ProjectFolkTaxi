@@ -1,8 +1,10 @@
 package com.netcracker.services;
 
 import com.netcracker.DTO.GroupDto;
+import com.netcracker.entities.Chat;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.TypeGroup;
+import com.netcracker.repositories.ChatRepository;
 import com.netcracker.repositories.GroupRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,8 @@ public class GroupService {
     private GroupRepository groupRepository;
     private TypeGroupService typeGroupService;
     private GroupMapper groupMapper;
+    @Autowired
+    ChatRepository chatRepository;
 
     @Autowired
     public GroupService(    GroupRepository groupRepository,
@@ -43,6 +47,8 @@ public class GroupService {
         LOG.debug("create group - name : \'{}\' , link :  \'{}\'", name, link);
         Group group = new Group(name, link, typeGroup);
         groupRepository.save(group);
+        Chat chat = new Chat(null,group);
+        chatRepository.save(chat);
         GroupDto groupDto = groupMapper.toDto(group);
         return groupDto;
     }
@@ -53,6 +59,7 @@ public class GroupService {
         Optional<Group> possible = groupRepository.findById(id);
 
         LOG.debug("Group - {}", possible.get());
+
         return possible.isPresent() ? possible.get() : null;
     }
 

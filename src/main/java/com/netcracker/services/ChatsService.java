@@ -33,9 +33,12 @@ public class ChatsService {
     @Autowired
     private GroupService groupService;
 
+    @Autowired
+    private RouteService routeService;
 
 
-    public Long createNewChat(
+
+    public void createNewChat(
                               Route route,
                               Group group){
         LOG.debug("[ createChat(route: {}, group : {}", route, group);
@@ -46,7 +49,7 @@ public class ChatsService {
 
 
         LOG.debug("] (chatId:{})", chat.getChatId());
-        return chat.getChatId();
+
     }
 
     public Chat getChatById(Long chatId){
@@ -86,6 +89,19 @@ public class ChatsService {
 
         Group group = groupService.getGroupById(groupId);
         Chat chat = chatRepository.findByGroup(group);
+
+        LOG.debug("](return : {})", chat);
+
+        return chat;
+    }
+
+    public Chat findChatByRoute(Long routeId){
+
+        LOG.debug("[ findChatByRoute(routeId :{}", routeId);
+
+
+        Route route = routeService.getRoutesBy(routeId);
+        Chat chat = chatRepository.findByRoute(route);
 
         LOG.debug("](return : {})", chat);
 
