@@ -12,9 +12,9 @@ spring.datasource:
   hikari:
     connectionTimeout: 20000
     maximumPoolSize: 5
-  url: jdbc:postgresql://localhost:5432/postgres
+  url: jdbc:postgresql://localhost:5432/folktaxi
   username: postgres
-  password: Palienko22
+  password: root
 
 security:
   oauth2:

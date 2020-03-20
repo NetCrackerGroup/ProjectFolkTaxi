@@ -33,8 +33,6 @@ public class GroupController {
     private GroupService groupService;
     @Autowired
     private GroupMapper groupMapper;
-    @Autowired
-    private GroupNotificationService groupNotificationService;
 
 
     @ModelAttribute
@@ -137,15 +135,6 @@ public class GroupController {
                 break;
         }
         return response;
-    }
-
-    @GetMapping("/notifications")
-    public Iterable<GroupNotification> getGroupNotifications(@RequestParam(name = "groupId") Long groupId) {
-
-        Group group = groupService.getGroupById(groupId);
-        Iterable<GroupNotification> groupNotifications = groupNotificationService.getGroupNotificationsByGroup(group);
-
-        return groupNotifications;
     }
 
 }

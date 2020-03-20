@@ -19,17 +19,11 @@ public class NotificationService {
 
     private static final Logger LOG = LoggerFactory.getLogger(NotificationService.class);
 
-    private CategoryNotificationService categoryNotificationService;
-    private InfoContentService  infoContentService;
+
 
     @Autowired
-    public void setEmailService(CategoryNotificationService categoryNotificationService,
-                                InfoContentService infoContentService,
-                                MessageRepository messageRepository){
-        this.categoryNotificationService = categoryNotificationService;
-        this.infoContentService = infoContentService;
+    public void setEmailService(){
     }
-
 
     public void notify(
             InfoContent infoContent,

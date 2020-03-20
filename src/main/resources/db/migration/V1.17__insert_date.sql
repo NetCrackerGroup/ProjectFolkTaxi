@@ -1,6 +1,3 @@
-INSERT INTO INFO(Info_Key, Info_Subject, Info_Text) VALUES ('user_create_group', 'Создание группы' , '$$$username$$$ создал группу $$$groupname$$$');
-INSERT INTO INFO(Info_Key, Info_Subject, Info_Text) VALUES ('user_joined_group', 'Вступление в группу', '$$$username$$$ присоединился к группе $$$groupname$$$');
-
 INSERT INTO schedules(schedule_id, route_id, time_of_journey, schedule_day)
 VALUES (0, 7, '0:39:00', 109);  
 INSERT INTO schedules(schedule_id, route_id, time_of_journey, schedule_day)
@@ -2000,5 +1997,4 @@ VALUES (997, 1004, '1:32:00', 62);
 INSERT INTO schedules(schedule_id, route_id, time_of_journey, schedule_day)
 VALUES (998, 1005, '22:52:00', 31);  
 INSERT INTO schedules(schedule_id, route_id, time_of_journey, schedule_day)
-VALUES (999, 1006, '4:35:00', 32);  
->>>>>>> 7c80d1ea3d4a87a876ef15e2d5864381a6a18212
+VALUES (999, 1006, '4:35:00', 32);

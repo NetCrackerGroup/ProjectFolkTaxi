@@ -30,7 +30,6 @@ public class GroupService {
     private GroupRepository groupRepository;
     private TypeGroupService typeGroupService;
     private AuthUserComponent authUserComponent;
-    private GroupMapper groupMapper;
     private ChatRepository chatRepository;
     private NotificationService notificationService;
     private InfoContentService infoContentService;
@@ -38,11 +37,17 @@ public class GroupService {
     @Autowired
     public GroupService(GroupRepository groupRepository,
                         TypeGroupService typeGroupService,
-                        AuthUserComponent authUserComponent
+                        AuthUserComponent authUserComponent,
+                        ChatRepository chatRepository,
+                        NotificationService notificationService,
+                        InfoContentService infoContentService
     ) {
         this.groupRepository = groupRepository;
         this.typeGroupService = typeGroupService;
         this.authUserComponent = authUserComponent;
+        this.chatRepository = chatRepository;
+        this.notificationService = notificationService;
+        this.infoContentService = infoContentService;
     }
 
 
