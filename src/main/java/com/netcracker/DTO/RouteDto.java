@@ -1,5 +1,5 @@
-
 package com.netcracker.DTO;
+
 import com.netcracker.entities.DriverRating;
 import org.locationtech.jts.geom.Point;
 import com.netcracker.entities.City;
@@ -13,6 +13,7 @@ public class RouteDto {
     private double[] routeBegin;
     private double[] routeEnd;
     private BigDecimal price;
+    private String driverName;
     private Date startDate;
     private Integer countOfPlaces;
     private UserRouteDto userDto;
@@ -25,6 +26,14 @@ public class RouteDto {
         this.startDate = startDate;
     }
 
+    public void setDriverName(String name) {
+    	driverName = name;
+    }
+    
+    public String getDriverName(String name) {
+    	return driverName;
+    }
+    
     public Date getStartDate() {
         return startDate;
     }
@@ -65,4 +74,3 @@ public class RouteDto {
                 '}';
     }
 }
-

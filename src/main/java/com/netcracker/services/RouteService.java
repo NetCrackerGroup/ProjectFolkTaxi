@@ -1,8 +1,14 @@
-
 package com.netcracker.services;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Calendar;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.Schedule;
+import java.util.Collection;
+
+import com.netcracker.DTO.RouteDto;
+import com.netcracker.DTO.mappers.RouteMapper;
 import com.netcracker.entities.User;
 import com.netcracker.repositories.RouteRepository;
 import com.netcracker.repositories.ScheduleRepository;
@@ -17,13 +23,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.netcracker.entities.Route;
+import com.netcracker.repositories.RouteRepository;
+import com.netcracker.rootsearch.BasicRouteFinder;
 import javax.management.Query;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-//import com.vividsolutions.jts.geom.Coordinate;
-//import com.vividsolutions.jts.geom.Point;
+import com.netcracker.rootsearch.SecondRouteFinder;
 
 @Service
 public class RouteService {
@@ -39,12 +47,16 @@ public class RouteService {
     @Autowired
     private UserRepository userRepository;
 	
+    @Autowired
+    private SecondRouteFinder srf;
+    
+    
+    
     public ArrayList<Route> getRoutesByCityId(Long cityId){
-
         return routeRepository.findRouteByCity(cityId);
     }
+    
     public Route getRoutesBy(Long routeId){
-
         return routeRepository.findRouteByRouteId(routeId);
     }
     public void saveNewRoute(Route route, Schedule schedule) {
@@ -102,5 +114,13 @@ public class RouteService {
     public Collection<User> getAllUserRoute(long id) {
         return routeRepository.findRouteByRouteId(id).getUsers();
     }
+    
+    public Collection<Route> getClosestRoutes(Double stXcord, Double stYcord, Double enXcord, Double enYcord,
+    		Integer stRadius, Integer enRadius, Integer dayOfWeek){
+    	Collection<Route> routes = srf.findRoutes(stXcord, stYcord, enXcord, enYcord, stRadius, enRadius, dayOfWeek);
+    	
+    	return routes;  
+    }
+    
 }
 

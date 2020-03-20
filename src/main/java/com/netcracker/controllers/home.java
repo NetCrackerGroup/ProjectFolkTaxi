@@ -1,4 +1,4 @@
-package com.netcracker.Controllers;
+package com.netcracker.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

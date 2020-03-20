@@ -2,8 +2,8 @@
 package com.netcracker.controllers;
 
 import com.netcracker.DTO.ScheduleDto;
+import com.netcracker.DTO.mappers.ScheduleMapper;
 import com.netcracker.entities.Schedule;
-import com.netcracker.services.ScheduleMapper;
 import com.netcracker.services.ScheduleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

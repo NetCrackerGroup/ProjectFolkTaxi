@@ -15,10 +15,32 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+<<<<<<< HEAD
         http.authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser", "/users/sign-up", "/users/")
+=======
+/*
+        http.authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser", "/users/sign-up", "/users/", "/routes/**")
+>>>>>>> 7c80d1ea3d4a87a876ef15e2d5864381a6a18212
                 .permitAll();
         http.authorizeRequests().anyRequest().fullyAuthenticated();
 
+<<<<<<< HEAD
+=======
+    }
+    */
+
+        http
+                .authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser", "/users/sign-up", "/routes/**").permitAll();
+//			 .anyRequest().authenticated();
+        http.requestMatchers().antMatchers( "/users/User", "/routes/add" )
+                .and().authorizeRequests()
+                .antMatchers( "/users/User", "/routes/add").access("hasAnyRole('USER', 'ADMIN')")
+                .and().requestMatchers().antMatchers( "/users/Admin")
+                .and().authorizeRequests()
+                .antMatchers("/users/Admin").access("hasRole('ADMIN')");
+   }
+
+>>>>>>> 7c80d1ea3d4a87a876ef15e2d5864381a6a18212
 
         /*http
                 .authorizeRequests()

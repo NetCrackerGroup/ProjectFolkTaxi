@@ -250,7 +250,6 @@
 			<version>2.3</version>
 			<scope>compile</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-spatial</artifactId>
@@ -273,8 +272,6 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
-
-
     </dependencies>
 	<dependencyManagement>
 		<dependencies>

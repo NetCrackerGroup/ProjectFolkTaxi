@@ -1,4 +1,4 @@
-package com.netcracker.Controllers;
+package com.netcracker.controllers;
 
 
 import com.netcracker.entities.Report;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("reports")
+//@CrossOrigin(origins="*", maxAge=3600)
 public class ReportController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ReportController.class);

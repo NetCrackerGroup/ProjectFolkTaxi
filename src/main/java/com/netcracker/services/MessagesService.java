@@ -2,6 +2,7 @@ package com.netcracker.services;
 
 
 import com.netcracker.DTO.MessageDto;
+import com.netcracker.DTO.mappers.MessageMapper;
 import com.netcracker.entities.*;
 import com.netcracker.repositories.ChatRepository;
 import com.netcracker.repositories.MessageRepository;

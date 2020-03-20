@@ -57,10 +57,7 @@ public class User {
 	@Column(name = "Driver_Rating")
 	private Double driverRating;
 	
-	public User() {
-		
-	}
-
+	public User() {	}
 
 	public String getSecurityRole() {
 		return securityRole;

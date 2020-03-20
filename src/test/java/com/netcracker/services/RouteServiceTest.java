@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.netcracker.entities.Route;
 import com.netcracker.repositories.RouteRepository;
 
+/*
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RouteServiceTest {
@@ -44,3 +45,4 @@ public class RouteServiceTest {
 
 
 }
+*/

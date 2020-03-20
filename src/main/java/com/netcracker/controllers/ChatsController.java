@@ -1,12 +1,12 @@
-package com.netcracker.Controllers;
+package com.netcracker.controllers;
 
 
 import com.netcracker.DTO.ChatDto;
+import com.netcracker.DTO.mappers.ChatMapper;
 import com.netcracker.entities.Chat;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Message;
 import com.netcracker.entities.Route;
-import com.netcracker.services.ChatMapper;
 import com.netcracker.services.ChatsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

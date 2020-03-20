@@ -1,10 +1,16 @@
-package com.netcracker.Controllers;
+package com.netcracker.controllers;
 
 import com.netcracker.DTO.GroupDto;
+import com.netcracker.DTO.mappers.GroupMapper;
 import com.netcracker.entities.Group;
+<<<<<<< HEAD
 import com.netcracker.entities.GroupNotification;
 import com.netcracker.models.CategoryNotification;
 import com.netcracker.services.*;
+=======
+import com.netcracker.services.GroupService;
+import com.netcracker.services.TypeGroupService;
+>>>>>>> 7c80d1ea3d4a87a876ef15e2d5864381a6a18212
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +40,6 @@ public class GroupController {
     private GroupNotificationService groupNotificationService;
     @Autowired
     private NotificationService notificationService;
-
 
 
     @ModelAttribute
@@ -69,6 +74,7 @@ public class GroupController {
         return groupDTo;
     }
 
+<<<<<<< HEAD
     @GetMapping("/entergroup/{link}")
     public Map<String, GroupDto> addUserInGroup(@PathVariable("link") String link) {
 
@@ -85,6 +91,8 @@ public class GroupController {
 
 
 
+=======
+>>>>>>> 7c80d1ea3d4a87a876ef15e2d5864381a6a18212
     @PostMapping(value = "")
     public Map<String, Long> createGroup (  @RequestParam(name = "name") String name,
                                             @RequestParam(name = "link") String typeGroup,

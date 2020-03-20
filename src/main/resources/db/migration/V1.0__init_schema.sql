@@ -57,7 +57,6 @@ CREATE TABLE public.User_1 (
 );
 
 
-
 CREATE SEQUENCE review_id_seq;
 
 CREATE TABLE public.Review (
@@ -68,6 +67,7 @@ CREATE TABLE public.Review (
                 User_ID BIGINT NOT NULL,
                 CONSTRAINT review_pk PRIMARY KEY (Review_ID)
 );
+
 
 CREATE SEQUENCE notification_id_seq;
 CREATE TABLE public.Notification (

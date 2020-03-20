@@ -1,10 +1,11 @@
 
-package com.netcracker.services;
+package com.netcracker.DTO.mappers;
 
 import com.netcracker.DTO.RouteDto;
 import com.netcracker.DTO.UserRouteDto;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.User;
+
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
@@ -97,6 +98,7 @@ public class RouteMapper extends AbstractMapper<Route, RouteDto> {
                     User user = route.getDriverId();
                     UserRouteDto userRouteDto = userRouteMapper.toDto(user);
                     routeDto.setUserRouteDto(userRouteDto);
+                    routeDto.setDriverName(userRouteDto.getFio());
                     return routeDto;
                 }
         );

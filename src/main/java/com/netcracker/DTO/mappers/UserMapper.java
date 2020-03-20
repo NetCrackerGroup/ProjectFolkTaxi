@@ -1,7 +1,8 @@
-package com.netcracker.services;
+package com.netcracker.DTO.mappers;
 
 import com.netcracker.DTO.UserDto;
 import com.netcracker.entities.User;
+
 import org.springframework.stereotype.Component;
 
 @Component
