@@ -10,6 +10,7 @@ import com.netcracker.models.CategoryNotification;
 import com.netcracker.repositories.ChatRepository;
 import com.netcracker.repositories.GroupRepository;
 import com.netcracker.repositories.UserRepository;
+import com.netcracker.services.Channels.ChatSenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,9 @@ public class GroupService {
     private TypeGroupService typeGroupService;
     private AuthUserComponent authUserComponent;
     private GroupMapper groupMapper;
-    @Autowired
-    ChatRepository chatRepository;
+    private ChatRepository chatRepository;
+    private NotificationService notificationService;
+    private InfoContentService infoContentService;
 
     @Autowired
     public GroupService(GroupRepository groupRepository,
@@ -75,7 +77,17 @@ public class GroupService {
         groupRepository.save(group);
 
         Chat chat = new Chat(null, group);
+        chat.setGroup(group);
         chatRepository.save(chat);
+
+        notificationService.notify(
+            infoContentService.getInfoContentByKey("user_create_group"),
+            new ChatSenderService(chat),
+            group
+        );
+
+
+        LOG.debug("{}", group.toString());
         return group;
     }
 

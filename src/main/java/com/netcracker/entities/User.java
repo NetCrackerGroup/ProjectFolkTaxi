@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "App_Users")
-public class User {
+public class User extends Recipient{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")

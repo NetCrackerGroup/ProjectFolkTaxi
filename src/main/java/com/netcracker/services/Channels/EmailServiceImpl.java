@@ -1,5 +1,6 @@
 package com.netcracker.services.Channels;
 
+import com.netcracker.entities.Recipient;
 import com.netcracker.entities.User;
 import com.netcracker.models.DomenUser;
 import com.netcracker.entities.InfoContent;
@@ -18,7 +19,7 @@ import java.io.IOException;
 import java.util.Date;
 
 @Component
-public class EmailServiceImpl implements Deliverable<User>{
+public class EmailServiceImpl implements Deliverable{
 
     private static final Logger LOG = LoggerFactory.getLogger(EmailServiceImpl.class);
 
@@ -36,7 +37,10 @@ public class EmailServiceImpl implements Deliverable<User>{
 
 
     @Override
-    public void deliver(InfoContent message, User user) throws MessagingException {
+    public void deliver(InfoContent message, Recipient recipient) throws MessagingException {
+
+            User user = (User) recipient;
+
             message.getText();
             String html = "<div style=\"background-color: gray;\">\n" +
                     "    <div style=\"background-color : white; padding : 5px; margin : 10px 15px 0 15px; border: 1px solid black;\">\n" +

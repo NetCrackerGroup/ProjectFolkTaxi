@@ -1,20 +1,20 @@
 package com.netcracker.controllers;
-<<<<<<< HEAD
+
 import com.netcracker.DTO.GroupDto;
-=======
->>>>>>> 7c80d1ea3d4a87a876ef15e2d5864381a6a18212
+
 
 import com.netcracker.DTO.GroupDto;
 import com.netcracker.DTO.RouteDto;
 import com.netcracker.DTO.UserDto;
 import com.netcracker.DTO.UserSecDto;
+import com.netcracker.DTO.mappers.GroupMapper;
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.User;
 import com.netcracker.repositories.RouteRepository;
 import com.netcracker.services.RouteService;
-import com.netcracker.services.GroupMapper;
+
 import com.netcracker.services.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -148,7 +148,6 @@ public class UsersController {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersService.saveNewUser(user);
     }
-<<<<<<< HEAD
 
     @GetMapping("/helloUser")
     public ResponseEntity helloUser() {
