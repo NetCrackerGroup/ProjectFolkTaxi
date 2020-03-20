@@ -2,10 +2,10 @@ package com.netcracker.controllers;
 
 
 import com.netcracker.DTO.MessageDto;
+import com.netcracker.DTO.mappers.MessageMapper;
 import com.netcracker.entities.Chat;
 import com.netcracker.entities.Message;
 import com.netcracker.repositories.MessageRepository;
-import com.netcracker.services.MessageMapper;
 import com.netcracker.services.MessagesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

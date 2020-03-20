@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RouteRepository extends CrudRepository<Route, Long> {
-	
 	ArrayList<Route> findRouteByCity(Long cityId);
 	Route findRouteByRouteId(Long routeId);
 

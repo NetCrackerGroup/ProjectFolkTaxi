@@ -1,4 +1,4 @@
-package com.netcracker.services;
+package com.netcracker.DTO.mappers;
 
 import com.netcracker.entities.Group;
 import org.modelmapper.ModelMapper;
@@ -18,7 +18,7 @@ public abstract class AbstractMapper <E, D> {
     private Class<E> entityClass;
     private Class<D> dtoClass;
 
-    AbstractMapper(Class<E> entityClass, Class<D> dtoClass) {
+    public AbstractMapper(Class<E> entityClass, Class<D> dtoClass) {
         this.entityClass = entityClass;
         this.dtoClass = dtoClass;
     }

@@ -1,8 +1,8 @@
 package com.netcracker.controllers;
 
 import com.netcracker.DTO.GroupDto;
+import com.netcracker.DTO.mappers.GroupMapper;
 import com.netcracker.entities.Group;
-import com.netcracker.services.GroupMapper;
 import com.netcracker.services.GroupService;
 import com.netcracker.services.TypeGroupService;
 import org.slf4j.Logger;

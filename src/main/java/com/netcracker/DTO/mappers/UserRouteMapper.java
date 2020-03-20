@@ -1,5 +1,5 @@
 
-package com.netcracker.services;
+package com.netcracker.DTO.mappers;
 
 import com.netcracker.DTO.UserDto;
 import com.netcracker.DTO.UserRouteDto;

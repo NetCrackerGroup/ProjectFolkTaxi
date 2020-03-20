@@ -1,4 +1,4 @@
-package com.netcracker.services;
+package com.netcracker.DTO.mappers;
 
 import com.netcracker.DTO.ChatDto;
 import com.netcracker.DTO.MessageDto;
@@ -7,6 +7,7 @@ import com.netcracker.entities.Chat;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Message;
 import com.netcracker.entities.Route;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

@@ -1,5 +1,7 @@
 package com.netcracker.controllers;
 
+import com.netcracker.DTO.GroupDto;
+import com.netcracker.DTO.RouteDto;
 import com.netcracker.DTO.UserDto;
 import com.netcracker.DTO.UserSecDto;
 import com.netcracker.entities.City;
@@ -23,6 +25,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("users")
@@ -124,11 +129,11 @@ public class UsersController {
         LOG.info("[getUserRoutesGroupes : {} {}",id,  isPassenger);
         return usersService.getRating(id, isPassenger);
     }
+
     @PostMapping("/sign-up")
     public void signUp(@RequestBody UserSecDto user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersService.saveNewUser(user);
     }
-
 }
 
