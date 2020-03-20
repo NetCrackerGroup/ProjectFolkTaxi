@@ -1,5 +1,10 @@
 package com.netcracker.controllers;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import com.netcracker.DTO.RouteDto;
 import com.netcracker.DTO.mappers.RouteMapper;
 import com.netcracker.entities.Route;
@@ -60,18 +65,58 @@ public class RouteController {
         return routes;
     }
     
-    @GetMapping("/closestRoutes/{address}/{radius}/{departure}")
-    public Collection<RouteDto> getClosestRoutes(@PathVariable(value="address") String address,
-    											 @PathVariable(value="radius") Integer radius,
+    @GetMapping("/closestRoutes/{startPoint}/{endPoint}/{stRadius}/{enRadius}/{departure}")
+    public Collection<RouteDto> getClosestRoutes(@PathVariable(value="startPoint") String startPoint,
+    		                                     @PathVariable(value="endPoint") String endPoint,	
+    											 @PathVariable(value="stRadius") Integer stRadius,
+    											 @PathVariable(value="enRadius") Integer enRadius,
     											 @PathVariable(value="departure") String departure){
     	
     	Calendar cal = new GregorianCalendar();
-    	cal.set(Calendar.HOUR, Integer.parseInt(departure.split(":")[0]));
-    	cal.set(Calendar.MINUTE, Integer.parseInt(departure.split(":")[1]));
+    	cal.set(Calendar.YEAR , Integer.parseInt(departure.split("\\.")[2]));
+    	cal.set(Calendar.MONTH, Integer.parseInt(departure.split("\\.")[1]));
+    	cal.set(Calendar.DAY_OF_MONTH , Integer.parseInt(departure.split("\\.")[0]));
     	
     	
-    	Collection<Route> routes = routeService.getClosestRoutes(Double.parseDouble(address.split(" ")[0]), 
-    										 Double.parseDouble(address.split(" ")[1]), radius, cal);
+    	Integer dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+	      
+	      switch(dayOfWeek) {
+		      case(1):{
+		    	  dayOfWeek = 1;
+		    	  break;
+		      }
+		      case(2):{
+		    	  dayOfWeek = 64;
+		    	  break;
+		      }
+		      case(3):{
+		    	  dayOfWeek = 32;
+		    	  break;
+		      }
+		      case(4):{
+		    	  dayOfWeek = 16;
+		    	  break;
+		      }
+		      case(5):{
+		    	  dayOfWeek = 8;
+		    	  break;
+		      }
+		      case(6):{
+		    	  dayOfWeek = 4;
+		    	  break;
+		      }
+		      case(7):{
+		    	  dayOfWeek = 2;
+		    	  break;
+		      }
+	      }
+    	
+    	
+    	Collection<Route> routes = routeService.getClosestRoutes(Double.parseDouble(startPoint.trim().split(",")[0]), 
+    										 Double.parseDouble(startPoint.trim().split(",")[1]),
+    										 Double.parseDouble(endPoint.trim().split(",")[0]),
+    										 Double.parseDouble(endPoint.trim().split(",")[1]),
+    										 stRadius, enRadius, dayOfWeek);
     	Collection<RouteDto> res = new ArrayList<RouteDto>();
     	for(Route rt: routes) {
     		res.add(routeMapper.toDto(rt));

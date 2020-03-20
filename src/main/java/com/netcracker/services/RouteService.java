@@ -74,8 +74,9 @@ public class RouteService {
         routeRepository.save(route);
     }
     
-    public Collection<Route> getClosestRoutes(Double Xcord, Double Ycord, Integer radius, Calendar dep){
-    	Collection<Route> routes = srf.findRoutes(Xcord, Ycord, radius, dep);
+    public Collection<Route> getClosestRoutes(Double stXcord, Double stYcord, Double enXcord, Double enYcord,
+    		Integer stRadius, Integer enRadius, Integer dayOfWeek){
+    	Collection<Route> routes = srf.findRoutes(stXcord, stYcord, enXcord, enYcord, stRadius, enRadius, dayOfWeek);
     	
     	return routes;  
     }

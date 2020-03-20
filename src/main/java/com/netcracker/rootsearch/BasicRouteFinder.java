@@ -42,8 +42,10 @@ public class BasicRouteFinder implements FindRoute {
 	} 
 	
 	@Override
-	public List<Route> findRoutes(Double Xcord, Double Ycord, Integer radius, Calendar depart) {
-		
+	public List<Route> findRoutes(Double stXcord, Double stYcord, Double enXcord, Double enYcord,
+			Integer stRadius, Integer enRadius, Integer dayOfWeek) {
+		return null;
+		/*
 		ArrayList<Route> all = new ArrayList<Route>(entityManager.createQuery("from  Route", Route.class).getResultList());
 		Double rad = new Double(radius);
 		rad /= 1000;
