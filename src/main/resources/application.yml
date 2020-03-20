@@ -24,5 +24,8 @@ security:
       scope: read,write
       auto-approve-scopes: '.*'
 
+spring:
+  jpa:
+    database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
 
 

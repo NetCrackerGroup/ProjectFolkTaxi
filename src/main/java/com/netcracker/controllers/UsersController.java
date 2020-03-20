@@ -1,10 +1,13 @@
 package com.netcracker.controllers;
+
 import com.netcracker.DTO.UserDto;
 import com.netcracker.DTO.UserSecDto;
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.User;
+import com.netcracker.repositories.RouteRepository;
+import com.netcracker.services.RouteService;
 import com.netcracker.services.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("users")
@@ -31,6 +32,9 @@ public class UsersController {
 
     @Autowired
     private UsersService usersService;
+
+    @Autowired
+    private RouteRepository routeRepository;
 
     @ModelAttribute
     public void setResponseHeader(HttpServletResponse response) {
@@ -85,7 +89,7 @@ public class UsersController {
         return user;
     }
 
-    @GetMapping("/groups/{id}")
+    @GetMapping("/{id}/groups")
     public Collection<Group> getUserGroup(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserGroup : {}", id);
         Collection<Group> group = usersService.getUserGroup(id);
@@ -93,30 +97,21 @@ public class UsersController {
         return group;
     }
 
-    @GetMapping("/routes/{id}")
-    public Collection<Route> getUserRoutes(@PathVariable(name = "id") Long id) {
-        LOG.info("[getUserRoutes : {}", id);
-        Collection<Route> routes = usersService.getUserRoute(id);
+    @GetMapping("/routes")
+    public Collection<Long> getUserRoutes() {
+        LOG.info("[getUserRoutes : {}");
+        Collection<Long> ids = new ArrayList<Long>() {};
+        Collection<Route> routes = usersService.getUserRoute();
+        for (Route route:
+             routes) {
+
+            Long id = route.getRouteId();
+            ids.add(id);
+        }
         LOG.info("] return : {}", routes);
-        return routes;
+        return ids;
     }
-    
-    @GetMapping("/groupsByEmail/{mail}")
-    public Collection<Group> getUserGroupsByEmail(@PathVariable(value = "mail") String mail) {
-        LOG.info("[getUserGroupByEmail : {}", mail);
-        Collection<Group> groups = usersService.getUserGroupsByEmail(mail);
-        LOG.info("] return : {}", groups);
-        return groups;
-    }
-    @GetMapping("/routesByEmail/{mail}")
-    public Collection<Route> getUserRoutesByEmail(@PathVariable(value = "mail") String mail) {
-        LOG.info("[getUserGroupByEmail : {}", mail);
-        Collection<Route> routes = usersService.getUserRoutesByEmail(mail);
-        LOG.info("] return : {}", routes);
-        return routes;
-    }
-    
-    @GetMapping("/routesAndGroups/{id}")
+    @GetMapping("/{id}/routesAndGroups")
     public Map<Class, Collection<?>> getUserRoutesGroupes(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserRoutesGroupes : {}", id);
         Map<Class, Collection<?>> map = usersService.getGroupAndRoute(id);
@@ -134,22 +129,6 @@ public class UsersController {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersService.saveNewUser(user);
     }
-    @GetMapping("/helloUser")
-    public ResponseEntity helloUser() {
-        Map<Object, Object> response = new HashMap<>();
-        response.put("hello", "hello user world");
-        return ResponseEntity.ok(response);
-    }
-    @GetMapping("/User")
-    public ResponseEntity helloUserContr() {
-        Map<Object, Object> response = new HashMap<>();
-        response.put("hello", "hello User");
-        return ResponseEntity.ok(response);
-    }
-    @GetMapping("/Admin")
-    public ResponseEntity helloAdmin() {
-        Map<Object, Object> response = new HashMap<>();
-        response.put("hello", "hello Admin");
-        return  ResponseEntity.ok(response);
-    }
+
 }
+

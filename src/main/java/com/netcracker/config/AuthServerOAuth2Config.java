@@ -69,4 +69,3 @@ class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 }
-

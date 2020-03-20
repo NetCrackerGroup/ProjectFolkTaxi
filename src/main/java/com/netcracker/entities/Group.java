@@ -1,8 +1,12 @@
 package com.netcracker.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.Objects;
+
 
 @Entity
 @Table(name = "User_Groups")
@@ -10,7 +14,7 @@ public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "group_id_generator")
-	@SequenceGenerator(name = "group_id_generator", sequenceName = "group_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "group_id_generator", sequenceName = "group_id_seq", allocationSize = 1)
     @Column(name = "Group_ID")
     private Long groupId;
 
@@ -36,6 +40,7 @@ public class Group {
         this.typeGroup = typeGroup;
     }
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "User_In_Group",
@@ -86,5 +91,30 @@ public class Group {
 
     public void setUsers(Collection<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Group group = (Group) o;
+        return groupId.equals(group.groupId) &&
+                Objects.equals(groupName, group.groupName) &&
+                Objects.equals(cityLink, group.cityLink);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(groupId, groupName, cityLink);
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "groupId=" + groupId +
+                ", groupName='" + groupName + '\'' +
+                ", typeGroup=" + typeGroup +
+                ", cityLink='" + cityLink + '\'' +
+                '}';
     }
 }
