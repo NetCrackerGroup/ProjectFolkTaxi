@@ -40,9 +40,9 @@ public class SecondRouteFinder implements FindRoute{
 	JdbcTemplate jdbc;
 	
 	private static final String driverClassName = "org.postgresql.Driver";
-    private static final String url = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String url = "jdbc:postgresql://localhost:5432/folktaxi";
     private static final String dbUsername = "postgres";
-    private static final String dbPassword = "Palienko22";
+    private static final String dbPassword = "root";
 	
 	public static DriverManagerDataSource getDataSource() {
 		  DriverManagerDataSource dataSource = new DriverManagerDataSource();
