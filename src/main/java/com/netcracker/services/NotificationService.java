@@ -25,6 +25,14 @@ public class NotificationService {
     public void setEmailService(){
     }
 
+    /**
+     *
+     * @param infoContent - шаблон сообщениея, берем из infoContentRepository, ищем по строковуму ключю (так как более
+     *                    понятен, чем просто число), если нет подходящего добавлеям в базу
+     * @param deliverable - тип канала связи
+     * @param recipient сюда кидаем либо Group, либо User (дефолтные)
+     * @throws MessagingException
+     */
     public void notify(
             InfoContent infoContent,
             Deliverable deliverable,
