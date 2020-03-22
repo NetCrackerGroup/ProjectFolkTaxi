@@ -10,14 +10,14 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "App_Users")
-public class User {
+public class User extends Recipient{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
 	@SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", allocationSize = 1)
 	@Column(name = "user_id")
 	private Long userId;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "city_id")
 	private City cityId;

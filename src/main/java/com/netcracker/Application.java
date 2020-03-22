@@ -22,4 +22,5 @@ public class    Application {
 //    public void authenticationManager(AuthenticationManagerBuilder builder, UserRepository userRepository) throws Exception {
 //        builder.userDetailsService(userSpringDetailsService);
 //    }
+
 }

@@ -27,5 +27,3 @@ security:
 spring:
   jpa:
     database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
-
-

@@ -27,7 +27,6 @@ public class Message {
     @Column(name = "Date_Of_Sending")
     private LocalDate dateOfSending;
 
-	
 	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Chat_ID")
     private Chat chat;

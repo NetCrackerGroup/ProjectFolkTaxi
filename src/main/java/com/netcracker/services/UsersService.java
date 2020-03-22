@@ -37,14 +37,19 @@ public class UsersService {
 
     private UserRepository usersRepository;
     private UserMapper userMapper;
+    private AuthUserComponent authUserComponent;
+
+
     private RouteMapper routeMapper;
     private GroupMapper groupMapper;
-    
+
     @Autowired
     public UsersService(    UserRepository usersRepository,
-                            UserMapper userMapper) {
+                            UserMapper userMapper,
+                            AuthUserComponent authUserComponent) {
         this.usersRepository = usersRepository;
         this.userMapper = userMapper;
+        this.authUserComponent = authUserComponent;
     }
 
     @Autowired
@@ -103,9 +108,18 @@ public class UsersService {
         return usersRepository.findUserByFio(fio);
     }
 
-    public Collection<Group> getUserGroup(Long userId) {
-        Optional<User> possible_user = usersRepository.findById(userId);
-        return possible_user.isPresent() ? possible_user.get().getGroups() : null;
+    public Collection<Group> getUserGroup() {
+
+        User user = authUserComponent.getUser();
+
+        return user.getGroups();
+    }
+
+    public Collection<Group> getUserAsAdminGroup() {
+
+        User user = authUserComponent.getUser();
+
+        return user.getGroups();
     }
 
     public Collection<Route> getUserRoute() {

@@ -27,7 +27,7 @@ import java.util.List;
 @RequestMapping("/Messages")
 public class MessagesController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UsersController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MessagesController.class);
 
     @Autowired
     private MessagesService messagesService;

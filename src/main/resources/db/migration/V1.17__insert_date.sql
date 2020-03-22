@@ -1997,4 +1997,4 @@ VALUES (997, 1004, '1:32:00', 62);
 INSERT INTO schedules(schedule_id, route_id, time_of_journey, schedule_day)
 VALUES (998, 1005, '22:52:00', 31);  
 INSERT INTO schedules(schedule_id, route_id, time_of_journey, schedule_day)
-VALUES (999, 1006, '4:35:00', 32);  
+VALUES (999, 1006, '4:35:00', 32);
