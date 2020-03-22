@@ -11,6 +11,7 @@ import com.netcracker.repositories.ChatRepository;
 import com.netcracker.repositories.GroupRepository;
 import com.netcracker.repositories.UserRepository;
 import com.netcracker.services.Channels.ChatSenderService;
+import com.netcracker.services.Channels.EmailServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,20 @@ public class GroupService {
 
     private static final Logger LOG = LoggerFactory.getLogger(GroupService.class);
 
+    private EmailServiceImpl emailService;
     private GroupRepository groupRepository;
     private TypeGroupService typeGroupService;
     private AuthUserComponent authUserComponent;
     private ChatRepository chatRepository;
     private NotificationService notificationService;
     private InfoContentService infoContentService;
+    private ChatSenderService chatSenderService;
+
+    @Autowired
+    public void setEmailService(EmailServiceImpl emailService) {
+        this.emailService = emailService;
+    }
+
 
     @Autowired
     public GroupService(GroupRepository groupRepository,
@@ -40,7 +49,8 @@ public class GroupService {
                         AuthUserComponent authUserComponent,
                         ChatRepository chatRepository,
                         NotificationService notificationService,
-                        InfoContentService infoContentService
+                        InfoContentService infoContentService,
+                        ChatSenderService chatSenderService
     ) {
         this.groupRepository = groupRepository;
         this.typeGroupService = typeGroupService;
@@ -48,6 +58,7 @@ public class GroupService {
         this.chatRepository = chatRepository;
         this.notificationService = notificationService;
         this.infoContentService = infoContentService;
+        this.chatSenderService = chatSenderService;
     }
 
 
@@ -85,15 +96,16 @@ public class GroupService {
         chat.setGroup(group);
         chatRepository.save(chat);
 
+        chatSenderService.setChat(chat);
         notificationService.notify(
             infoContentService.getInfoContentByKey("user_create_group"),
-            new ChatSenderService(chat),
+            chatSenderService,
             group
         );
 
-
         LOG.debug("{}", group.toString());
         return group;
+
     }
 
     public Group addUserInGroup (String link){
