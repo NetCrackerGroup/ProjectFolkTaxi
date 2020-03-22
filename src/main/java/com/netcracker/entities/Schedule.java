@@ -28,6 +28,18 @@ public class Schedule {
 	@Column(name = "time_of_journey")
 	private Date timeOfJourney;
 
+
+	@Column(name = "start_day")
+	private Date startDate;
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
 	public Schedule() {
 
 	}
@@ -35,10 +47,11 @@ public class Schedule {
 	public Schedule(@NotNull
 					@Size(min = 1, max = 20)
 							Integer scheduleDay,
-					Date timeOfJourney) {
+					Date timeOfJourney,
+					Date startDate) {
 		this.scheduleDay = scheduleDay;
 		this.timeOfJourney = timeOfJourney;
-
+		this.startDate = startDate;
 	}
 
 	public Long getScheduleId() {

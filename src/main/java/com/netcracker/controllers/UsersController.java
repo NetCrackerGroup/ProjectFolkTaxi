@@ -135,5 +135,7 @@ public class UsersController {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersService.saveNewUser(user);
     }
+
+
 }
 

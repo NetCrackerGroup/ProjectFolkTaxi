@@ -67,8 +67,6 @@ public class Route {
     )
     Collection<User> users;
 
-    @Column(name = "start_day")
-    private Date startDate;
 
     public Route() {
     }
@@ -81,14 +79,6 @@ public class Route {
         return countOfPlaces;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
     //убрал @Range(min=0, max=90) и заработало, почему?
     public Route(  Point routeBegin,
                    Point routeEnd,
@@ -99,7 +89,6 @@ public class Route {
         this.routeEnd = routeEnd;
         this.price = price;
         this.countOfPlaces = countOfPlaces;
-        this.startDate = startDate;
     }
 
     public Long getRouteId() {
