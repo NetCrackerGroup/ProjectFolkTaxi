@@ -16,14 +16,42 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     public void configure(HttpSecurity http) throws Exception {
 
         http
-                .authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser",  "/users/sign-up").permitAll();
+                .authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser",  "/users/sign-up").permitAll()
 //			 .anyRequest().authenticated();
-        http.requestMatchers().antMatchers( "/users/User" )
+                .and().requestMatchers().antMatchers( "/users/User" ,
+                                                        "/users/user/profile",
+                                                        "/users/update-user-password",
+                                                        "/users/update-user-fio",
+                                                        "/users/update-user-city",
+                                                        "/users/update-user-phone-number",
+                                                        "/users/update-user-info",
+                                                        "/group/",
+                                                        "/users/update-user-image",
+                                                        "/users/update-user-email",
+                                                        "/users/user/image",
+                                                        "/reports/create-report",
+                                                        "/users/rate/driver-rating")
                 .and().authorizeRequests()
-                .antMatchers( "/users/User").access("hasAnyRole('USER', 'ADMIN')")
+                .antMatchers( "/users/User",
+                                "/users/user/profile",
+                                "/users/update-user-password",
+                                "/users/update-user-fio",
+                                "/users/update-user-city",
+                                "/users/update-user-phone-number",
+                                "/users/update-user-info",
+                                "/group/",
+                                "/users/update-user-image",
+                                "/users/update-user-email",
+                                "/users/user/image",
+                                "/reports/create-report",
+                                "/users/rate/driver-rating")
+                .access("hasAnyRole('USER', 'ADMIN')")
                 .and().requestMatchers().antMatchers( "/users/Admin")
                 .and().authorizeRequests()
-                .antMatchers("/users/Admin").access("hasRole('ADMIN')");
+                .antMatchers("/users/Admin").access("hasRole('ADMIN')")
+                .anyRequest().fullyAuthenticated()
+                .and()
+                .formLogin();
    }
 
 }

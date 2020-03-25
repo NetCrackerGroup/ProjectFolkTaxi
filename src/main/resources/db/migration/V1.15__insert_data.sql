@@ -1,0 +1,1 @@
+INSERT INTO App_Users(User_ID, City_ID, Role_name, FIO, Passenger_Rating, Email, Phone_Number, Password, Info) VALUES (7, 1, 'ROLE_USER','Ilya Aganin' , 5, 'ilya.aganin42@gmail.com' , '88005553535', '$2a$04$rkLAV8Sd7XzYiWBkUl0L6uJQND2HFox86BjcztV5FKAzyc7/8UA/i', 'google.ru');

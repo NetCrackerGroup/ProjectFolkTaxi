@@ -14,7 +14,7 @@ CREATE TABLE public.Moderator (
 
 CREATE TABLE public.Driver_Rating (
                 User_ID BIGINT NOT NULL,
-                Average_Mark NUMERIC,
+                Average_Mark NUMERIC DEFAULT 0 NOT NULL,
                 CONSTRAINT driver_rating_pk PRIMARY KEY (User_ID)
 );
 
@@ -92,7 +92,7 @@ CREATE TABLE public.Report (
                 Report_Text VARCHAR,
                 Report_Reason VARCHAR NOT NULL,
                 Was_Considered BOOLEAN NOT NULL,
-                Moderator_ID BIGINT NOT NULL,
+                Moderator_ID BIGINT,
                 User_ID BIGINT NOT NULL,
                 CONSTRAINT report_pk PRIMARY KEY (Report_ID)
 );
@@ -177,6 +177,13 @@ CREATE TABLE public.Passenger_In_Route (
                 CONSTRAINT passenger_in_route_pk PRIMARY KEY (Route_ID, User_ID)
 );
 
+
+ALTER TABLE public.Driver_Rating ADD CONSTRAINT user_driver_rating_pk
+FOREIGN KEY (User_ID)
+REFERENCES public.User_1 (User_ID)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
 
 ALTER TABLE public.Report ADD CONSTRAINT moderator_report_fk
 FOREIGN KEY (Moderator_ID)
