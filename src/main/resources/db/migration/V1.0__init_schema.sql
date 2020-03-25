@@ -39,11 +39,6 @@ CREATE TABLE public.City (
 );
 
 
-
--- CREATE TABLE public.Role_1 (
---                 Role_ID BIGINT NOT NULL,
---                 Role_name anyenum NOT NULL
--- );
 CREATE SEQUENCE user_id_seq
 start with 7;
 
@@ -60,8 +55,6 @@ CREATE TABLE public.User_1 (
                 Password VARCHAR,
                 CONSTRAINT user_id PRIMARY KEY (User_ID)
 );
-
-
 
 
 CREATE SEQUENCE review_id_seq;
@@ -112,13 +105,15 @@ CREATE TABLE public.Group_Moderator (
                 CONSTRAINT group_moderator_pk PRIMARY KEY (User_ID)
 );
 
-CREATE SEQUENCE route_id_seq;
+
+CREATE SEQUENCE route_id_seq
+start with 6;
 
 CREATE TABLE public.Route (
                 Route_ID BIGINT NOT NULL default nextval('route_id_seq'),
                 City_ID BIGINT NOT NULL,
-                Route_Begin VARCHAR NOT NULL,
-                Route_End VARCHAR NOT NULL,
+                Route_Begin geography NOT NULL,
+                Route_End geography NOT NULL,
                 Price NUMERIC,
                 Driver_ID BIGINT NOT NULL,
                 CONSTRAINT route_pk PRIMARY KEY (Route_ID)
@@ -128,7 +123,6 @@ CREATE SEQUENCE schedule_id_seq;
 
 CREATE TABLE public.Schedule (
                 Schedule_ID BIGINT NOT NULL default nextval('schedule_id_seq'),
-                Schedule_Day VARCHAR NOT NULL,
                 Route_ID BIGINT NOT NULL,
                 Time_Of_Journey TIME,
                 CONSTRAINT schedule_pk PRIMARY KEY (Schedule_ID)
@@ -143,13 +137,15 @@ CREATE TABLE public.Chat (
                 CONSTRAINT chat_pk PRIMARY KEY (Chat_ID)
 );
 
-CREATE SEQUENCE message_id_seq;
+CREATE SEQUENCE message_id_seq
+start with 15;
 
 CREATE TABLE public.Message (
                 Message_ID BIGINT NOT NULL default nextval('message_id_seq'),
                 Text VARCHAR,
                 Date_Of_Sending TIMESTAMP NOT NULL,
                 Chat_ID BIGINT NOT NULL,
+                User_Message_ID BIGINT NOT NULL,
                 CONSTRAINT message_pk PRIMARY KEY (Message_ID)
 );
 
@@ -313,16 +309,18 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE public.Message ADD CONSTRAINT chat_message_fk
-FOREIGN KEY (Chat_ID)
-REFERENCES public.Chat (Chat_ID)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
-
 ALTER TABLE public.Passenger_in_Journey ADD CONSTRAINT journey_passenger_in_journey_fk
 FOREIGN KEY (Journey_ID)
 REFERENCES public.Journey (Journey_ID)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
+
+ALTER TABLE public.Message ADD CONSTRAINT user_message_fk
+FOREIGN KEY (User_Message_ID)
+REFERENCES public.User_1 (User_ID)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+

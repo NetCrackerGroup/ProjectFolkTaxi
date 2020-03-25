@@ -1,7 +1,6 @@
 package com.netcracker.entities;
 
-import com.netcracker.security.SecurityRole;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,14 +10,14 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "App_Users")
-public class User {
+public class User extends Recipient{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
 	@SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", allocationSize = 1)
 	@Column(name = "user_id")
 	private Long userId;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "city_id")
 	private City cityId;
@@ -38,7 +37,7 @@ public class User {
 	@Column(name = "phone_number")
 	private String phoneNumber;
 	
-	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	Collection<Route> routes;
   
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
@@ -47,11 +46,11 @@ public class User {
     @Column(name = "Passenger_Rating")
     private Double passengerRating;
 
-    @Column(name = "Password")
-	private String password;
+    @Column(name="Password")
+	   private String password;
 
-    @Column(name = "Role_name")
-	private String securityRole;
+    @Column(name ="Role_name")
+	 private String securityRole;
 
 	@JoinColumn(name = "Driver_Rating")
 	private Double driverRating;
@@ -64,7 +63,6 @@ public class User {
 	private String image;
 
 	public User() {	}
-
 
 	public String getSecurityRole() {
 		return securityRole;
@@ -80,7 +78,7 @@ public class User {
 				@NotNull City city,
 				@NotNull @Size(min = 1, max = 100) String password,
 				@NotNull String securityRole
-				) {
+	) {
 		this.fio = fio;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
@@ -89,7 +87,7 @@ public class User {
 		this.cityId = city;
 		this.password = password;
 		this.securityRole = securityRole;
-		
+
 	}
 
 	public Long getUserId() {
@@ -173,20 +171,20 @@ public class User {
 
 	@Override
 	public boolean equals(Object obj) {
-	    if (this == obj) return true;
-	    if (obj == null || getClass() != obj.getClass()) return false;
-	    User user = (User) obj;
-	    return userId.equals(user.userId);
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+		User user = (User) obj;
+		return userId.equals(user.userId);
 	}
 
 	@Override
 	public String toString() {
 		return "User{"+
-				"userId=" + userId + 
-				", cityId=" + cityId + 
-				", fio=" + fio + 
-				", email=" + email + 
-				", phoneNumber=" + phoneNumber + 
+				"userId=" + userId +
+				", cityId=" + cityId +
+				", fio=" + fio +
+				", email=" + email +
+				", phoneNumber=" + phoneNumber +
 				"}";
 	}
 }

@@ -1,13 +1,31 @@
 package com.netcracker.controllers;
+<<<<<<< HEAD
 import com.netcracker.DTO.UserAccDto;
 import com.netcracker.DTO.UserDto;
 import com.netcracker.DTO.UserSecDto;
 import com.netcracker.exceptions.ResourceNotFoundException;
+=======
+
+import com.netcracker.DTO.GroupDto;
+
+
+import com.netcracker.DTO.GroupDto;
+import com.netcracker.DTO.RouteDto;
+import com.netcracker.DTO.UserDto;
+import com.netcracker.DTO.UserSecDto;
+import com.netcracker.DTO.mappers.GroupMapper;
+>>>>>>> master
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.User;
+<<<<<<< HEAD
 import com.netcracker.repositories.UserRepository;
+=======
+import com.netcracker.repositories.RouteRepository;
+import com.netcracker.services.RouteService;
+
+>>>>>>> master
 import com.netcracker.services.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +38,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+<<<<<<< HEAD
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+=======
+import java.util.*;
+>>>>>>> master
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,10 +56,17 @@ public class UsersController {
     private static final Logger LOG = LoggerFactory.getLogger(UsersController.class);
 
     @Autowired
+    private GroupMapper groupMapper;
+
+    @Autowired
     private UsersService usersService;
 
     @Autowired
+<<<<<<< HEAD
     private UserRepository userRepository;
+=======
+    private RouteRepository routeRepository;
+>>>>>>> master
 
     @ModelAttribute
     public void setResponseHeader(HttpServletResponse response) {
@@ -102,6 +131,7 @@ public class UsersController {
         return user;
     }
 
+<<<<<<< HEAD
     @GetMapping("/user/{id}")
     public UserAccDto getUserByIdForView(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserByid : {}", id);
@@ -132,14 +162,35 @@ public class UsersController {
         LOG.info("] return : {}", group);
         return group;
     }
+=======
+>>>>>>> master
 
-    @GetMapping("/{id}/routes")
-    public Collection<Route> getUserRoutes(@PathVariable(name = "id") Long id) {
-        LOG.info("[getUserRoutes : {}", id);
-        Collection<Route> routes = usersService.getUserRoute(id);
+    @GetMapping("/routes")
+    public Collection<Long> getUserRoutes() {
+        LOG.info("[getUserRoutes : {}");
+        Collection<Long> ids = new ArrayList<Long>() {};
+        Collection<Route> routes = usersService.getUserRoute();
+        for (Route route:
+             routes) {
+
+            Long id = route.getRouteId();
+            ids.add(id);
+        }
         LOG.info("] return : {}", routes);
-        return routes;
+        return ids;
     }
+
+    @GetMapping("/groups")
+    public Collection<GroupDto> getGroups() {
+
+        Collection<Group> groups = usersService.getUserGroup();
+        Collection<GroupDto> groupDtos = new LinkedList<GroupDto>();
+        for (Group group : groups) {
+            groupDtos.add(groupMapper.toDto(group));
+        }
+        return groupDtos;
+    }
+
     @GetMapping("/{id}/routesAndGroups")
     public Map<Class, Collection<?>> getUserRoutesGroupes(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserRoutesGroupes : {}", id);
@@ -153,11 +204,13 @@ public class UsersController {
         LOG.info("[getUserRoutesGroupes : {} {}",id,  isPassenger);
         return usersService.getRating(id, isPassenger);
     }
+
     @PostMapping("/sign-up")
     public void signUp(@RequestBody UserSecDto user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersService.saveNewUser(user);
     }
+
     @GetMapping("/helloUser")
     public ResponseEntity helloUser() {
         Map<Object, Object> response = new HashMap<>();
@@ -170,6 +223,7 @@ public class UsersController {
         response.put("hello", "hello User");
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/Admin")
     public ResponseEntity helloAdmin() {
         Map<Object, Object> response = new HashMap<>();
@@ -215,3 +269,4 @@ public class UsersController {
     }
 
 }
+

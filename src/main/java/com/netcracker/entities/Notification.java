@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
-@Table(name="Notifications")
+@Table(name = "Notifications")
 public class Notification {
 
     @Id
@@ -17,34 +17,35 @@ public class Notification {
     private Long notificationId;
 
     @NotNull
-    @Column(name = "Text")
-    private String text;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn (name = "Info_ID")
+    private InfoContent infoContent;
 
     @NotNull
-    @Column(name = "Delivery_Channel")
-    private String deliveryChannel;
+    @Column(name = "delivery_channel")
+    private String channel;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "User_ID")
     private User user;
 
+
+
     public Notification() {
     }
 
-    public Notification(    @NotNull String text,
+    public Notification(    @NotNull InfoContent infoContent,
                             @NotNull String deliveryChannel
     ) {
-        this.text = text;
-        this.deliveryChannel = deliveryChannel;
+        this.infoContent = infoContent;
     }
 
-    public Notification(    @NotNull String text,
+    public Notification(    @NotNull InfoContent infoContent,
                             @NotNull String deliveryChannel,
                             @NotNull User user
     ) {
-        this.text = text;
-        this.deliveryChannel = deliveryChannel;
+        this.infoContent = infoContent;
         this.user = user;
     }
 
@@ -56,21 +57,6 @@ public class Notification {
         this.notificationId = notificationId;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getDeliveryChannel() {
-        return deliveryChannel;
-    }
-
-    public void setDeliveryChannel(String deliveryChannel) {
-        this.deliveryChannel = deliveryChannel;
-    }
 
     public User getUser() {
         return user;
@@ -80,15 +66,6 @@ public class Notification {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        return "Notification{" +
-                "notificationId=" + notificationId +
-                ", text='" + text + '\'' +
-                ", deliveryChannel='" + deliveryChannel + '\'' +
-                ", user=" + user +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -96,13 +73,31 @@ public class Notification {
         if (o == null || getClass() != o.getClass()) return false;
         Notification that = (Notification) o;
         return Objects.equals(getNotificationId(), that.getNotificationId()) &&
-                Objects.equals(getText(), that.getText()) &&
-                Objects.equals(getDeliveryChannel(), that.getDeliveryChannel()) &&
+                Objects.equals(infoContent, that.infoContent) &&
+                Objects.equals(getChannel(), that.getChannel()) &&
                 Objects.equals(getUser(), that.getUser());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getNotificationId(), getText(), getDeliveryChannel(), getUser());
+        return Objects.hash(getNotificationId(), infoContent, getChannel(), getUser());
+    }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "notificationId=" + notificationId +
+                ", text='" + infoContent.getText() + '\'' +
+                ", channel='" + channel + '\'' +
+                ", user=" + user +
+                '}';
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
     }
 }
