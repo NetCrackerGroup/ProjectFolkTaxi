@@ -16,9 +16,14 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
 
-<<<<<<< HEAD
         http
-                .authorizeRequests().antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser",  "/users/sign-up").permitAll()
+                .authorizeRequests().antMatchers("/oauth/token",
+                                                             "/oauth/authorize**",
+                                                             "/helloUser",
+                                                             "/users/sign-up",
+                                                             "/users/",
+                                                             "/routes/**",
+                                                             "/group/notifications").permitAll()
 //			 .anyRequest().authenticated();
                 .and().requestMatchers().antMatchers( "/users/User" ,
                                                         "/users/user/profile",
@@ -32,7 +37,11 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                                                         "/users/update-user-email",
                                                         "/users/user/image",
                                                         "/reports/create-report",
-                                                        "/users/rate/driver-rating")
+                                                        "/users/rate/driver-rating",
+                                                        "/group",
+                                                        "/group/",
+                                                        "/group/entergroup/*",
+                                                        "/group/useringroup/")
                 .and().authorizeRequests()
                 .antMatchers( "/users/User",
                                 "/users/user/profile",
@@ -46,7 +55,11 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                                 "/users/update-user-email",
                                 "/users/user/image",
                                 "/reports/create-report",
-                                "/users/rate/driver-rating")
+                                "/users/rate/driver-rating",
+                                "/group",
+                                "/group/",
+                                "/group/entergroup/*",
+                                "/group/useringroup/")
                 .access("hasAnyRole('USER', 'ADMIN')")
                 .and().requestMatchers().antMatchers( "/users/Admin")
                 .and().authorizeRequests()
@@ -56,7 +69,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .formLogin();
    }
 
-=======
       /*  http.authorizeRequests()
                 .antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser", "/users/sign-up", "/users/", "/routes/**")
                 .permitAll();
@@ -76,10 +88,9 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .and().requestMatchers().antMatchers( "/users/Admin")
                 .and().authorizeRequests()
                 .antMatchers("/users/Admin").access("hasRole('ADMIN')");*/
-        http.authorizeRequests()
+       /* http.authorizeRequests()
                 .antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser", "/users/sign-up", "/users/", "/group/notifications")
                 .permitAll().and().authorizeRequests().anyRequest().fullyAuthenticated()
         ;
-    }
->>>>>>> master
+    }*/
 }

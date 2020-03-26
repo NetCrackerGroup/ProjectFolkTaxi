@@ -32,7 +32,6 @@ public class ReportService {
 
         return report.isPresent() ? report.get() : null;
     }
-<<<<<<< HEAD
 
     public Long createNewReport(Long userId,
                                 String reportReason,
@@ -50,6 +49,4 @@ public class ReportService {
 
 
 }
-=======
-}
->>>>>>> master
+

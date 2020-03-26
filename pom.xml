@@ -132,10 +132,6 @@
 			<version>2.4.0</version>
 		</dependency>
 
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcpkix-jdk15on</artifactId>

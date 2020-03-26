@@ -47,13 +47,10 @@ public class Route {
     @JoinColumn(name = "driver_id")
     private User driverId;
 
-<<<<<<< HEAD
     @Column(name = "journeys")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Collection<Journey> journeys;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-=======
     public void setUsers(Collection<User> users) {
         this.users = users;
     }
@@ -67,7 +64,7 @@ public class Route {
 
 
     @ManyToMany(fetch = FetchType.LAZY )
->>>>>>> master
+
     @JoinTable(
             name = "passenger_in_route",
             joinColumns = { @JoinColumn(name = "route_id") },

@@ -1,31 +1,21 @@
 package com.netcracker.controllers;
-<<<<<<< HEAD
 import com.netcracker.DTO.UserAccDto;
 import com.netcracker.DTO.UserDto;
 import com.netcracker.DTO.UserSecDto;
-import com.netcracker.exceptions.ResourceNotFoundException;
-=======
-
-import com.netcracker.DTO.GroupDto;
 
 
 import com.netcracker.DTO.GroupDto;
-import com.netcracker.DTO.RouteDto;
-import com.netcracker.DTO.UserDto;
-import com.netcracker.DTO.UserSecDto;
+
+
 import com.netcracker.DTO.mappers.GroupMapper;
->>>>>>> master
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.User;
-<<<<<<< HEAD
 import com.netcracker.repositories.UserRepository;
-=======
-import com.netcracker.repositories.RouteRepository;
-import com.netcracker.services.RouteService;
 
->>>>>>> master
+import com.netcracker.repositories.RouteRepository;
+
 import com.netcracker.services.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,13 +28,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-<<<<<<< HEAD
-import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
-=======
 import java.util.*;
->>>>>>> master
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,11 +47,10 @@ public class UsersController {
     private UsersService usersService;
 
     @Autowired
-<<<<<<< HEAD
     private UserRepository userRepository;
-=======
+
+    @Autowired
     private RouteRepository routeRepository;
->>>>>>> master
 
     @ModelAttribute
     public void setResponseHeader(HttpServletResponse response) {
@@ -131,7 +115,6 @@ public class UsersController {
         return user;
     }
 
-<<<<<<< HEAD
     @GetMapping("/user/{id}")
     public UserAccDto getUserByIdForView(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserByid : {}", id);
@@ -155,15 +138,13 @@ public class UsersController {
         return city;
     }
 
-    @GetMapping("/{id}/groups")
+   /* @GetMapping("/{id}/groups")
     public Collection<Group> getUserGroup(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserGroup : {}", id);
         Collection<Group> group = usersService.getUserGroup(id);
         LOG.info("] return : {}", group);
         return group;
-    }
-=======
->>>>>>> master
+    }*/
 
     @GetMapping("/routes")
     public Collection<Long> getUserRoutes() {

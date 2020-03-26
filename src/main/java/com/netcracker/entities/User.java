@@ -52,7 +52,7 @@ public class User extends Recipient{
     @Column(name ="Role_name")
 	 private String securityRole;
 
-	@JoinColumn(name = "Driver_Rating")
+	@Column(name = "Driver_Rating")
 	private Double driverRating;
 
 	@Size(min = 0, max = 100)

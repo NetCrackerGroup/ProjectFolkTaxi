@@ -1,15 +1,10 @@
 package com.netcracker.services;
 
-<<<<<<< HEAD
+
 import com.netcracker.DTO.UserAccDto;
 import com.netcracker.DTO.UserDto;
 import com.netcracker.DTO.UserSecDto;
 import com.netcracker.entities.*;
-=======
-import com.netcracker.DTO.GroupDto;
-import com.netcracker.DTO.RouteDto;
-import com.netcracker.DTO.UserDto;
-import com.netcracker.DTO.UserSecDto;
 import com.netcracker.DTO.mappers.GroupMapper;
 import com.netcracker.DTO.mappers.RouteMapper;
 import com.netcracker.DTO.mappers.UserMapper;
@@ -17,7 +12,6 @@ import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.User;
->>>>>>> master
 import com.netcracker.repositories.CityRepository;
 import com.netcracker.repositories.DriverRatingRepository;
 import com.netcracker.repositories.UserRepository;
@@ -25,32 +19,24 @@ import com.netcracker.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-=======
->>>>>>> master
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-<<<<<<< HEAD
-import java.io.File;
+
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.*;
-=======
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
->>>>>>> master
+
 
 @Service
 public class UsersService {
@@ -62,21 +48,19 @@ public class UsersService {
     @Autowired
     private DriverRatingRepository driverRatingRepository;
 
+    @Autowired
     private UserRepository usersRepository;
     private UserMapper userMapper;
-<<<<<<< HEAD
     private UserAccMapper userAccMapper;
 
     @Autowired
     @Lazy
     private PasswordEncoder bCryptPasswordEncoder;
-=======
     private AuthUserComponent authUserComponent;
 
 
     private RouteMapper routeMapper;
     private GroupMapper groupMapper;
->>>>>>> master
 
     @Autowired
     public UsersService(    UserRepository usersRepository,
@@ -289,21 +273,21 @@ public class UsersService {
         return map;
     }
 
-<<<<<<< HEAD
+
     public City getUserCity(Long userId) {
         Optional<User> possible_user = usersRepository.findById(userId);
         return possible_user.isPresent() ? possible_user.get().getCityId() : null;
     }
-    public Collection<Group> getUserGroup(Long userId) {
+
+    /*public Collection<Group> getUserGroup(Long userId) {
         Optional<User> possible_user = usersRepository.findById(userId);
-        return possible_user.isPresent() ? possible_user.get().getGroups() : null;
-=======
+        return possible_user.isPresent() ? possible_user.get().getGroups() : null;*/
+
     public Collection<Group> getUserGroup() {
 
         User user = authUserComponent.getUser();
 
         return user.getGroups();
->>>>>>> master
     }
 
     public Collection<Group> getUserAsAdminGroup() {
