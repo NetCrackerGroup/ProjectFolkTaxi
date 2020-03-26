@@ -70,8 +70,12 @@ public class RouteService {
         route.setDriverId(user);
         route.setCity(user.getCityId());
         schedule.setRouteId(route);
+        Collection<User> usersInGroup = new ArrayList<>();
+        usersInGroup.add(user);
+        route.setUsers(usersInGroup);
         routeRepository.save(route);
         scheduleRepository.save(schedule);
+
     }
 
     public void saveNewOneRoute(Route route) {

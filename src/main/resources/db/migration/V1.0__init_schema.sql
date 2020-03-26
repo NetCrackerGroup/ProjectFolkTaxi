@@ -129,7 +129,8 @@ CREATE TABLE public.Schedule (
                 CONSTRAINT schedule_pk PRIMARY KEY (Schedule_ID)
 );
 
-CREATE SEQUENCE chat_id_seq;
+CREATE SEQUENCE chat_id_seq
+start with 3;
 
 CREATE TABLE public.Chat (
                 Chat_ID BIGINT NOT NULL default nextval('chat_id_seq'),
@@ -139,7 +140,7 @@ CREATE TABLE public.Chat (
 );
 
 CREATE SEQUENCE message_id_seq
-start with 15;
+start with 13;
 
 CREATE TABLE public.Message (
                 Message_ID BIGINT NOT NULL default nextval('message_id_seq'),
@@ -150,7 +151,8 @@ CREATE TABLE public.Message (
                 CONSTRAINT message_pk PRIMARY KEY (Message_ID)
 );
 
-CREATE SEQUENCE journey_id_seq;
+CREATE SEQUENCE journey_id_seq
+start with 7;
 
 CREATE TABLE public.Journey (
                 Journey_ID BIGINT NOT NULL default nextval('journey_id_seq'),
