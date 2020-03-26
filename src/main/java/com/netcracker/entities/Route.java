@@ -1,6 +1,7 @@
 package com.netcracker.entities;
 
 
+import com.netcracker.services.Channels.Deliverable;
 import org.hibernate.validator.constraints.Range;
 import org.locationtech.jts.geom.Point;
 
@@ -20,7 +21,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "Routes")
-public class Route {
+public class Route extends Recipient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "route_id_generator")
@@ -28,7 +29,7 @@ public class Route {
     @Column(name = "route_id")
     private Long routeId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
     private City city;
 
@@ -43,7 +44,7 @@ public class Route {
     @Column(name = "price")
     private BigDecimal price;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne()
     @JoinColumn(name = "driver_id")
     private User driverId;
 
@@ -59,7 +60,7 @@ public class Route {
     private Integer countOfPlaces;
 
 
-    @ManyToMany(fetch = FetchType.LAZY )
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "passenger_in_route",
             joinColumns = { @JoinColumn(name = "route_id") },
