@@ -43,9 +43,13 @@ public class Route {
     @Column(name = "price")
     private BigDecimal price;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "driver_id")
     private User driverId;
+
+    @Column(name = "journeys")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Collection<Journey> journeys;
 
     public void setUsers(Collection<User> users) {
         this.users = users;
@@ -60,6 +64,7 @@ public class Route {
 
 
     @ManyToMany(fetch = FetchType.LAZY )
+
     @JoinTable(
             name = "passenger_in_route",
             joinColumns = { @JoinColumn(name = "route_id") },

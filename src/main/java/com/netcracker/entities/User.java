@@ -23,13 +23,13 @@ public class User extends Recipient{
 	private City cityId;
 	
 	@NotNull
-	@Size(min = 1, max = 200)
+	@Size(min = 1, max = 50)
 	@Column(name = "fio")
 	private String fio;
 	
 	@NotNull
 	@Size(min = 1, max = 100)
-	@Column(name = "email", unique = true)
+	@Column(name = "email", unique = true, nullable = false)
 	private String email;
 	
 	@NotNull
@@ -52,11 +52,16 @@ public class User extends Recipient{
     @Column(name ="Role_name")
 	 private String securityRole;
 
-
-
 	@Column(name = "Driver_Rating")
 	private Double driverRating;
-	
+
+	@Size(min = 0, max = 100)
+	@Column(name = "Info")
+	private String info;
+
+	@Column(name = "Image")
+	private String image;
+
 	public User() {	}
 
 	public String getSecurityRole() {
@@ -133,6 +138,7 @@ public class User extends Recipient{
 
 	public Double getDriverRating() { return driverRating; }
 
+
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
@@ -143,6 +149,20 @@ public class User extends Recipient{
 	public String getPassword() { return password; }
 
 	public void setPassword(String password) { this.password = password; }
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) { this.info = info; }
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 
 	@Override
 	public int hashCode() {

@@ -8,32 +8,43 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "Driver_Rating")
 public class DriverRating {
-	
-	@Id
-	private Long id;
-	
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "User_id")
-    private User driveRatingUser;
+
+    @Id
+	private Long userId;
 
     @Column(name = "Average_Mark")
-    private double averageMark;
+    private Double averageMark;
 
-    public DriverRating(){}
+    @Column(name = "number_of_votes")
+    private Long numberOfVotes;
+
+    public DriverRating() {
+    }
+
+    public DriverRating(Long userId){
+        this.userId = userId;
+    }
     public DriverRating(
-            @NotNull User driveRatingUser,
-            @NotNull double averageMark
+            @NotNull Double averageMark,
+            @NotNull Long numberOfVotes
     ) {
-        this.driveRatingUser = driveRatingUser;
         this.averageMark = averageMark;
+        this.numberOfVotes = numberOfVotes;
     }
 
-    public void setDriveRatingUser(User driveRatingUser) {
-        this.driveRatingUser = driveRatingUser;
+    public Double getAverageMark() {
+        return averageMark;
     }
 
-    public void setAverageMark(float averageMark) {
+    public Long getNumberOfVotes() {
+        return numberOfVotes;
+    }
+
+    public void setNumberOfVotes(Long numberOfVotes) {
+        this.numberOfVotes = numberOfVotes;
+    }
+
+    public void setAverageMark(Double averageMark) {
         this.averageMark = averageMark;
     }
 }

@@ -2,6 +2,8 @@ server.port: 1337
 security.jwt.token:
   secret-key: very-long-secret-key-to-avoid-problems-with-jwt-security-lib
   expire-length: 3600000 #one hour
+  token-validity-in-seconds: 86400
+  token-validity-in-seconds-for-remember-me: 2592000
 
 logging:
   level:
@@ -14,7 +16,7 @@ spring.datasource:
     maximumPoolSize: 5
   url: jdbc:postgresql://localhost:5432/folktaxi
   username: postgres
-  password: root
+  password: postgres
 
 security:
   oauth2:

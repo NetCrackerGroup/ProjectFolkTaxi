@@ -17,12 +17,14 @@ public class Journey {
     @Column(name = "Journey_ID")
     private Long journeyId;
 
-
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Route_ID")
     private Route route;
 
+    /*@OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "driver_id")
+    private User driverId;*/
 
     @NotNull
     @Column(name = "Date_Of_Journey")
@@ -36,13 +38,7 @@ public class Journey {
     )
     Collection<User> users;
 
-    public Long getRoute_Id() {
-        return journeyId;
-    }
-
-    public void setRoute_Id(Long route_Id) {
-        this.journeyId = route_Id;
-    }
+    public Long getJourneyId() { return journeyId; }
 
     public Route getRoute() {
         return route;
@@ -60,13 +56,18 @@ public class Journey {
         this.date = date;
     }
 
-    public Collection<User> getUsers() {
-        return users;
-    }
+    public Collection<User> getUsers() { return users; }
 
-    public void setUsers(Collection<User> users) {
-        this.users = users;
-    }
+    public void setUsers(Collection<User> users) { this.users = users; }
+
+    /*public User getDriverId() {
+        return driverId;
+    }*/
+
+    /*public void setDriverId(User driverId) {
+        this.driverId = driverId;
+    }*/
+
 
     @Override
     public boolean equals(Object o) {
