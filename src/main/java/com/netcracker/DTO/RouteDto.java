@@ -13,6 +13,7 @@ public class RouteDto {
     private double[] routeBegin;
     private double[] routeEnd;
     private BigDecimal price;
+    private String driverName;
     private Date startDate;
     private Integer routeId;
     private Integer countOfPlaces;
@@ -26,7 +27,16 @@ public class RouteDto {
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
-    
+
+    public void setDriverName(String name) {
+    	driverName = name;
+    }
+
+    public String getDriverName(String name) {
+    	return driverName;
+    }
+
+
     public Date getStartDate() {
         return startDate;
     }

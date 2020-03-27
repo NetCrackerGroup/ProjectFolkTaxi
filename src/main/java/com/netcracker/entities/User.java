@@ -37,7 +37,7 @@ public class User extends Recipient{
 	@Column(name = "phone_number")
 	private String phoneNumber;
 	
-	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
 	Collection<Route> routes;
   
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
