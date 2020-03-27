@@ -39,83 +39,17 @@ public class SecondRouteFinder implements FindRoute{
 	@Autowired
 	JdbcTemplate jdbc;
 	
-	private static final String driverClassName = "org.postgresql.Driver";
-    private static final String url = "jdbc:postgresql://localhost:5432/postgres";
-    private static final String dbUsername = "postgres";
-    private static final String dbPassword = "Palienko22";
-	
-	public static DriverManagerDataSource getDataSource() {
-		  DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		  dataSource.setDriverClassName(driverClassName);
-		  dataSource.setUrl(url);
-		  dataSource.setUsername(dbUsername);
-		  dataSource.setPassword(dbPassword);
-		 
-		  return dataSource;
-	}
+	@Autowired
+	DataSource dataSource;
 	
 	@Override
 	public List<Route> findRoutes(Double stXcord, Double stYcord, Double enXcord, Double enYcord, 
 			Integer stRadius, Integer enRadius, Integer dayOfWeek) {
 		
 		try {
-			
-			/*
-	          Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres",
-	                  "postgres",
-	                  "Palienko22"
-	          );
-	          
-	          ArrayList<Long> ids = new ArrayList<Long>();
-	          ArrayList<Route> res = new ArrayList<Route>();
-	          
-	          PreparedStatement stmt = con.prepareStatement(" " 
-	        		+ "  SELECT  R.route_id\r\n"
-	        		+ "  	 FROM  Routes R\r\n"  
-	          		+ "  	 WHERE ST_Distance(\r\n"
-	          		+ "					R.route_begin,\r\n"
-	          		+ "					ST_GeomFromText('POINT(" + stXcord.toString() + " " + stYcord.toString() + ")', 4326)\r\n"
-	          	    + "					) < " + stRadius.toString() + "\r\n" 
-		          	+ "            ST_Distance(\r\n" 
-	          		+ "                 R.route_end,\r\n " 
-	          	    + "                 ST_GeomFromText('Point(" + enXcord.toString() + " " + enYcord.toString() + ")', 4326)\r\n"
-	          	    + "                 ) < " + enRadius.toString() + "\r\n"
-	          		+ " ;");
-	          
-	          ResultSet rs = stmt.executeQuery();
-	          
-	          while (rs.next())
-	        	  ids.add(rs.getLong(1));
-	          	
-	          con.close();
-	        */  
-	          
-			
 			ArrayList<Long> ids;
 	        ArrayList<Route> res = new ArrayList<Route>();	
 	
-	        
-	     //   PGpoint stPoint = new PGpoint(stXcord, stYcord);
-	     //   PGpoint enPoint = new PGpoint(enXcord, enYcord);
-	      //  query.setObject(1, myPoint); 
-	        
-	        
-	 
-	        String query = " " 
-	        		+ "  SELECT  R.route_id\r\n"
-	        		+ "  	 FROM  Routes R\r\n"  
-	          		+ "  	 WHERE ST_Distance(\r\n"
-	          		+ "					R.Route_begin,\r\n"
-	          		+ "					ST_SetSRID(ST_MakePoint(?, ?), 4326)::geography\r\n"
-	          	    + "					) < ? AND\r\n" 
-		          	+ "            ST_Distance(\r\n" 
-	          		+ "                 R.route_end,\r\n " 
-	          	    + "                 ST_SetSRID(ST_MakePoint(?, ?), 4326)::geography\r\n"
-	          	    + "                 ) < ?\r\n"
-	            	+ " ;";
-	        
-	        
-		      // Убрать CAST
 		      String schedQuery = " " 
 	        		+ "  SELECT  S.route_id\r\n"
 	        		+ "  	 FROM  Schedules S\r\n"  
@@ -135,24 +69,8 @@ public class SecondRouteFinder implements FindRoute{
 	            	+ " ;";
 	        
 	        
-			  DataSource dataSource;
-		      dataSource = getDataSource();
 		      JdbcTemplate template = new JdbcTemplate(dataSource);
 			 
-		      /*
-		      List<Long> idsFromQuery = template.query(query, 
-		    		  new PreparedStatementSetter() {
-		    	  		public void setValues(PreparedStatement preparedStatement) throws SQLException{
-		    	  			preparedStatement.setObject(1, stPoint);
-		    	  			preparedStatement.setDouble(2, stRadius);
-		    	  			preparedStatement.setObject(3, enPoint);
-		    	  			preparedStatement.setDouble(4, enRadius);
-		    	  			
-		    	  		}
-		      		},
-		    		  new LongMapper()
-		    		  ); 
-		      */
 		      
 		      List<Long> idsFromQuery = template.query(schedQuery, 
 		    		  new PreparedStatementSetter() {
