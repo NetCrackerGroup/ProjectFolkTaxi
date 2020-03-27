@@ -92,6 +92,21 @@ public class ScheduledTasks {
                 "                          ((now())::timestamp  -   (s.time_of_journey::time + interval '1 hour')::time )::time < (interval '00:05:00')::time\n" +
                 "                    and (? & CAST(S.schedule_day AS INT) <> 0  or s.start_day = now()::date );";
 
+
+
+//        select s.route_id,  s.time_of_journey  from schedules s
+//        inner join (
+//                select route_id, count(route_id) as countOfPassengers from passenger_in_route
+//        group by route_id
+//                                    ) as passOnRoute
+//        on passOnRoute.route_id = s.route_id
+//
+//        where passOnRoute.countOfPassengers > 1
+//        and
+//                ((now()+ interval '3 hour')::timestamp  -   (s.time_of_journey::time + interval '1 hour')::time )::time < (interval '00:05:00')::time
+//        and (8 & CAST(S.schedule_day AS INT) <> 0  or s.start_day = now()::date );
+
+
         DataSource dataSource;
         dataSource = getDataSource();
         JdbcTemplate template = new JdbcTemplate(dataSource);
@@ -108,11 +123,10 @@ public class ScheduledTasks {
         if (ids.size() != 0) {
             for (Long id: ids) {
                 Route currentRoute = routeRepository.findRouteByRouteId(id);
-                Journey journey = new Journey(date, currentRoute.getUsers(), currentRoute, currentRoute.getDriverId());
-
+                Collection<User> users = currentRoute.getUsers();
+                Journey journey = new Journey(date, users, currentRoute, currentRoute.getDriverId());
 
                 journeyRepository.save(journey);
-
 
 //                for (User u:
 //                     users) {

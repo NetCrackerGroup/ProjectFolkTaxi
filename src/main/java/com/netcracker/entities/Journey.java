@@ -21,7 +21,7 @@ public class Journey {
 
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Route_ID")
     private Route route;
 
@@ -31,7 +31,7 @@ public class Journey {
         this.date = date;
         this.users = users;
         this.route = route;
-        this.driverId = driver;
+//        this.driverId = driver;
     }
 
     @NotNull
@@ -46,18 +46,18 @@ public class Journey {
     )
     Collection<User> users;
 
-    public User getDriverId() {
-        return driverId;
-    }
+//    public User getDriverId() {
+//        return driverId;
+//    }
+//
+//    public void setDriverId(User driverId) {
+//        this.driverId = driverId;
+//    }
 
-    public void setDriverId(User driverId) {
-        this.driverId = driverId;
-    }
-
-    @NotNull
-    @JoinColumn(name = "Driver_ID")
-    @OneToOne()
-    private User driverId;
+//    @NotNull
+//    @JoinColumn(name = "Driver_ID")
+//    @OneToOne()
+//    private User driverId;
 
     public Long getRoute_Id() {
         return journeyId;
