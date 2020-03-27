@@ -15,6 +15,7 @@ import com.netcracker.services.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
@@ -58,39 +59,26 @@ public class ScheduledTasks {
     @Autowired
     ChatRepository chatRepository;
 
+    @Autowired
+    DataSource dataSource;
+
     private static final Logger LOG = LoggerFactory.getLogger(ScheduledTasks.class);
 
-    private static final String driverClassName = "org.postgresql.Driver";
-    private static final String url = "jdbc:postgresql://localhost:5432/folktaxi";
-    private static final String dbUsername = "postgres";
-    private static final String dbPassword = "root";
 
-    public static DriverManagerDataSource getDataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(driverClassName);
-        dataSource.setUrl(url);
-        dataSource.setUsername(dbUsername);
-        dataSource.setPassword(dbPassword);
 
-        return dataSource;
-    }
+
 
     //убери один ноль
     @Scheduled(fixedRate = 300000)
     public void getFinishedRoutes() throws MessagingException {
         LOG.info("[getFinishedRoutes ");
 
-        String schedQuery = "select s.route_id,  s.time_of_journey  from schedules s\n" +
-                "                     inner join (\n" +
-                "                       select route_id, count(route_id) as countOfPassengers from passenger_in_route\n" +
-                "                        group by route_id\n" +
-                "                    ) as passOnRoute \n" +
-                "                    on passOnRoute.route_id = s.route_id\n" +
-                "         \n" +
-                "                    where passOnRoute.countOfPassengers > 1 \n" +
-                "                    and \n" +
-                "                          ((now())::timestamp  -   (s.time_of_journey::time + interval '1 hour')::time )::time < (interval '00:05:00')::time\n" +
-                "                    and (? & CAST(S.schedule_day AS INT) <> 0  or s.start_day = now()::date );";
+        String schedQuery = "select s.route_id  from schedules s\n" +
+                "                                     inner join passenger_in_route\n" +
+                "                                    on passenger_in_route.route_id = s.route_id\n" +
+                "                                    where ((now())::timestamp  -   (s.time_of_journey::time + interval '1 hour')::time )::time < (interval '00:05:00')::time\n" +
+                "                                    and (? & CAST(S.schedule_day AS INT) <> 0  or s.start_day = now()::date )\n" +
+                "                                    group by s.route_id having count(s.route_id) > 1;";
 
 
 
@@ -107,8 +95,6 @@ public class ScheduledTasks {
 //        and (8 & CAST(S.schedule_day AS INT) <> 0  or s.start_day = now()::date );
 
 
-        DataSource dataSource;
-        dataSource = getDataSource();
         JdbcTemplate template = new JdbcTemplate(dataSource);
         LocalDate date = LocalDate.now();
         int val  = date.getDayOfWeek().getValue();
