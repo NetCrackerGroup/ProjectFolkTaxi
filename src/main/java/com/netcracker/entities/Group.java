@@ -63,6 +63,14 @@ public class Group extends Recipient{
     @Column(name = "Link")
     private String cityLink;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "User_Not_In_Group",
+            joinColumns = { @JoinColumn(name = "Group_ID") },
+            inverseJoinColumns = { @JoinColumn(name = "User_ID") }
+    )
+    Collection<User> notUsers;
+
 
     public String getGroupName() {
         return groupName;
@@ -110,6 +118,14 @@ public class Group extends Recipient{
 
     public void setModerators(Collection<User> moderators) {
         this.moderators = moderators;
+    }
+
+
+    public Collection<User> getNotUsers() {
+        return notUsers;
+    }
+    public void setNotUsers(Collection<User> notUsers) {
+        this.notUsers = notUsers;
     }
 
 

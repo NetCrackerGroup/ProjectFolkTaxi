@@ -107,7 +107,7 @@ CREATE TABLE public.Group_Moderator (
 
 
 CREATE SEQUENCE route_id_seq
-start with 6;
+start with 1006;
 
 CREATE TABLE public.Route (
                 Route_ID BIGINT NOT NULL default nextval('route_id_seq'),
@@ -119,7 +119,8 @@ CREATE TABLE public.Route (
                 CONSTRAINT route_pk PRIMARY KEY (Route_ID)
 );
 
-CREATE SEQUENCE schedule_id_seq;
+CREATE SEQUENCE schedule_id_seq
+start with 1000;
 
 CREATE TABLE public.Schedule (
                 Schedule_ID BIGINT NOT NULL default nextval('schedule_id_seq'),
