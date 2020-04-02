@@ -1,0 +1,13 @@
+ALTER TABLE public.User_Not_In_Group ADD CONSTRAINT user_user_not_in_group_fk
+FOREIGN KEY (User_ID)
+REFERENCES public.App_Users (User_ID)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.User_Not_In_Group ADD CONSTRAINT group_user_not_in_group_fk
+FOREIGN KEY (Group_ID)
+REFERENCES public.User_Groups (Group_ID)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
