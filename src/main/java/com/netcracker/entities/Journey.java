@@ -38,13 +38,13 @@ public class Journey {
     @Column(name = "Date_Of_Journey")
     private LocalDate date;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "Passenger_in_Journey",
             joinColumns = {@JoinColumn(name = "Journey_ID")},
             inverseJoinColumns = {@JoinColumn(name = "User_ID")}
     )
-    Collection<User> users;
+    private Collection<User> users;
 
 //    public User getDriverId() {
 //        return driverId;

@@ -65,9 +65,6 @@ public class ScheduledTasks {
     private static final Logger LOG = LoggerFactory.getLogger(ScheduledTasks.class);
 
 
-
-
-
     //убери один ноль
     @Scheduled(fixedRate = 300000)
     public void getFinishedRoutes() throws MessagingException {
@@ -79,7 +76,6 @@ public class ScheduledTasks {
                 "                                    where ((now())::timestamp  -   (s.time_of_journey::time + interval '1 hour')::time )::time < (interval '00:05:00')::time\n" +
                 "                                    and (? & CAST(S.schedule_day AS INT) <> 0  or s.start_day = now()::date )\n" +
                 "                                    group by s.route_id having count(s.route_id) > 1;";
-
 
 
 //        select s.route_id,  s.time_of_journey  from schedules s
@@ -97,22 +93,21 @@ public class ScheduledTasks {
 
         JdbcTemplate template = new JdbcTemplate(dataSource);
         LocalDate date = LocalDate.now();
-        int val  = date.getDayOfWeek().getValue();
+        int val = date.getDayOfWeek().getValue();
         List<Long> idsFromQuery = template.query(schedQuery, new PreparedStatementSetter() {
-                    public void setValues(PreparedStatement preparedStatement) throws SQLException{
+                    public void setValues(PreparedStatement preparedStatement) throws SQLException {
                         preparedStatement.setInt(1, val);
                     }
                 },
                 new LongMapper()
         );
         ArrayList<Long> ids = new ArrayList<>(idsFromQuery);
-        if (ids.size() != 0) {
-            for (Long id: ids) {
-                Route currentRoute = routeRepository.findRouteByRouteId(id);
-                Collection<User> users = currentRoute.getUsers();
-                Journey journey = new Journey(date, users, currentRoute, currentRoute.getDriverId());
-
-                journeyRepository.save(journey);
+        for (Long id : ids) {
+            Route currentRoute = routeRepository.findRouteByRouteId(id);
+            Collection<User> users = currentRoute.getUsers();
+            Journey journey = new Journey(date, users, currentRoute, currentRoute.getDriverId());
+            currentRoute.setUsers(users);
+            journeyRepository.save(journey);
 
 //                for (User u:
 //                     users) {
@@ -122,16 +117,15 @@ public class ScheduledTasks {
 //                            u
 //                            );
 //                }
-                Chat chat = chatRepository.findByRoute(currentRoute);
-                chatSenderService.setChat(chat);
-                notificationService.notify(
-                        infoContentService.getInfoContentByKey("journey_is_over"),
-                        chatSenderService,
-                        currentRoute
-                );
+            Chat chat = chatRepository.findByRoute(currentRoute);
+            chatSenderService.setChat(chat);
+            notificationService.notify(
+                    infoContentService.getInfoContentByKey("journey_is_over"),
+                    chatSenderService,
+                    currentRoute
+            );
 
 
-            }
         }
         LOG.info("] return : {}", ids);
     }
