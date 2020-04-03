@@ -158,28 +158,32 @@ public class GroupService {
         Optional<Group> group = groupRepository.findById(groupId);
         Collection<User> notUsers = group.get().getNotUsers();
         Collection<Long> idNotUsers = new ArrayList<Long>();
-        /*for ( User notUser: group.get().getNotUsers()){
-            idNotUsers.add(notUser.getUserId());
-        }
         boolean contain = false;
-        if(idNotUsers.contains(authUserComponent.getUser().getUserId()))
-        {
-            contain = true;
-        }*/
+        if(group.get().getNotUsers()!=null) {
+            for (User notUser : group.get().getNotUsers()) {
+                idNotUsers.add(notUser.getUserId());
+            }
+
+            if (idNotUsers.contains(authUserComponent.getUser().getUserId())) {
+                contain = true;
+            }
+        }
         LOG.debug("group : {}", group.get());
         if (group.isPresent()) {
-            group.get().getUsers().add(user);
-            Map<String, String> maps = new HashMap<String, String>();
-            maps.put("groupName", group.get().getGroupName());
-            FillInfoContent fillInfoContent = new FillInfoContent(maps);
-            notificationService.notify(
-                    infoContentService.getInfoContentByKey("user_entered_group"),
-                    applicationSenderService,
-                    user,
-                    fillInfoContent
-            );
-            groupRepository.save(group.get());
-            LOG.debug("users group : {}", group.get().getUsers());
+            if (contain == false) {
+                group.get().getUsers().add(user);
+                Map<String, String> maps = new HashMap<String, String>();
+                maps.put("groupName", group.get().getGroupName());
+                FillInfoContent fillInfoContent = new FillInfoContent(maps);
+                notificationService.notify(
+                        infoContentService.getInfoContentByKey("user_entered_group"),
+                        applicationSenderService,
+                        user,
+                        fillInfoContent
+                );
+                groupRepository.save(group.get());
+                LOG.debug("users group : {}", group.get().getUsers());
+            }
         }
         return group.get();
     }
