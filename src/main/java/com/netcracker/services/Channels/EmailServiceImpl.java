@@ -1,5 +1,6 @@
 package com.netcracker.services.Channels;
 
+import com.netcracker.entities.InfoMap;
 import com.netcracker.entities.Recipient;
 import com.netcracker.entities.User;
 import com.netcracker.models.DomenUser;
@@ -20,13 +21,13 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.plaf.nimbus.AbstractRegionPainter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Pattern;
 
 @Component
 public class EmailServiceImpl implements Deliverable{
@@ -53,24 +54,36 @@ public class EmailServiceImpl implements Deliverable{
 
 
     @Override
-    public void deliver(InfoContent message, Recipient recipient) throws MessagingException {
+    public void deliver(InfoContent message, Recipient recipient, Collection<InfoMap> infoMaps) throws MessagingException {
 
             User user = (User) recipient;
 
             message.getText();
 
-
+            LOG.debug("InfoMaps : {}" , infoMaps);
 
             MimeMessagePreparator preparator = new MimeMessagePreparator() {
                 public void prepare(MimeMessage mimeMessage) throws MessagingException, IOException, TemplateException {
                     mimeMessage.setFrom(domenUser.getDomenName());
-                    //   mimeMessage.setText(message);
+                    //mimeMessage.setText(message);
 
                     //Configuration cfg = new Configuration(Configuration.VERSION_2_3_27);
                     //cfg.setDirectoryForTemplateLoading();
                    // cfg.setTemplateLoader();
                     Map<String, Object> root = new HashMap<>();
-                    root.put("msg", message.getText());
+                    String[] text = message.getText().split(Pattern.quote("$$$"));
+                    LOG.debug("Text : {}",  Arrays.toString(text));
+                    for ( int i = 1; i < text.length; i+=2 ){
+                        LOG.debug("{} template : {}", i, text[i]);
+                        for ( InfoMap infoMap : infoMaps) {
+                            LOG.debug("{} infomaps : {}" , i, infoMap.getInfoKey());
+                            if (text[i].trim().equals(infoMap.getInfoKey().trim())) {
+                                text[i] = infoMap.getInfoValue().trim();
+                                break;
+                            }
+                        }
+                    }
+                    root.put("msg", String.join(" ", text).trim());
                     root.put("url", url);
 
                     Template temp = configuration.getTemplate("notification.ftl");
@@ -78,6 +91,7 @@ public class EmailServiceImpl implements Deliverable{
                     temp.process(root, writer);
 
                     String html = writer.toString();
+                    html = html.replace("\\n", "<br/>");
 
                     mimeMessage.setContent(html, "text/html; charset=UTF-8");
                     mimeMessage.setSubject(message.getSubject(), "UTF-8");

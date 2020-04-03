@@ -17,13 +17,9 @@ public class CategoryNotificationService {
     private static final Logger LOG = LoggerFactory.getLogger(CategoryNotificationService.class);
 
     private EmailServiceImpl emailService;
-    private GroupNotificationService groupNotificationService;
 
     @Autowired public void setEmailService(EmailServiceImpl emailService) {
         this.emailService = emailService;
-    }
-    @Autowired public void setGroupNotificationService (GroupNotificationService groupNotificationService) {
-        this.groupNotificationService = groupNotificationService;
     }
 
     public CategoryNotificationService() {}
@@ -35,7 +31,6 @@ public class CategoryNotificationService {
 
         switch (categoryNotification.name()) {
             case "GROUP":
-                deliverable = this.groupNotificationService;
                 break;
             case "SUNBSCRIPTION":
 

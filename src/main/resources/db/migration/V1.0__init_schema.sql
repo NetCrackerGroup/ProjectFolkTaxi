@@ -18,8 +18,6 @@ CREATE TABLE public.Driver_Rating (
                 CONSTRAINT driver_rating_pk PRIMARY KEY (User_ID)
 );
 
-
-
 CREATE SEQUENCE group_id_seq;
 
 CREATE TABLE public.Group_1 (
@@ -43,6 +41,7 @@ CREATE SEQUENCE user_id_seq
 start with 7;
 
 CREATE TYPE Role_names AS ENUM ( 'ROLE_ADMIN', 'ROLE_USER');
+
 CREATE TABLE public.User_1 (
                 User_ID BIGINT NOT NULL default nextval('user_id_seq'),
                 City_ID BIGINT NOT NULL,
