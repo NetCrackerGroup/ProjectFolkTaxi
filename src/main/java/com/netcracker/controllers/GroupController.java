@@ -85,7 +85,7 @@ public class GroupController {
     @PostMapping(value = "")
     public Map<String, Long> createGroup (  @RequestParam(name = "name") String name,
                                             @RequestParam(name = "link") String typeGroup,
-                                            final HttpServletResponse response) throws MessagingException {
+                                            final HttpServletResponse response) throws Exception {
         Group group = groupService.createGroup(name, typeGroup);
         GroupDto groupDto = groupMapper.toDto(group);
        // LOG.debug("get group with id - {}", group.getGroupId());
@@ -117,8 +117,7 @@ public class GroupController {
 
     @PostMapping("/act")
     public Map<String, GroupDto> actGroup(@RequestParam(name="groupId") Long groupId ,
-                                    @RequestParam(name="essence") String essence)
-    {
+                                    @RequestParam(name="essence") String essence) throws Exception {
         LOG.debug("Entry controller ");
         Map<String, GroupDto> response = new HashMap<String, GroupDto>() ;
         Group group;

@@ -28,6 +28,7 @@ public class MessageMapper extends AbstractMapper<Message, MessageDto> {
 
     @Autowired
     private ChatMapper chatmapper;
+
     @PostConstruct
     public void setupMapper() {
         mapper.createTypeMap(Message.class, MessageDto.class).addMapping(Message::getChat, MessageDto::setChat).setPostConverter(

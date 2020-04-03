@@ -65,7 +65,7 @@ public class UsersController {
                               @RequestParam String email,
                               @RequestParam String phoneNumber,
                               @RequestParam City city,
-                              @RequestParam String password){
+                              @RequestParam String password) throws Exception {
         LOG.debug("[ createUser(fio : {}, email : {}, phoneNumber : {}", fio, email, phoneNumber);
         Long userId = usersService.createNewUser(fio, email, phoneNumber, city, password, "ROLE_USER");
 
@@ -144,7 +144,7 @@ public class UsersController {
     }
 
     @PostMapping("/sign-up")
-    public void signUp(@RequestBody UserSecDto user) {
+    public void signUp(@RequestBody UserSecDto user) throws Exception {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersService.saveNewUser(user);
     }
