@@ -10,6 +10,7 @@ import com.netcracker.repositories.RouteRepository;
 import com.netcracker.rootsearch.LongMapper;
 import com.netcracker.services.Channels.ChatSenderService;
 import com.netcracker.services.Channels.EmailServiceImpl;
+import com.netcracker.services.Channels.FillInfoContent;
 import com.netcracker.services.InfoContentService;
 import com.netcracker.services.NotificationService;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -67,7 +69,7 @@ public class ScheduledTasks {
 
     //убери один ноль
     @Scheduled(fixedRate = 300000)
-    public void getFinishedRoutes() throws MessagingException {
+    public void getFinishedRoutes() throws Exception {
         LOG.info("[getFinishedRoutes ");
 
         String schedQuery = "select s.route_id  from schedules s\n" +
@@ -117,12 +119,16 @@ public class ScheduledTasks {
 //                            u
 //                            );
 //                }
+
+            //эту штуку убрать нужно и разаброться что вместо неё вставить
+            FillInfoContent fillInfoContent = new FillInfoContent(new HashMap<>());
             Chat chat = chatRepository.findByRoute(currentRoute);
             chatSenderService.setChat(chat);
             notificationService.notify(
                     infoContentService.getInfoContentByKey("journey_is_over"),
                     chatSenderService,
-                    currentRoute
+                    currentRoute,
+                    fillInfoContent
             );
 
 
