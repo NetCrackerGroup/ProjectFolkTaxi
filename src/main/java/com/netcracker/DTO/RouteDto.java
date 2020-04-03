@@ -13,10 +13,11 @@ public class RouteDto {
     private double[] routeBegin;
     private double[] routeEnd;
     private BigDecimal price;
-    private String driverName;
     private Date startDate;
+    private Integer routeId;
     private Integer countOfPlaces;
     private UserRouteDto userDto;
+    private int distance;
 
     public void setUserRouteDto(UserRouteDto userDto) { this.userDto = userDto; }
 
@@ -24,14 +25,6 @@ public class RouteDto {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
-    }
-
-    public void setDriverName(String name) {
-    	driverName = name;
-    }
-    
-    public String getDriverName(String name) {
-    	return driverName;
     }
     
     public Date getStartDate() {
@@ -73,4 +66,20 @@ public class RouteDto {
                 ", countOfPlaces=" + countOfPlaces +
                 '}';
     }
+
+	public Integer getRouteId() {
+		return routeId;
+	}
+
+	public void setRouteId(Integer routeId) {
+		this.routeId = routeId;
+	}
+
+	public int getDistance() {
+		return distance;
+	}
+
+	public void setDistance(int distance) {
+		this.distance = distance;
+	}
 }

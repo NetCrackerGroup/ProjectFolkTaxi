@@ -34,7 +34,8 @@ public class UserSecDto {
         this.password = password;
     }
 
-    public User toUser(City city){
+    public User toUser(City city
+    ){
         User user = new User(name, email, phoneNumber, city, password, "ROLE_USER");
         return user;
     }

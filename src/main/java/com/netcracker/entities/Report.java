@@ -26,7 +26,7 @@ public class Report {
     @Column(name = "Was_Considered")
     private Boolean wasConsidered;
 
-    @NotNull
+
     @Column (name = "Moderator_ID")
     private Long moderatorId;
 
@@ -52,6 +52,18 @@ public class Report {
         this.wasConsidered = wasConsidered;
         this.moderatorId = moderatorId;
         this.user = user;
+    }
+
+    public Report (
+            @NotNull User user,
+            @NotNull String reportReason,
+            String reportText
+          )
+    {
+        this.user = user;
+        this.reportReason = reportReason;
+        this.reportText = reportText;
+        this.wasConsidered = false;
     }
 
     public Long getReportId() {

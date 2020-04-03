@@ -1,19 +1,20 @@
 package com.netcracker.controllers;
-
-import com.netcracker.DTO.GroupDto;
-
-
-import com.netcracker.DTO.GroupDto;
-import com.netcracker.DTO.RouteDto;
+import com.netcracker.DTO.UserAccDto;
 import com.netcracker.DTO.UserDto;
 import com.netcracker.DTO.UserSecDto;
+
+
+import com.netcracker.DTO.GroupDto;
+
+
 import com.netcracker.DTO.mappers.GroupMapper;
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.User;
+import com.netcracker.repositories.UserRepository;
+
 import com.netcracker.repositories.RouteRepository;
-import com.netcracker.services.RouteService;
 
 import com.netcracker.services.UsersService;
 import org.slf4j.Logger;
@@ -21,14 +22,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.netcracker.services.UsersService;
-import com.netcracker.entities.User;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.*;
 import java.util.Collection;
 import java.util.HashMap;
@@ -45,6 +45,9 @@ public class UsersController {
 
     @Autowired
     private UsersService usersService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private RouteRepository routeRepository;
@@ -83,6 +86,16 @@ public class UsersController {
         return user;
     }
 
+    @GetMapping("/user/image")
+    public String getUserImageForNav(){
+
+        String image = usersService.getUserImageForNav();
+
+        LOG.info("image : {}", image);
+
+        return image;
+    }
+
     @GetMapping("")
     public Iterable<User> getAllUsers(){
         LOG.info("[ getAllUsers");
@@ -96,12 +109,42 @@ public class UsersController {
     @GetMapping("/{id}")
     public UserDto getUserByid(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserByid : {}", id);
-        System.out.println("`123123");
+        //System.out.println("`123123");
         UserDto user = usersService.getUserById(id);
         LOG.info("] return : {}", user);
         return user;
     }
 
+    @GetMapping("/user/{id}")
+    public UserAccDto getUserByIdForView(@PathVariable(name = "id") Long id) {
+        LOG.info("[getUserByid : {}", id);
+        UserAccDto user = usersService.getUserByIdForView(id);
+        LOG.info("] return : {}", user);
+        return user;
+    }
+
+    @GetMapping("/user/profile")
+    public UserAccDto getUserForPro() {
+        UserAccDto user = usersService.getUserForPro();
+        LOG.info("] return : {}", user);
+        return user;
+    }
+
+    @GetMapping("/{id}/city")
+    public City getUserCity(@PathVariable(name = "id") Long id){
+        LOG.info("[getUserCity : {}", id);
+        City city = usersService.getUserCity(id);
+        LOG.info("] return : {}", city);
+        return city;
+    }
+
+   /* @GetMapping("/{id}/groups")
+    public Collection<Group> getUserGroup(@PathVariable(name = "id") Long id) {
+        LOG.info("[getUserGroup : {}", id);
+        Collection<Group> group = usersService.getUserGroup(id);
+        LOG.info("] return : {}", group);
+        return group;
+    }*/
 
     @GetMapping("/routes")
     public Collection<Long> getUserRoutes() {
@@ -168,5 +211,43 @@ public class UsersController {
         response.put("hello", "hello Admin");
         return  ResponseEntity.ok(response);
     }
+
+    @PostMapping("/update-user-fio")
+    public ResponseEntity<User> updateUserFio(@RequestParam(value="fio") String fio){ return ResponseEntity.ok(usersService.updateUserFio(fio)); }
+
+    @PostMapping("/update-user-city")
+    public ResponseEntity<User> updateUserCity(@RequestParam(value="city") String city){ return ResponseEntity.ok(usersService.updateUserCity(city)); }
+
+    @PostMapping("/update-user-phone-number")
+    public ResponseEntity<User> updateUserPhoneNumber(@RequestParam(value="phoneNumber") String phoneNumber){ return ResponseEntity.ok(usersService.updateUserPhoneNumber(phoneNumber)); }
+
+    @PostMapping("/update-user-info")
+    public ResponseEntity<User> updateUserInfo(@RequestParam(value="info") String info){ return ResponseEntity.ok(usersService.updateUserInfo(info)); }
+
+    @PostMapping("/update-user-image")
+    public ResponseEntity<User> updateUserImage(@RequestParam(value="image") MultipartFile image) throws IOException { return ResponseEntity.ok(usersService.updateUserImage(image)); }
+
+    @PostMapping("/update-user-email")
+    public ResponseEntity<User> updateUserEmail(@RequestParam(value="email") String email,
+                                                @RequestParam(value="currPassword") String currPassword){
+        return ResponseEntity.ok(usersService.updateUserEmail(email, currPassword));
+
+    }
+
+
+    @PostMapping("/update-user-password")
+    public ResponseEntity<User> updateUserPassword(@RequestParam(value="oldPassword") String oldPassword,
+                                                   @RequestParam(value="currPassword") String currPassword){
+        return ResponseEntity.ok(usersService.updateUserPassword(oldPassword, currPassword));
+
+    }
+
+    @PostMapping("/rate/driver-rating")
+    public void updateUserDriverRating(@RequestParam(value="userId") Long userId,
+                                       @RequestParam(value="driverRating") Double driverRating){
+        usersService.rateDriver(userId, driverRating);
+
+    }
+
 }
 

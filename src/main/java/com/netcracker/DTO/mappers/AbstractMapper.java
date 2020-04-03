@@ -30,6 +30,7 @@ public abstract class AbstractMapper <E, D> {
     }
 
     public D toDto(E entity) {
+        //System.out.println(Objects.isNull(entity));
         return Objects.isNull(entity)
                 ? null
                 : mapper.map(entity, dtoClass);

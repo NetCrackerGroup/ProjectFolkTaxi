@@ -137,4 +137,29 @@ public class GroupController {
         return response;
     }
 
+    @PutMapping("/deleteUser")
+    public Map<String, GroupDto> deleteUserCompletely(@RequestParam(name="groupId") Long groupId, @RequestParam(name="userId")Long userId){
+        LOG.info("[ deleteUserCompletely(userId : {})", userId);
+        Map<String, GroupDto> response = new HashMap<String, GroupDto>() ;
+        Group group;
+
+        group=groupService.deleteUserCompletely(groupId,userId);
+        response.put("group", groupMapper.toDto(group));
+
+        LOG.info("]");
+        return response;
+
+    }
+
+    @PostMapping("/userismoderator")
+    public Map<String, Boolean> checkUserIsModerator(@RequestParam(name = "group_id") Long groupId) {
+        LOG.debug("#### checkUserIsModeraror #####");
+        Boolean userIsModerator = groupService.checkUserIsModeratorGroup(groupId);
+
+        Map<String, Boolean>  response = new HashMap<String, Boolean>() {{
+            put("isModerator", userIsModerator);
+        }};
+        return response;
+    }
+
 }

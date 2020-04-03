@@ -98,7 +98,6 @@ public class RouteMapper extends AbstractMapper<Route, RouteDto> {
                     User user = route.getDriverId();
                     UserRouteDto userRouteDto = userRouteMapper.toDto(user);
                     routeDto.setUserRouteDto(userRouteDto);
-                    routeDto.setDriverName(userRouteDto.getFio());
                     return routeDto;
                 }
         );
