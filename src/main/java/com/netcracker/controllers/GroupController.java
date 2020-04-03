@@ -85,7 +85,7 @@ public class GroupController {
     @PostMapping(value = "")
     public Map<String, Long> createGroup (  @RequestParam(name = "name") String name,
                                             @RequestParam(name = "link") String typeGroup,
-                                            final HttpServletResponse response) throws MessagingException {
+                                            final HttpServletResponse response) throws Exception {
         Group group = groupService.createGroup(name, typeGroup);
         GroupDto groupDto = groupMapper.toDto(group);
        // LOG.debug("get group with id - {}", group.getGroupId());
@@ -117,8 +117,7 @@ public class GroupController {
 
     @PostMapping("/act")
     public Map<String, GroupDto> actGroup(@RequestParam(name="groupId") Long groupId ,
-                                    @RequestParam(name="essence") String essence)
-    {
+                                    @RequestParam(name="essence") String essence) throws Exception {
         LOG.debug("Entry controller ");
         Map<String, GroupDto> response = new HashMap<String, GroupDto>() ;
         Group group;
@@ -134,6 +133,31 @@ public class GroupController {
                 response.put("group", groupMapper.toDto(group));
                 break;
         }
+        return response;
+    }
+
+    @PutMapping("/deleteUser")
+    public Map<String, GroupDto> deleteUserCompletely(@RequestParam(name="groupId") Long groupId, @RequestParam(name="userId")Long userId){
+        LOG.info("[ deleteUserCompletely(userId : {})", userId);
+        Map<String, GroupDto> response = new HashMap<String, GroupDto>() ;
+        Group group;
+
+        group=groupService.deleteUserCompletely(groupId,userId);
+        response.put("group", groupMapper.toDto(group));
+
+        LOG.info("]");
+        return response;
+
+    }
+
+    @PostMapping("/userismoderator")
+    public Map<String, Boolean> checkUserIsModerator(@RequestParam(name = "group_id") Long groupId) {
+        LOG.debug("#### checkUserIsModeraror #####");
+        Boolean userIsModerator = groupService.checkUserIsModeratorGroup(groupId);
+
+        Map<String, Boolean>  response = new HashMap<String, Boolean>() {{
+            put("isModerator", userIsModerator);
+        }};
         return response;
     }
 

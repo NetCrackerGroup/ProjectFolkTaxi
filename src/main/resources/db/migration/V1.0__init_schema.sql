@@ -18,8 +18,6 @@ CREATE TABLE public.Driver_Rating (
                 CONSTRAINT driver_rating_pk PRIMARY KEY (User_ID)
 );
 
-
-
 CREATE SEQUENCE group_id_seq;
 
 CREATE TABLE public.Group_1 (
@@ -43,6 +41,7 @@ CREATE SEQUENCE user_id_seq
 start with 7;
 
 CREATE TYPE Role_names AS ENUM ( 'ROLE_ADMIN', 'ROLE_USER');
+
 CREATE TABLE public.User_1 (
                 User_ID BIGINT NOT NULL default nextval('user_id_seq'),
                 City_ID BIGINT NOT NULL,
@@ -107,7 +106,7 @@ CREATE TABLE public.Group_Moderator (
 
 
 CREATE SEQUENCE route_id_seq
-start with 1007;
+start with 1006;
 
 CREATE TABLE public.Route (
                 Route_ID BIGINT NOT NULL default nextval('route_id_seq'),
@@ -120,7 +119,7 @@ CREATE TABLE public.Route (
 );
 
 CREATE SEQUENCE schedule_id_seq
-start with 1007;
+start with 1000;
 
 CREATE TABLE public.Schedule (
                 Schedule_ID BIGINT NOT NULL default nextval('schedule_id_seq'),
@@ -129,8 +128,7 @@ CREATE TABLE public.Schedule (
                 CONSTRAINT schedule_pk PRIMARY KEY (Schedule_ID)
 );
 
-CREATE SEQUENCE chat_id_seq
-start with 3;
+CREATE SEQUENCE chat_id_seq;
 
 CREATE TABLE public.Chat (
                 Chat_ID BIGINT NOT NULL default nextval('chat_id_seq'),
@@ -140,7 +138,7 @@ CREATE TABLE public.Chat (
 );
 
 CREATE SEQUENCE message_id_seq
-start with 13;
+start with 15;
 
 CREATE TABLE public.Message (
                 Message_ID BIGINT NOT NULL default nextval('message_id_seq'),
@@ -151,8 +149,7 @@ CREATE TABLE public.Message (
                 CONSTRAINT message_pk PRIMARY KEY (Message_ID)
 );
 
-CREATE SEQUENCE journey_id_seq
-start with 7;
+CREATE SEQUENCE journey_id_seq;
 
 CREATE TABLE public.Journey (
                 Journey_ID BIGINT NOT NULL default nextval('journey_id_seq'),

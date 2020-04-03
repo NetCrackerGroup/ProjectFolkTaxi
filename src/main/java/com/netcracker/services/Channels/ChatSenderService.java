@@ -1,10 +1,7 @@
 package com.netcracker.services.Channels;
 
 import com.netcracker.config.DomenUserConfig;
-import com.netcracker.entities.Chat;
-import com.netcracker.entities.InfoContent;
-import com.netcracker.entities.Message;
-import com.netcracker.entities.Recipient;
+import com.netcracker.entities.*;
 import com.netcracker.models.DomenUser;
 import com.netcracker.repositories.MessageRepository;
 import com.netcracker.repositories.UserRepository;
@@ -15,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import java.time.LocalDate;
+import java.util.Collection;
 
 @Component
 public class ChatSenderService implements Deliverable {
@@ -53,7 +51,7 @@ public class ChatSenderService implements Deliverable {
 
 
     @Override
-    public void deliver(InfoContent message, Recipient recipient) throws MessagingException {
+    public void deliver(InfoContent message, Recipient recipient , Collection<InfoMap> infoMaps) throws MessagingException {
         LOG.debug("Delivere info by chat");
         Message mes = new Message();
         LOG.debug("messageRepository : {}" , messageRepository);

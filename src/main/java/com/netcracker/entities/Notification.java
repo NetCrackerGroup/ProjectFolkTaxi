@@ -3,7 +3,9 @@ package com.netcracker.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 import java.util.Objects;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "Notifications")
@@ -21,29 +23,47 @@ public class Notification {
     @JoinColumn (name = "Info_ID")
     private InfoContent infoContent;
 
-    @NotNull
-    @Column(name = "delivery_channel")
-    private String channel;
+
+    @ManyToMany(fetch = FetchType.LAZY )
+    @JoinTable(
+            name = "infotonotification",
+            joinColumns = { @JoinColumn(name = "notification_id") },
+            inverseJoinColumns = { @JoinColumn(name = "infomap_id") }
+    )
+    Collection<InfoMap> templatevalues;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "User_ID")
     private User user;
 
+    @Column(name = "time")
+    private Timestamp timestamp;
 
+    @Column(name="Was_Watched")
+    @NotNull
+    private boolean wasWatched;
+
+    public Notification(@NotNull InfoContent infoContent, Collection<InfoMap> templatevalues, @NotNull User user) {
+        this.infoContent = infoContent;
+        this.templatevalues = templatevalues;
+        this.user = user;
+    }
 
     public Notification() {
     }
 
-    public Notification(    @NotNull InfoContent infoContent,
-                            @NotNull String deliveryChannel
+    public Notification(
+            @NotNull InfoContent infoContent,
+            @NotNull String deliveryChannel
     ) {
         this.infoContent = infoContent;
     }
 
-    public Notification(    @NotNull InfoContent infoContent,
-                            @NotNull String deliveryChannel,
-                            @NotNull User user
+    public Notification(
+            @NotNull InfoContent infoContent,
+            @NotNull String deliveryChannel,
+            @NotNull User user
     ) {
         this.infoContent = infoContent;
         this.user = user;
@@ -67,37 +87,35 @@ public class Notification {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Notification that = (Notification) o;
-        return Objects.equals(getNotificationId(), that.getNotificationId()) &&
-                Objects.equals(infoContent, that.infoContent) &&
-                Objects.equals(getChannel(), that.getChannel()) &&
-                Objects.equals(getUser(), that.getUser());
+    public InfoContent getInfoContent() {
+        return infoContent;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getNotificationId(), infoContent, getChannel(), getUser());
+    public void setInfoContent(InfoContent infoContent) {
+        this.infoContent = infoContent;
     }
 
-    @Override
-    public String toString() {
-        return "Notification{" +
-                "notificationId=" + notificationId +
-                ", text='" + infoContent.getText() + '\'' +
-                ", channel='" + channel + '\'' +
-                ", user=" + user +
-                '}';
+    public Collection<InfoMap> getTemplatevalues() {
+        return templatevalues;
     }
 
-    public String getChannel() {
-        return channel;
+    public void setTemplatevalues(Collection<InfoMap> templatevalues) {
+        this.templatevalues = templatevalues;
     }
 
-    public void setChannel(String channel) {
-        this.channel = channel;
+    public boolean isWasWatched() {
+        return wasWatched;
+    }
+
+    public void setWasWatched(boolean wasWatched) {
+        this.wasWatched = wasWatched;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 }
