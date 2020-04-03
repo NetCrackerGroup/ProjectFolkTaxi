@@ -1,17 +1,7 @@
 package com.netcracker.folktaxi;
 
-import com.netcracker.entities.City;
-import com.netcracker.repositories.CityRepository;
 
-import static java.lang.System.out;
-
-
-import com.netcracker.entities.Notification;
 import com.netcracker.entities.Report;
-import com.netcracker.entities.User;
-import com.netcracker.repositories.NotifacationRepository;
-import com.netcracker.repositories.ReportRepository;
-import com.netcracker.repositories.UserRepository;
 
 public class MainHibernate {
 

@@ -1,0 +1,1 @@
+ALTER TABLE Notifications ADD was_watched BOOLEAN NOT NULL default false;

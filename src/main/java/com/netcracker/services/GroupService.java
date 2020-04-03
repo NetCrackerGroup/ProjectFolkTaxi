@@ -1,5 +1,6 @@
 package com.netcracker.services;
 
+import com.netcracker.Application;
 import com.netcracker.DTO.GroupDto;
 import com.netcracker.entities.Chat;
 import com.netcracker.DTO.mappers.GroupMapper;
@@ -10,8 +11,10 @@ import com.netcracker.models.CategoryNotification;
 import com.netcracker.repositories.ChatRepository;
 import com.netcracker.repositories.GroupRepository;
 import com.netcracker.repositories.UserRepository;
+import com.netcracker.services.Channels.ApplicationSenderService;
 import com.netcracker.services.Channels.ChatSenderService;
 import com.netcracker.services.Channels.EmailServiceImpl;
+import com.netcracker.services.Channels.FillInfoContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,8 @@ import org.bouncycastle.util.encoders.Hex;
 import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -42,6 +47,7 @@ public class GroupService {
     private InfoContentService infoContentService;
     private ChatSenderService chatSenderService;
     private UserRepository userRepository;
+    private ApplicationSenderService applicationSenderService;
 
     @Autowired
     public void setEmailService(EmailServiceImpl emailService) {
@@ -57,7 +63,8 @@ public class GroupService {
                         NotificationService notificationService,
                         InfoContentService infoContentService,
                         ChatSenderService chatSenderService,
-                        UserRepository userRepository
+                        UserRepository userRepository,
+                        ApplicationSenderService applicationSenderService
     ) {
         this.groupRepository = groupRepository;
         this.typeGroupService = typeGroupService;
@@ -67,6 +74,7 @@ public class GroupService {
         this.infoContentService = infoContentService;
         this.chatSenderService = chatSenderService;
         this.userRepository = userRepository;
+        this.applicationSenderService = applicationSenderService;
     }
 
 
@@ -74,7 +82,7 @@ public class GroupService {
      *Если существует группа с переданным именем, то метод вернет null
      *В ином случае вернет группу.
      */
-    public Group createGroup(String name, String nameType) throws MessagingException {
+    public Group createGroup(String name, String nameType) throws Exception {
         LOG.debug("Мы тут");
         if (groupRepository.findGroupByGroupName(name).isPresent()) {
             LOG.debug("Сюда ?");
@@ -103,13 +111,7 @@ public class GroupService {
         Chat chat = new Chat(null, group);
         chat.setGroup(group);
         chatRepository.save(chat);
-
         chatSenderService.setChat(chat);
-        notificationService.notify(
-            infoContentService.getInfoContentByKey("user_create_group"),
-            chatSenderService,
-            group
-        );
 
         LOG.debug("{}", group.toString());
         return group;
@@ -117,9 +119,7 @@ public class GroupService {
     }
 
     public Group addUserInGroup (String link){
-
         Optional<Group> group = groupRepository.findGroupByCityLink(link);
-
         if (group.isPresent()) {
             group.get().getUsers().add(authUserComponent.getUser());
         }
@@ -153,26 +153,33 @@ public class GroupService {
         return group.get();
     }
 
-    public Group addUserInGroup (Long groupId){
+    public Group addUserInGroup (Long groupId) throws Exception {
         User user = authUserComponent.getUser();
         Optional<Group> group = groupRepository.findById(groupId);
         Collection<User> notUsers = group.get().getNotUsers();
         Collection<Long> idNotUsers = new ArrayList<Long>();
-        for ( User notUser: group.get().getNotUsers()){
+        /*for ( User notUser: group.get().getNotUsers()){
             idNotUsers.add(notUser.getUserId());
         }
         boolean contain = false;
         if(idNotUsers.contains(authUserComponent.getUser().getUserId()))
         {
             contain = true;
-        }
+        }*/
         LOG.debug("group : {}", group.get());
         if (group.isPresent()) {
-            if (contain == false) {
-                group.get().getUsers().add(user);
-                groupRepository.save(group.get());
-                LOG.debug("users group : {}", group.get().getUsers());
-            }
+            group.get().getUsers().add(user);
+            Map<String, String> maps = new HashMap<String, String>();
+            maps.put("groupName", group.get().getGroupName());
+            FillInfoContent fillInfoContent = new FillInfoContent(maps);
+            notificationService.notify(
+                    infoContentService.getInfoContentByKey("user_entered_group"),
+                    applicationSenderService,
+                    user,
+                    fillInfoContent
+            );
+            groupRepository.save(group.get());
+            LOG.debug("users group : {}", group.get().getUsers());
         }
         return group.get();
     }

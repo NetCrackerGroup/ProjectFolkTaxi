@@ -16,6 +16,9 @@ import com.netcracker.repositories.CityRepository;
 import com.netcracker.repositories.DriverRatingRepository;
 import com.netcracker.repositories.UserRepository;
 
+import com.netcracker.services.Channels.ChatSenderService;
+import com.netcracker.services.Channels.EmailServiceImpl;
+import com.netcracker.services.Channels.FillInfoContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +60,14 @@ public class UsersService {
     @Lazy
     private PasswordEncoder bCryptPasswordEncoder;
     private AuthUserComponent authUserComponent;
+    private NotificationService notificationService;
+    private EmailServiceImpl emailService;
+    private InfoContentService infoContentService;
 
+    @Autowired
+    public void setInfoContentService(InfoContentService infoContentService) {
+        this.infoContentService = infoContentService;
+    }
 
     private RouteMapper routeMapper;
     private GroupMapper groupMapper;
@@ -65,10 +75,14 @@ public class UsersService {
     @Autowired
     public UsersService(    UserRepository usersRepository,
                             UserMapper userMapper,
-                            AuthUserComponent authUserComponent) {
+                            AuthUserComponent authUserComponent,
+                            NotificationService notificationService,
+                            EmailServiceImpl emailService) {
         this.usersRepository = usersRepository;
         this.userMapper = userMapper;
         this.authUserComponent = authUserComponent;
+        this.notificationService = notificationService;
+        this.emailService = emailService;
     }
 
     @Autowired
@@ -77,11 +91,16 @@ public class UsersService {
 
 
 
-    public Long createNewUser(String fio, String email, String phoneNumber, City city, String password, String securityRole){
+    public Long createNewUser(String fio, String email, String phoneNumber, City city, String password, String securityRole) throws Exception {
         LOG.debug("[ createUser(fio : {}, email : {}, phoneNumber : {}", fio, email, phoneNumber);
 
         User user = new User(fio, email, phoneNumber, city, password, securityRole);
         DriverRating driverRating = new DriverRating(user.getUserId());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("username", user.getFio());
+        FillInfoContent fillInfoContent = new FillInfoContent(map);
+        notificationService.notify(infoContentService.getInfoContentByKey("user_registered"), emailService, user, fillInfoContent);
         usersRepository.save(user);
         driverRatingRepository.save(driverRating);
 
@@ -89,10 +108,14 @@ public class UsersService {
         return user.getUserId();
     }
 
-    public Long saveNewUser(UserSecDto userDto) {
+    public Long saveNewUser(UserSecDto userDto) throws Exception {
         LOG.debug("[ saveNewUser(fio : {}", userDto);
         Optional<City> city = cityRepository.findById((long) userDto.getCityId());
         User user = userDto.toUser(city.get());
+        Map<String, String> map = new HashMap<>();
+        map.put("username", user.getFio());
+        FillInfoContent fillInfoContent = new FillInfoContent(map);
+        notificationService.notify(infoContentService.getInfoContentByKey("user_registered"), emailService, user, fillInfoContent);
         usersRepository.save(user);
 
         LOG.debug("] (userId : {})", user.getUserId());
@@ -277,6 +300,10 @@ public class UsersService {
     public City getUserCity(Long userId) {
         Optional<User> possible_user = usersRepository.findById(userId);
         return possible_user.isPresent() ? possible_user.get().getCityId() : null;
+    }
+    public User getUserByFIO(String fio) {
+        LOG.debug("getUserByUsername(username: {})", fio);
+        return usersRepository.findUserByFio(fio);
     }
 
     /*public Collection<Group> getUserGroup(Long userId) {
