@@ -19,7 +19,8 @@ public class RouteDto {
     private Integer countOfPlaces;
     private UserRouteDto userDto;
     private int distance;
-
+    private int optimality;
+    
     public void setUserRouteDto(UserRouteDto userDto) { this.userDto = userDto; }
 
     public UserRouteDto getUserRouteDto() { return userDto; }
@@ -91,5 +92,13 @@ public class RouteDto {
 
 	public void setDistance(int distance) {
 		this.distance = distance;
+	}
+
+	public int getOptimality() {
+		return optimality;
+	}
+
+	public void setOptimality(int optimality) {
+		this.optimality = optimality;
 	}
 }

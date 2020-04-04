@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -43,17 +44,31 @@ public class SecondRouteFinder implements FindRoute{
 	DataSource dataSource;
 	
 	@Override
-	public List<Route> findRoutes(Double stXcord, Double stYcord, Double enXcord, Double enYcord, 
-			Integer stRadius, Integer enRadius, Integer dayOfWeek) {
+	public HashMap<InfoAboutRoute, Route> findRoutes(Double stXcord, Double stYcord, Double enXcord, Double enYcord, 
+			Integer stRadius, Integer enRadius, Integer dayOfWeek, String time) {
 		
 		try {
 			ArrayList<Long> ids;
-	        ArrayList<Route> res = new ArrayList<Route>();	
+	        HashMap<InfoAboutRoute, Route> res = new HashMap<InfoAboutRoute, Route>();	
 	
+	        /*
+	         * AND (S.time_of_journey - CAST('19:00' AS time)) < CAST('24:00' AS interval)
+			   AND (CAST('19:00' AS time) - S.time_of_journey) < CAST('24:00' AS interval)
+	         */
+	        
 		      String schedQuery = " " 
-	        		+ "  SELECT  S.route_id\r\n"
-	        		+ "  	 FROM  Schedules S\r\n"  
-	          		+ "  	 WHERE ? & CAST(S.schedule_day AS INT) <> 0"
+	        		+ "  SELECT  S.route_id,\r\n"
+	        		+ "      ST_Distance(\r\n" 
+	        		+ "          R.Route_begin,\r\n" 
+	        		+ "          ST_SetSRID(ST_MakePoint(?, ?), 4326)::geography\r\n" 
+	        		+ "        ) AS Distance,\r\n" 
+	        		+ "        TO_CHAR(S.time_of_journey - CAST(? AS time), 'HH24:MI:SS') AS timeUntilStart"
+	        		+ "  	 FROM  Schedules S,\r\n"
+	        		+ "            Routes R"  
+	          		+ "  	 WHERE ? & CAST(S.schedule_day AS INT) <> 0\r\n" 
+	                + "        AND (S.time_of_journey - CAST( ? AS time)) < CAST( ? AS interval)\r\n"
+	          		+ "        AND (CAST( ? AS time) - S.time_of_journey) < CAST( ? AS interval)\r\n"
+	          		+ "        AND (R.route_id = S.route_id)"
 	          		+ "        AND S.route_id IN ("
 	          		+ "  		SELECT  R.route_id\r\n"
 	        		+ "  	 		FROM  Routes R\r\n"  
@@ -72,41 +87,50 @@ public class SecondRouteFinder implements FindRoute{
 		      JdbcTemplate template = new JdbcTemplate(dataSource);
 			 
 		      
-		      List<Long> idsFromQuery = template.query(schedQuery, 
+		      List<InfoAboutRoute> infoFromQuery = template.query(schedQuery, 
 		    		  new PreparedStatementSetter() {
 		    	  		public void setValues(PreparedStatement preparedStatement) throws SQLException{
-		    	  			preparedStatement.setInt(1, dayOfWeek);
-		    	  			preparedStatement.setDouble(2, stXcord);
-		    	  			preparedStatement.setDouble(3, stYcord);
-		    	  			preparedStatement.setDouble(4, stRadius);
-		    	  			preparedStatement.setDouble(5, enXcord);
-		    	  			preparedStatement.setDouble(6, enYcord);
-		    	  			preparedStatement.setDouble(7, enRadius);
+		    	  			
+		    	  			preparedStatement.setDouble(1, stXcord);
+		    	  			preparedStatement.setDouble(2, stYcord);
+		    	  			
+		    	  			if(time != "") {
+		    	  				preparedStatement.setString(3, time);
+			    	  			preparedStatement.setString(5, time);
+			    	  			preparedStatement.setString(6, "01:00");
+			    	  			preparedStatement.setString(7, time);
+			    	  			preparedStatement.setString(8, "01:00");
+		    	  			}
+		    	  			else {
+		    	  				preparedStatement.setString(3, "00:00");
+		    	  				preparedStatement.setString(5, "00:00");
+			    	  			preparedStatement.setString(6, "24:00");
+			    	  			preparedStatement.setString(7, "00:00");
+			    	  			preparedStatement.setString(8, "24:00");
+		    	  			}
+		    	  			
+		    	  			preparedStatement.setInt(4, dayOfWeek);
+		    	  			
+		    	  			preparedStatement.setDouble(9, stXcord);
+		    	  			preparedStatement.setDouble(10, stYcord);
+		    	  			preparedStatement.setDouble(11, stRadius);
+		    	  			preparedStatement.setDouble(12, enXcord);
+		    	  			preparedStatement.setDouble(13, enYcord);
+		    	  			preparedStatement.setDouble(14, enRadius);
 		    	  			
 		    	  		}
 		      		},
-		    		  new LongMapper()
+		    		  new RouteInfoMapper()
 		    		  ); 
 		      
-		      
-		      
-		      ids = new ArrayList<Long>(idsFromQuery);
-		      
-		      
-		      
-		      
-	          for(Long id: ids) {
+	          for(InfoAboutRoute info: infoFromQuery) {
 	        	 
-	        	  res.add(routeRep.findRouteByRouteId(id));
+	        	  res.put(info, routeRep.findRouteByRouteId(info.getRouteId()));
 	          }
-	      
 	          return res;
 	          
 	      } catch (Exception e) {
-	    	  
-	          System.out.println(e);
-	          
-	          
+	    	  System.out.println(e);
 	          return null;
 	      } 
 	}

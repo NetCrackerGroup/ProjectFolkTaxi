@@ -1,3 +1,4 @@
+
 ALTER TABLE Notifications DROP COLUMN was_watched;
 ALTER TABLE Notifications DROP COLUMN text;
 ALTER TABLE Notifications DROP COLUMN delivery_channel;
@@ -21,3 +22,4 @@ create table public.InfoMap (
 
 
 
+>>>>>>> origin/master
