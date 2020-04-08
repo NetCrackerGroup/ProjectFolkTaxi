@@ -7,7 +7,7 @@ import com.netcracker.entities.User;
 import com.netcracker.repositories.ChatRepository;
 import com.netcracker.repositories.JourneyRepository;
 import com.netcracker.repositories.RouteRepository;
-import com.netcracker.rootsearch.LongMapper;
+import com.netcracker.repositories.UserRepository;
 import com.netcracker.services.Channels.ChatSenderService;
 import com.netcracker.services.Channels.EmailServiceImpl;
 import com.netcracker.services.Channels.FillInfoContent;
@@ -23,6 +23,7 @@ import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import javax.sql.DataSource;
@@ -64,11 +65,14 @@ public class ScheduledTasks {
     @Autowired
     DataSource dataSource;
 
+    @Autowired
+    UserRepository userRepository;
     private static final Logger LOG = LoggerFactory.getLogger(ScheduledTasks.class);
 
 
     //убери один ноль
     @Scheduled(fixedRate = 300000)
+    @Transactional
     public void getFinishedRoutes() throws Exception {
         LOG.info("[getFinishedRoutes ");
 
@@ -107,9 +111,10 @@ public class ScheduledTasks {
         for (Long id : ids) {
             Route currentRoute = routeRepository.findRouteByRouteId(id);
             Collection<User> users = currentRoute.getUsers();
-            Journey journey = new Journey(date, users, currentRoute, currentRoute.getDriverId());
-            currentRoute.setUsers(users);
+            Journey journey = new Journey(date, new ArrayList<User>(), currentRoute, currentRoute.getDriverId());
             journeyRepository.save(journey);
+            journey.setUsers(users);
+
 
 //                for (User u:
 //                     users) {

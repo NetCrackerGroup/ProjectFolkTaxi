@@ -86,7 +86,12 @@ public class Journey {
 
     public Collection<User> getUsers() { return users; }
 
-    public void setUsers(Collection<User> users) { this.users = users; }
+    public void setUsers(Collection<User> users) {
+        for (User u: users) {
+            u.setOneMoreJourney(this);
+        }
+
+    }
 
     /*public User getDriverId() {
         return driverId;
@@ -111,5 +116,9 @@ public class Journey {
     @Override
     public int hashCode() {
         return Objects.hash(journeyId);
+    }
+
+    public void setUser(User user) {
+            this.users.add(user);
     }
 }

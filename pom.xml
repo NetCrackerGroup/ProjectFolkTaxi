@@ -17,6 +17,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+				</configuration>
 			</plugin>
 			<!-- plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -36,28 +39,28 @@
                       </execution>
                  </executions>
         </plugin -->
-			<plugin>
-					<groupId>com.googlecode.flyway</groupId>
-					<artifactId>flyway-maven-plugin</artifactId>
-					<version>1.6.1</version>
-					<configuration>
-						<user>postgres</user>
-						<password>root</password>
-						<driver>org.postgresql.Driver</driver>
-						<url>jdbc:postgresql://localhost:5432/folktaxi</url>
-						<baseDir>db/migration</baseDir>
-					</configuration>
-					<executions>
-						<execution>
-							<id>flyway database migration</id>
-							<phase>compile</phase>
-							<goals>
-								<goal>clean</goal>
-								<goal>migrate</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
+<!--			<plugin>-->
+<!--					<groupId>com.googlecode.flyway</groupId>-->
+<!--					<artifactId>flyway-maven-plugin</artifactId>-->
+<!--					<version>1.6.1</version>-->
+<!--					<configuration>-->
+<!--						<user>postgres</user>-->
+<!--						<password>root</password>-->
+<!--						<driver>org.postgresql.Driver</driver>-->
+<!--						<url>jdbc:postgresql://localhost:5432/folktaxi</url>-->
+<!--						<baseDir>db/migration</baseDir>-->
+<!--					</configuration>-->
+<!--					<executions>-->
+<!--						<execution>-->
+<!--							<id>flyway database migration</id>-->
+<!--							<phase>compile</phase>-->
+<!--							<goals>-->
+<!--								<goal>clean</goal>-->
+<!--								<goal>migrate</goal>-->
+<!--							</goals>-->
+<!--						</execution>-->
+<!--					</executions>-->
+<!--				</plugin>-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -66,6 +69,7 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -84,6 +88,11 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
 			</plugin>
 		</plugins>
 	</build>

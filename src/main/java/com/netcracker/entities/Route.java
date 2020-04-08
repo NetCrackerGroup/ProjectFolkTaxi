@@ -4,6 +4,7 @@ package com.netcracker.entities;
 import com.netcracker.services.Channels.Deliverable;
 import org.hibernate.validator.constraints.Range;
 import org.locationtech.jts.geom.Point;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -44,7 +45,7 @@ public class Route extends Recipient {
     @Column(name = "price")
     private BigDecimal price;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "driver_id")
     private User driverId;
 
@@ -55,6 +56,7 @@ public class Route extends Recipient {
     public void setUsers(Collection<User> users) {
         this.users = users;
     }
+
 
     public Collection<User> getUsers() {
         return users;
@@ -173,11 +175,13 @@ public class Route extends Recipient {
     public String toString() {
         return "Route{" +
                 "routeId=" + routeId +
-                ", city='" + city  +
-                ", routeBegin='" + routeBegin +
+                ", city=" + city +
+                ", routeBegin=" + routeBegin +
                 ", routeEnd=" + routeEnd +
                 ", price=" + price +
-                ", driver=" + driverId +
+                ", driverId=" + driverId +
+                ", countOfPlaces=" + countOfPlaces +
+                ", users=" + users +
                 '}';
     }
 }

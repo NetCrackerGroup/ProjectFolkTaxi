@@ -1,8 +1,7 @@
 package com.netcracker.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
@@ -37,10 +36,29 @@ public class User extends Recipient{
 	@Column(name = "phone_number")
 	private String phoneNumber;
 	
-	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "users")
+	@MapKey(name="routeId")
 	Collection<Route> routes;
+	public Collection<Journey> getJourneys() {
+		return journeys;
+	}
+
+	public void setJourney(Collection<Journey> journey) {
+		this.journeys = journey;
+	}
+	public void setOneMoreJourney(Journey journey) {
+
+		if (!getJourneys().contains(journey)) {
+			this.journeys.add(journey);
+			journey.setUser(this);
+		}
+	}
+
+	@ManyToMany(mappedBy = "users",cascade={CascadeType.ALL}, fetch = FetchType.LAZY)
+	Collection<Journey> journeys;
   
-    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "users")
+	@MapKey(name="groupId")
     Collection<Group> groups;
 
     @Column(name = "Passenger_Rating")
