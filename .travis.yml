@@ -5,14 +5,14 @@ sudo: false
 services:
 - postgresql
 addons:
-  sshknownhosts:
-  - 142.93.130.144
+  ssh_known_hosts: 142.93.130.144
 before_install:
 - openssl aes-256-cbc -K $encrypted_9bcb96b811bf_key -iv $encrypted_9bcb96b811bf_iv
   -in deploy/deploy.enc -out /root/.ssh/authorized_keys  -d
-- psql -c 'create database folktaxi_test;' -U postgres
 -  eval "$(ssh-agent -s)"
 - chmod 777 /root/.ssh/authorized_keys
+ - ssh-add /root/.ssh/authorized_keys
+- psql -c 'create database folktaxi_test;' -U postgres
 test:
   adapter: postgresql
   database: folktaxi_test
