@@ -8,8 +8,8 @@ addons:
   sshknownhosts:
   - 142.93.130.144
 before_install:
-- openssl aes-256-cbc -K $encrypted_9430ea8d29f4_key -iv $encrypted_9430ea8d29f4_iv
-  -in deploy/deploy.enc -out deploy/folktaxi -d
+- openssl aes-256-cbc -K $encrypted_3f086151f6a2_key -iv $encrypted_3f086151f6a2_iv
+  -in deploy/deploy.enc -out deploy/23 -d
 - psql -c 'create database folktaxi_test;' -U postgres
 test:
   adapter: postgresql
