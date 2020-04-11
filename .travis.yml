@@ -30,4 +30,4 @@ env:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/var/deploy/<root>@<142.93.130.144>:/var/deploy/
+  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/var/deploy/ root@142.93.130.144:/var/deploy/
