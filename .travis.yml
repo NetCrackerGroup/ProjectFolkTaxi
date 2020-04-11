@@ -1,35 +1,29 @@
-# используем язык java. Travis CI поддерживает другие языки тоже.
 language: java
-#
 jdk:
-    - openjdk11
+- openjdk11
 sudo: false
 services:
-  - postgresql
-
+- postgresql
+addons:
+  sshknownhosts:
+  - 142.93.130.144
 before_install:
-  - psql -c 'create database folktaxi_test;' -U postgres
-
+- openssl aes-256-cbc -K $encrypted_e31224239218_key -iv $encrypted_e31224239218_iv
+  -in deploy/deploy.enc -out deploy/deploy -d
+- psql -c 'create database folktaxi_test;' -U postgres
 test:
   adapter: postgresql
   database: folktaxi_test
-
 cache:
   directories:
-    - $HOME/.m2
-
-## после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
-## Здесь используется сторонни сервис https://codecov.io/
+  - "$HOME/.m2"
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
-
-
+- bash <(curl -s https://codecov.io/bash)
 notifications:
   slack: ncvrneducatio-ilo8811:wiR4y5A4El7Sd2QxjiY9DkCN
-#    on_success: always # default: change
-#    on_failure: always # default: always
-
-
 env:
   global:
-    - CODECOV_TOKEN="433e8117-a7da-47a3-b437-58e2084e91d4"
+  - CODECOV_TOKEN="433e8117-a7da-47a3-b437-58e2084e91d4"
+  - REMOTEAPPDIR=/var/deploy/
+  - REMOTEUSER=root
+  - REMOTEHOST=142.93.130.144
