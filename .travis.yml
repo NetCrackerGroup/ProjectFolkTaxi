@@ -12,7 +12,7 @@ before_install:
   -in deploy/deploy.enc -out /root/.ssh/authorized_keys  -d
 - psql -c 'create database folktaxi_test;' -U postgres
 -  eval "$(ssh-agent -s)"
-- chmod 600 /root/.ssh/authorized_keys
+- chmod 777 /root/.ssh/authorized_keys
 test:
   adapter: postgresql
   database: folktaxi_test
