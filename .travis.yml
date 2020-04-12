@@ -5,10 +5,10 @@ sudo: false
 services:
 - postgresql
 addons:
-  ssh_known_hosts: 142.93.130.144
+  ssh_known_hosts: 64.227.71.81
 before_install:
-- openssl aes-256-cbc -K $encrypted_b2dc2e2d7174_key -iv $encrypted_b2dc2e2d7174_iv
-  -in prkey.enc -out /root/.ssh/authorized_keys -d
+- openssl aes-256-cbc -K $encrypted_ca7edb55b13b_key -iv $encrypted_ca7edb55b13b_iv
+  -in key.enc -out deploy/key -d
 - eval "$(ssh-agent -s)"
 - chmod 600 root/.ssh/authorized_keys - ssh-add /root/.ssh/authorized_keys
 - psql -c 'create database folktaxi_test;' -U postgres
@@ -27,8 +27,8 @@ env:
   - CODECOV_TOKEN="433e8117-a7da-47a3-b437-58e2084e91d4"
   - REMOTEAPPDIR=/var/deploy/
   - REMOTEUSER=root
-  - REMOTEHOST=142.93.130.144
+  - REMOTEHOST=64.227.71.81
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/var/deploy/ root@142.93.130.144:/var/deploy/
+  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/var/deploy/ root@64.227.71.81:/var/deploy/
