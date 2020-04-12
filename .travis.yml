@@ -8,10 +8,10 @@ addons:
   ssh_known_hosts: 142.93.130.144
 before_install:
 - openssl aes-256-cbc -K $encrypted_9356773b9a91_key -iv $encrypted_9356773b9a91_iv
-  -in okopen.enc -out /deploy/okopen -d
+  -in okopen.enc -out /root/deploy/okopen -d
 - eval "$(ssh-agent -s)"
-- chmod 600 /deploy/okopen
-- ssh-add /deploy/okopen
+- chmod 600 /root/deploy/okopen
+- ssh-add /root/deploy/okopen
 - psql -c 'create database folktaxi_test;' -U postgres
 test:
   adapter: postgresql
