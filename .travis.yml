@@ -7,8 +7,8 @@ services:
 addons:
   ssh_known_hosts: 142.93.130.144
 before_install:
-- openssl aes-256-cbc -K $encrypted_0ddd2445e49f_key -iv $encrypted_0ddd2445e49f_iv
-  -in travis_rsa.enc -out travis_rsa -d
+- openssl aes-256-cbc -K $encrypted_9356773b9a91_key -iv $encrypted_9356773b9a91_iv
+  -in okopen.enc -out deploy/okopen -d
 - eval "$(ssh-agent -s)"
 - chmod 600 root/.ssh/authorized_keys - ssh-add /root/.ssh/authorized_keys
 - psql -c 'create database folktaxi_test;' -U postgres
