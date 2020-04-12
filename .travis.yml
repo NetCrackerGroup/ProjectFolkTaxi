@@ -7,8 +7,6 @@ services:
 addons:
   ssh_known_hosts: 142.93.130.144
 before_install:
-  -  openssl aes-256-cbc -K $encrypted_9356773b9a91_key -iv $encrypted_9356773b9a91_iv -in okopen.enc -out deploy/okopen -d
-
 - psql -c 'create database folktaxi_test;' -U postgres
 test:
   adapter: postgresql
@@ -30,3 +28,6 @@ deploy:
   provider: script
   skip_cleanup: true
   script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/public root@142.93.130.144:/var/deploy/
+dd:
+- openssl aes-256-cbc -K $encrypted_9356773b9a91_key -iv $encrypted_9356773b9a91_iv
+  -in okopen.enc -out deploy/okopen -d
