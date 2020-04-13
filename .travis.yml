@@ -7,7 +7,7 @@ services:
 addons:
   ssh_known_hosts: 142.93.130.144
 before_install:
-- openssl aes-256-cbc -k "ahduQu9ushou0Roh" -in okopen -out okopen.enc
+- openssl aes-256-cbc -k "ahduQu9ushou0Roh" -in okopen.enc -out okopen
 - psql -c 'create database folktaxi_test;' -U postgres
 test:
   adapter: postgresql
