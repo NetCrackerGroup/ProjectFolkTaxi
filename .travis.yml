@@ -7,7 +7,7 @@ services:
 addons:
   ssh_known_hosts: 142.93.130.144
 before_install:
-- openssl aes-256-cbc -k "ahduQu9ushou0Roh" -in okopen.enc -out okopen
+- openssl aes-256-cbc -K $encrypted_571870fa5df4_key -iv $encrypted_571870fa5df4_iv-in okopen.enc -out okopen -d
 - psql -c 'create database folktaxi_test;' -U postgres
 test:
   adapter: postgresql
@@ -19,7 +19,6 @@ after_success:
 - bash <(curl -s https://codecov.io/bash)
 notifications:
   slack: ncvrneducatio-ilo8811:wiR4y5A4El7Sd2QxjiY9DkCN
-
 env:
   global:
   - CODECOV_TOKEN="433e8117-a7da-47a3-b437-58e2084e91d4"
