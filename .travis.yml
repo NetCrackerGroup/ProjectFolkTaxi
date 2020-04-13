@@ -5,7 +5,7 @@ sudo: true
 services:
 - postgresql
 addons:
-  ssh_known_hosts: 142.93.130.144:8080
+  ssh_known_hosts: 142.93.130.144
 before_install:
 - openssl aes-256-cbc -K $encrypted_571870fa5df4_key -iv $encrypted_571870fa5df4_iv
   -in okopen.enc -out okopen -d
@@ -25,8 +25,8 @@ env:
   - CODECOV_TOKEN="433e8117-a7da-47a3-b437-58e2084e91d4"
   - REMOTEAPPDIR=/var/deploy/
   - REMOTEUSER=root
-  - REMOTEHOST=142.93.130.144:8080
-deploy:
-  provider: script
-  skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/public root@142.93.130.144:/var/deploy/
+  - REMOTEHOST=142.93.130.144
+#deploy:
+#  provider: script
+#  skip_cleanup: true
+#  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/public root@142.93.130.144:/var/deploy/
