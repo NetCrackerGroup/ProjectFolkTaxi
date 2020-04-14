@@ -7,8 +7,7 @@ services:
 addons:
   ssh_known_hosts: 142.93.130.144
 before_install:
-- openssl aes-256-cbc -K $encrypted_571870fa5df4_key -iv $encrypted_571870fa5df4_iv
-  -in okopen.enc -out /okopen.pub -d
+- openssl aes-256-cbc -K $encrypted_92725ca94bf5_key -iv $encrypted_92725ca94bf5_iv -in deploy-key.enc -out deploy-key -d
 - psql -c 'create database folktaxi_test;' -U postgres
 test:
   adapter: postgresql
@@ -27,4 +26,3 @@ env:
   - REMOTEAPPDIR=/var/deploy/
   - REMOTEUSER=root
   - REMOTEHOST=142.93.130.144
-  - secure: qr+q05JI5YGuimviHUaRvELiQIWgpef3DgoJblKaimIfFMDvkHcgLsYMCuUX+yErt5d5XGJl1+HxSCbPYT7Jpj3VoRh5vHu8NVfz6Uz48LAp37ILnau3C163aqjVotVlUrd03j69fzOGgpzdbrL/c7HjQW1HNJ7GjGPi4QsApleLk6CA8fSvJAwDWP1eDmu8dc81kfrQciUeXcQOFQ58si6mHA1kohHJHtXhD8Ijpw8uozFIVrCkdiwmaoZOZnlygc6xGMW1ktYaFPPvGTq+QQvGziGAX/Bh9c3006ZPOkFh1yqH7b6dE3lOGMpMQZZZjWsMTZdDjw7SpLQtXuecHLexswgQMBGd7V41Y0EroTkQbXDN3Pk4JRJ1uBok4o6PGvZLmUlYIaTxr6GyRK/K0GS3JqweVqnQSLyraWsbfIOCKuukkIe5efGx/SYy2xkg26Nh/vaWe3yVmx6MuxyqFLdUW72RR9MPMp/h9Rqm1RQ1Axh2Q+i7qOSdUeSjfzZSmAeNF6GDmoNMYALrkVfE2Dw4jXL6LR4Eo5omUaLod8aGN4CJt7NJ2gzt4nDkm2QruooMs5quxBE/KATu60j5Ahq91/HEfm4RMAb6FAtNBf8HyABrDsZhVWO9SMFDlIbdq5ryxMGyW4l8kxOWfQ1woMd2MP2qagLUxR7brwrApHY=
