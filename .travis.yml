@@ -7,11 +7,17 @@ services:
 addons:
   ssh_known_hosts: 142.93.130.144
 before_install:
-- openssl aes-256-cbc -K $encrypted_92725ca94bf5_key -iv $encrypted_92725ca94bf5_iv -in deploy-key.enc -out deploy-key -d
+- openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv
+  -in deploy_rsa.enc -out deploy_rsa -d
+- eval "$(ssh-agent -s)"
+- chmod 600 /tmp/deploy\_rsa
+- ssh-add /tmp/deploy\_rsa
 - psql -c 'create database folktaxi_test;' -U postgres
 test:
   adapter: postgresql
   database: folktaxi_test
+before_deploy:
+  - echo -e "Host $DEPLOY_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 cache:
   directories:
   - "$HOME/.m2"
@@ -26,3 +32,11 @@ env:
   - REMOTEAPPDIR=/var/deploy/
   - REMOTEUSER=root
   - REMOTEHOST=142.93.130.144
+  - secure: upHC+4eYEhNot43ktKbF34hAr1qc4gQbjgLKWQifA/V3D+Eaa9/GHH8X1n1Vh0yzC84RglEfZBjMa4MxCiSoYPTtyEFyAAu8NWnUg5Ph6heaTYB3BvrAr2kp0Z9drY/O8P+mgX/pcEv7QtWJNOV+oUh1vvMC65sU0qfpYbrmKTeezAEHBpAYNp04Y+7FwBWmc9W6ztPrZQBXkGdlN+Q+g2zNYU8b3oUHrFfHagatCF8NeoRLwFLBNP7ccbLYUPL6bZGTYtdOAtMNsYiM3OmfY9qThs20qeUdiTNPEp+2uizwqXYnvE8w8J/gsNaH8928GeZxQJcn+VJwRZxHTPqpu6+wxN8rQXDlXKWi4/+0G18SYR2tIGXI86RhbdhakE1REsoYVMsDEcgNPU4mIRzWfF1s04YXmJ9sSVJC4yxG1q+5yNT4so19kWaeiK8tSkF2o9A/d5vhdPwNg8wWavm7NVeWHhbzgV4f41xSu58brcbuiZOMDwf68ZxIOZnjjG0KtMwsekzgH5lWIBXztGEdlq/ax6DYqcG7N/i2cJWNVtmN8xq82x2SN+GIL7OxzBfByztg2+2/6/cVvyHTeiJTU9MHuDVM00MDmiSCN81iPEGb1NUKWzvZiZgP1I+hcWQXl8PHW/Dv9dS2kl6X+ztRtcjX8971gp5i/4kgdhzDWuI=
+  - secure: spmRWylendNkSN8E51+4ilk1bXq0uE1N3q3oRAkIWiv2tMuEnbdlW4c3YbpE8gVSTSTIV4fK5Fry/CXhkQ/yhyFvFFMikOicwEf039088OLnso5s+cPswMVLH1zi9Nato8C8m0JTp4ssADmjTuEGZuZBsSP//2NK4Ty+LMxcDCXbP0Q8F3wGshsEdcgaLPdGYtlv+u+keGtlZgQvVkPrQiu3dw+PQcA7Tp2aeEOl6t7Ohu0Pu0bDbaA3hhM3IovBGHVqC3mhozUtoVrmvTyP7v3YE9IxcDmnby2V2yh/0u1C0D1rB6kdK0/KmuKWcZWx5J/NLZHKKZQNStbfms/qIZn3Js9jUdzmB6xeL2iZnpXUh1OQXYYMvaaChoK95B2arRtrzZfxtB8TbBvttrlj6pZc3CTviliYJ+NAVa+zWUP4PoiX+en5bfcM+uu/pmUsmoiJwjFQQlCpXrcQ9YaPSsU0msW/DumparNwlkCfkeSHb4+QWlVqwvfyuu+EcV0eStJnCAfh7ZJTsOuLrzIfImoBJlO6k+oLAyffHsy16pGyYhuPn89UASQCm5IfJUBoK6/BjPzdeYrUMKuRUJN6KVcewN+x1yOXR5so8l7FONGmcDtNiMtJWF0lF8aPXm6wqsvevKZzI+ThcCjqtXVa+HehYbJTGfolRQcSBoRybQU=
+  - secure: otJDfV/DCjcUg1x+R2RM32BEboPxibkYP5npFTMKzPpvDyfBPWbaptMoR3d2AFSpxOi7urOIqKBB/L4xZY37FjlvzGkpKAtXExQmTms9JdFkfq4VqrSWoY53CYyGusjnD3V59HZ87KceMP1xDyi7D06ywdBnbCwp20dNCEHziMWlwwrButGumURzahbRz9nvbNK14D8CdSm5/YlX3arUfaYuh0GQ7fh3yqagR5jclB8pymSLfNGEIJNaCtT0dAIv+EsTgITelHMcLw+1diOWHQArx8GRNcHmu3pKshaF2qpZsFF/EF9PdZv/x+xE2hLwweXfW6H4iij0bIk9WIofe0OyR17vrXv1a5e9Q7b181uBfoT1aPTws0azEczHMXqL0Rw3ohc97nb1BVjJzutimy5Hq+3awrW+sjOV3xGICeY9Owrfxu7tEXS6krjK4z1+2B2MOHYpjIOAtkbL09ghL7AqUV8XRwZnMsOEcPBt2CjJfIecTrBxB6je7nKKun/ibS5Bdp0VWMmKwfMbD90zHpaGGkJa0SmEP3IzmspIxj4AV2bEluuQXla+HteJDs+neEdoxhK1SjAzmpKgEJneXLvdUxs+IZmYC04xpMd8tGWn/DW8o5osM0H5APMYnjdsb37hXbEN9vpdVCmk7iTVY/WugNeTlTUlKvXjPr74Jnc=
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: rsync -r --quiet --delete-after _site/* $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_DIRECTORY
