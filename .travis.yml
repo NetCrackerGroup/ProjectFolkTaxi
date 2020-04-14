@@ -20,7 +20,6 @@ before_deploy:
 - echo -e "Host $DEPLOY_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/authorized_keys
 cache:
   directories:
-    -
   - "$HOME/.m2"
 after_success:
 - bash <(curl -s https://codecov.io/bash)
