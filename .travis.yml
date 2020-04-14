@@ -8,8 +8,8 @@ addons:
   ssh_known_hosts: 142.93.130.144
 before_install:
 - eval "$(ssh-agent -s)"
-- chmod 600 /tmp/deploy\_rsa
-- ssh-add /tmp/deploy\_rsa
+- chmod 600 /tmp/deploy_rsa
+- ssh-add /tmp/deploy_rsa
 - psql -c 'create database folktaxi_test;' -U postgres
 test:
   adapter: postgresql
