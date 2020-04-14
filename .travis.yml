@@ -14,13 +14,16 @@ test:
   database: folktaxi_test
 before_deploy:
 - echo -e "Host $DEPLOY_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/authorized_keys
+- gem install mime-types -v 2.6.2
 cache:
   directories:
   - "$HOME/.m2"
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-- eval "$(ssh-agent -s)" - chmod 600 $TRAVIS_BUILD_DIR/deploy_rsa - ssh-add $TRAVIS_BUILD_DIR/deploy_rsa
-  - bundle exec rake publish
+- eval "$(ssh-agent -s)"
+- chmod 600 $TRAVIS_BUILD_DIR/deploy_rsa
+- ssh-add $TRAVIS_BUILD_DIR/deploy_rsa
+- bundle exec rake publish
 notifications:
   slack: ncvrneducatio-ilo8811:wiR4y5A4El7Sd2QxjiY9DkCN
 env:
