@@ -4,6 +4,7 @@ jdk:
 sudo: true
 services:
 - postgresql
+tags: true
 addons:
   ssh_known_hosts: 142.93.130.144
 before_install:
