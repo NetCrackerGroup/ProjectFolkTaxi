@@ -17,7 +17,7 @@ test:
   adapter: postgresql
   database: folktaxi_test
 before_deploy:
-  - echo -e "Host $DEPLOY_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - echo -e "Host $DEPLOY_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/authorized_keys
 cache:
   directories:
   - "$HOME/.m2"
