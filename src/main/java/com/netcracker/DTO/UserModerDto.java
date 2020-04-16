@@ -7,12 +7,23 @@ public class UserModerDto {
     private String phoneNumber;
     private Long numberOfComplaints;
 
-    public UserModerDto(Long userId, String fio, String email, String phoneNumber, Long numberOfComplaints) {
+    public Long getIsBan() {
+        return isBan;
+    }
+
+    public void setIsBan(Long isBan) {
+        this.isBan = isBan;
+    }
+
+    private Long isBan;
+
+    public UserModerDto(Long userId, String fio, String email, String phoneNumber, Long numberOfComplaints, Long isBan) {
         this.userId = userId;
         this.fio = fio;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.numberOfComplaints = numberOfComplaints;
+        this.isBan = isBan;
     }
 
     public UserModerDto() {
