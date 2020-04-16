@@ -1,13 +1,9 @@
 package com.netcracker.controllers;
-import com.netcracker.DTO.UserAccDto;
-import com.netcracker.DTO.UserDto;
-import com.netcracker.DTO.UserSecDto;
-
-
-import com.netcracker.DTO.GroupDto;
+import com.netcracker.DTO.*;
 
 
 import com.netcracker.DTO.mappers.GroupMapper;
+import com.netcracker.DTO.mappers.UserModMapper;
 import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
@@ -51,6 +47,8 @@ public class UsersController {
 
     @Autowired
     private RouteRepository routeRepository;
+    @Autowired
+    private UserModMapper userModMapper;
 
     @ModelAttribute
     public void setResponseHeader(HttpServletResponse response) {
@@ -96,16 +94,33 @@ public class UsersController {
         return image;
     }
 
-    @GetMapping("")
-    public Iterable<User> getAllUsers(){
+    @GetMapping("/getAllUsers")
+    public Iterable<UserModerDto> getAllUsers(){
         LOG.info("[ getAllUsers");
 
         Iterable<User> users = usersService.getAllUsers();
-
-        LOG.info("] (return : {})", users);
-        return users;
+        Collection<UserModerDto> userDtos = new LinkedList<UserModerDto>();
+        for (User user : users) {
+            userDtos.add(userModMapper.toDto(user));
+        }
+        LOG.info("] (return : {})", userDtos);
+        return userDtos;
     }
 
+
+    @GetMapping("/getAllUsersWithComplains")
+    public Iterable<UserModerDto> getAllUsersWithComplains(){
+        LOG.info("[ getAllUsersWithComplains");
+
+        Iterable<User> users = usersService.getUsersWithComplains();
+        Collection<UserModerDto> userDtos = new LinkedList<UserModerDto>();
+        for (User user : users) {
+            userDtos.add(userModMapper.toDto(user));
+        }
+        LOG.info("] (return : {})", userDtos);
+
+        return userDtos;
+    }
     @GetMapping("/{id}")
     public UserDto getUserByid(@PathVariable(name = "id") Long id) {
         LOG.info("[getUserByid : {}", id);
@@ -249,5 +264,60 @@ public class UsersController {
 
     }
 
+    @GetMapping("/isAdmin")
+    public Map<String,Boolean> IsAdmin(){
+        LOG.debug("#### checkUserIsAdmin #####");
+        Boolean isAdmin =  usersService.isAdmin();
+
+
+        Map<String, Boolean>  response = new HashMap<String, Boolean>() {{
+            put("isAdmin", isAdmin);
+        }};
+        return response;
+    }
+
+    @PostMapping("/complain")
+    public void complain(@RequestParam(value="userId") Long userId){
+        usersService.complain(userId);
+    }
+
+    @DeleteMapping("/deleteUser")
+    public void deleteUser(@RequestParam(value="userId") Long userId){
+        usersService.deleteUser(userId);
+    }
+
+
+    @PutMapping("/ban")
+    public Map<String,Long> setBan(@RequestParam(value="userId") Long userId){
+
+        Long result = usersService.setBan(userId);
+        Map<String, Long>  response = new HashMap<String, Long>() {{
+            put("isBan", result);
+        }};
+
+        return response;
+
+    }
+
+    @GetMapping("/isban")
+    public Map<String, Long> isBan(@RequestParam(value="userId") Long userId){
+
+        Long result = usersService.isBan(userId);
+        Map<String, Long>  response = new HashMap<String, Long>() {{
+            put("isBan", result);
+        }};
+
+        return response;
+    }
+
+    @GetMapping("/getLogged")
+    public Map<String, Long> getUserLogged(){
+        Long result = usersService.getUserLogged();
+        Map<String, Long>  response = new HashMap<String, Long>() {{
+            put("isLogged", result);
+        }};
+        return response;
+
+    }
 }
 
