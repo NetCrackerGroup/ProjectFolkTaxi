@@ -1,4 +1,5 @@
 package com.netcracker.config;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,9 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 class CorsConfig {
+
+    @Value("${frontUrl}")
+    private String frontUrl;
     @Bean
     public FilterRegistrationBean<CorsFilter> corsFilterRegistrationBean() {
 
@@ -16,7 +20,7 @@ class CorsConfig {
 
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:4200");
+        config.addAllowedOrigin(frontUrl);
         config.addAllowedHeader("Authorization");
         config.addAllowedHeader("Content-Type");
         config.addAllowedHeader("Accept");
