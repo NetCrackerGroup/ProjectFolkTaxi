@@ -1,0 +1,1 @@
+UPDATE Info SET info_text = 'Оцените маршрут'  where info_key = 'journey_is_over';
