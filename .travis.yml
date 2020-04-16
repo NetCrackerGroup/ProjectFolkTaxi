@@ -15,6 +15,7 @@ test:
 before_deploy:
 - echo -e "Host $DEPLOY_HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/authorized_keys
 - gem install mime-types -v 2.6.2
+- mvn package
 cache:
   directories:
   - "$HOME/.m2"
@@ -26,6 +27,8 @@ after_success:
 - bundle exec rake publish
 notifications:
   slack: ncvrneducatio-ilo8811:wiR4y5A4El7Sd2QxjiY9DkCN
+
+
 env:
   global:
   - CODECOV_TOKEN="433e8117-a7da-47a3-b437-58e2084e91d4"
