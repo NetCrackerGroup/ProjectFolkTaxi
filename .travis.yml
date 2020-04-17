@@ -26,7 +26,7 @@ after_success:
 - echo "123"
 - echo $TRAVIS_BUILD_DIR
 - ssh-add $TRAVIS_BUILD_DIR/authorized_keys
-- bundle exec rake publish
+#- bundle exec rake publish
 notifications:
   slack: ncvrneducatio-ilo8811:wiR4y5A4El7Sd2QxjiY9DkCN
 env:
