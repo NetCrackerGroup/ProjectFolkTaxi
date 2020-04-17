@@ -19,8 +19,8 @@ public class UserAccMapper {//extends AbstractMapper<User, UserAccDto> {
         userAccDto.setFio(user.getFio());
         userAccDto.setPhoneNumber(user.getPhoneNumber());
         userAccDto.setCityName(user.getCityId().getCityName());
-        userAccDto.setPassengerRating(user.getPassengerRating());
-        userAccDto.setDriverRating(user.getDriverRating());
+        userAccDto.setPassengerRating(Math.round(user.getPassengerRating() * 100.0) / 100.0);
+        userAccDto.setDriverRating(Math.round(user.getDriverRating() * 100.0) / 100.0);
         userAccDto.setInfo(user.getInfo());
         userAccDto.setImage(user.getImage());
         return userAccDto;

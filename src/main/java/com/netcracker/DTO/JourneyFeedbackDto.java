@@ -1,6 +1,7 @@
 package com.netcracker.DTO;
 
-import com.netcracker.entities.Route;
+
+import java.util.Collection;
 
 public class JourneyFeedbackDto {
 
@@ -9,15 +10,17 @@ public class JourneyFeedbackDto {
     private Long driverId;
     private String driverName;
     private Double driverRating;
+    private Collection<PassengerForRateDto> passengers;
 
     public JourneyFeedbackDto(){}
 
-    public JourneyFeedbackDto(Long journeyId, Long routeId, Long driverId, String driverName, Double driverRating) {
+    public JourneyFeedbackDto(Long journeyId, Long routeId, Long driverId, String driverName, Double driverRating, Collection<PassengerForRateDto> passengers) {
         this.journeyId = journeyId;
         this.routeId = routeId;
         this.driverId = driverId;
         this.driverName = driverName;
         this.driverRating = driverRating;
+        this.passengers = passengers;
     }
     public Long getJourneyId() {
         return journeyId;
@@ -58,5 +61,10 @@ public class JourneyFeedbackDto {
     public void setDriverRating(Double driverRating) {
         this.driverRating = driverRating;
     }
+
+    public void setPassengers(Collection<PassengerForRateDto> passengers) {
+        this.passengers = passengers;
+    }
+
 
 }

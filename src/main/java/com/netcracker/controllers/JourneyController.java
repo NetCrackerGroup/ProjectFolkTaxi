@@ -28,10 +28,10 @@ public class JourneyController {
 
 
     @GetMapping("/{Journey_ID}")
-    public JourneyFeedbackDto getJourneyById(@PathVariable(value="Journey_ID") Long journeyId){
+    public JourneyFeedbackDto getJourneyByIdForRate(@PathVariable(value="Journey_ID") Long journeyId){
         LOG.info("[ getJourneyById : {}", journeyId);
 
-        JourneyFeedbackDto journey = journeyService.getJourneyById(journeyId);
+        JourneyFeedbackDto journey = journeyService.getJourneyByIdForRate(journeyId);
 
         LOG.info("] return : {}", journey);
         return journey;

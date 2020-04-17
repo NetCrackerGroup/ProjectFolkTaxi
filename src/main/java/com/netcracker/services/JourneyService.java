@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ public class JourneyService {
     @Autowired
     private ChatRepository chatRepository;
 
-    public JourneyFeedbackDto getJourneyById(Long journeyId){
+    public JourneyFeedbackDto getJourneyByIdForRate(Long journeyId){
         LOG.info("[ getJourneyById : {}", journeyId);
 
         Optional<Journey> journey = journeyRepository.findById(journeyId);
@@ -34,6 +35,12 @@ public class JourneyService {
         return journey.isPresent() ? (new JourneyFeedbackDtoMapper()).toJourneyFeedbackDto(journey.get()) : null;
     }
 
+
+    public Collection<User> getPassengersInJourney (Long journeyId){
+
+        return journeyRepository.findById(journeyId).get().getUsers();
+    }
+  
     public Long getJourneyByRouteandDate(Long chatId, LocalDate messageDate) {
         Chat chat = chatRepository.findByChatId(chatId);
 

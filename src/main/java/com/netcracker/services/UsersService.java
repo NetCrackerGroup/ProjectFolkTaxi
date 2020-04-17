@@ -14,6 +14,7 @@ import com.netcracker.entities.Route;
 import com.netcracker.entities.User;
 import com.netcracker.repositories.CityRepository;
 import com.netcracker.repositories.DriverRatingRepository;
+import com.netcracker.repositories.PassengerRatingRepository;
 import com.netcracker.repositories.UserRepository;
 
 import com.netcracker.services.Channels.ChatSenderService;
@@ -50,6 +51,9 @@ public class UsersService {
 
     @Autowired
     private DriverRatingRepository driverRatingRepository;
+
+    @Autowired
+    private PassengerRatingRepository passengerRatingRepository;
 
     @Autowired
     private UserRepository usersRepository;
@@ -205,13 +209,14 @@ public class UsersService {
             bytes[i++] = b.byteValue();*/
 
         user.setImage( Base64.getEncoder().encodeToString(image.getBytes()) );
+
         LOG.debug("] (new image : {})", user.getImage());
 
         final User updatedUser = usersRepository.save(user);
         return updatedUser;
     }
 
-    public User updateUserEmail(String email, String currPassword) {
+   /* public User updateUserEmail(String email, String currPassword) {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         LOG.info("info: {}", loggedInUser.toString());
 
@@ -228,7 +233,7 @@ public class UsersService {
                       usersRepository.findUserByEmail(userDetail.getUsername()).getPassword());
             return null;
         }
-    }
+    }*/
 
     public User updateUserPassword(String oldPassword, String currPassword) {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
@@ -262,10 +267,30 @@ public class UsersService {
          driver.setDriverRating(driverRating.getAverageMark());
          driverRatingRepository.save(driverRating);
          userRepository.save(driver);
+
          return driver.getUserId();
      }
      else
          return null;
+    }
+
+    public Long ratePassenger (Long passengerId, Double rate){
+
+        Optional<User> posPassenger = userRepository.findById(passengerId);
+
+        if ( posPassenger.isPresent() ) {
+            User passenger = posPassenger.get();
+            PassengerRating passengerRating = passengerRatingRepository.findById(passenger.getUserId()).get();
+            Long numberOfVotes = passengerRating.getNumberOfVotes();
+            passengerRating.setNumberOfVotes( numberOfVotes + 1 );
+            passengerRating.setAverageMark( ( passengerRating.getAverageMark() * (numberOfVotes - 1)  + rate ) / passengerRating.getNumberOfVotes());
+            passenger.setPassengerRating(passengerRating.getAverageMark());
+            passengerRatingRepository.save(passengerRating);
+            userRepository.save(passenger);
+            return passenger.getUserId();
+        }
+        else
+            return null;
     }
 
     /**
