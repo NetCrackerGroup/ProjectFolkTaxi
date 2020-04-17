@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -21,12 +22,17 @@ public class JourneyService {
     @Autowired
     private JourneyRepository journeyRepository;
 
-    public JourneyFeedbackDto getJourneyById(Long journeyId){
+    public JourneyFeedbackDto getJourneyByIdForRate(Long journeyId){
         LOG.info("[ getJourneyById : {}", journeyId);
 
         Optional<Journey> journey = journeyRepository.findById(journeyId);
 
         LOG.info("] return : {}", journey.get());
         return journey.isPresent() ? (new JourneyFeedbackDtoMapper()).toJourneyFeedbackDto(journey.get()) : null;
+    }
+
+    public Collection<User> getPassengersInJourney (Long journeyId){
+
+        return journeyRepository.findById(journeyId).get().getUsers();
     }
 }

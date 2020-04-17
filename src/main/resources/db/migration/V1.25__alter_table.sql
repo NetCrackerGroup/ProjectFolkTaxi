@@ -22,4 +22,3 @@ create table public.InfoMap (
 
 
 
->>>>>>> origin/master

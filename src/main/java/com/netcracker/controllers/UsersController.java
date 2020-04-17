@@ -20,6 +20,7 @@ import com.netcracker.services.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.context.annotation.Lazy;
@@ -225,14 +226,14 @@ public class UsersController {
     public ResponseEntity<User> updateUserInfo(@RequestParam(value="info") String info){ return ResponseEntity.ok(usersService.updateUserInfo(info)); }
 
     @PostMapping("/update-user-image")
-    public ResponseEntity<User> updateUserImage(@RequestParam(value="image") MultipartFile image) throws IOException { return ResponseEntity.ok(usersService.updateUserImage(image)); }
+    public ResponseEntity<User> updateUserImage(@RequestParam(value="file") MultipartFile file) throws IOException { return ResponseEntity.ok(usersService.updateUserImage(file)); }
 
-    @PostMapping("/update-user-email")
+    /*@PostMapping("/update-user-email")
     public ResponseEntity<User> updateUserEmail(@RequestParam(value="email") String email,
                                                 @RequestParam(value="currPassword") String currPassword){
         return ResponseEntity.ok(usersService.updateUserEmail(email, currPassword));
 
-    }
+    }*/
 
 
     @PostMapping("/update-user-password")
@@ -246,6 +247,13 @@ public class UsersController {
     public void updateUserDriverRating(@RequestParam(value="userId") Long userId,
                                        @RequestParam(value="driverRating") Double driverRating){
         usersService.rateDriver(userId, driverRating);
+
+    }
+
+    @PostMapping("/rate/passenger-rating")
+    public void updateUserPassengerRating(@RequestParam(value="userId") Long userId,
+                                          @RequestParam(value="passengerRating") Double passengerRating){
+        usersService.ratePassenger(userId, passengerRating);
 
     }
 
