@@ -18,6 +18,7 @@ spring.datasource:
   username: postgres
   password: root
 
+
 security:
   oauth2:
     client:
