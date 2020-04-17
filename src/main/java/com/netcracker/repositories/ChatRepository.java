@@ -15,5 +15,6 @@ import java.util.List;
 public interface ChatRepository extends CrudRepository<Chat, Long> {
     Chat findByRoute(Route route);
     Chat findByGroup(Group group);
+    Chat findByChatId(Long chatId);
 
 }

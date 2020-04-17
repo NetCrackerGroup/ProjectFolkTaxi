@@ -378,6 +378,13 @@ public class UsersService {
         LOG.debug("] (return : {})", users);
         return users;
     }
+
+    public Iterable<User> getUsersWithComplains(){
+        LOG.debug("[getUsersWithComplains");
+        Iterable<User> users = usersRepository.findUsers();
+        LOG.debug("] (return : {})", users);
+        return users;
+    }
     public UserDto getUserById(Long userId) {
         System.out.println("`2223");
         Optional<User> user = usersRepository.findById(userId);
@@ -402,6 +409,83 @@ public class UsersService {
 
         User user = userRepository.findUserByEmail(userDetail.getUsername());
         return (new UserAccMapper()).toUserAccDto(user);
+    }
+
+    public boolean isAdmin() {
+        boolean result = false;
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        User user = usersRepository.findUserByEmail(userDetail.getUsername());
+
+        if(user.getSecurityRole().equals("ROLE_ADMIN"))
+            result = true;
+
+        LOG.debug("[ user( :{}",user.getSecurityRole() );
+        return result;
+    }
+
+    public void complain(Long userId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        User user = usersRepository.findUserByEmail(userDetail.getUsername());
+
+        User userComplain = usersRepository.findUserByUserId(userId);
+        userComplain.setNumberOfComplaints(userComplain.getNumberOfComplaints() + 1);
+
+        usersRepository.save(userComplain);
+
+
+    }
+    public void deleteUser(Long userId){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        User user = usersRepository.findUserByEmail(userDetail.getUsername());
+
+        if(!(user.getSecurityRole().equals("ROLE_ADMIN"))){
+            throw new IllegalArgumentException("Can't delete user");}
+
+        usersRepository.deleteById(userId);
+    }
+    public Long setBan(Long userId){
+
+        Long result = Long.valueOf(0);
+        if(this.isAdmin())
+        {
+            User user = usersRepository.findUserByUserId(userId);
+            if(user.getIsBan()== 0)
+                user.setIsBan(Long.valueOf(1));
+            else user.setIsBan(Long.valueOf(0));
+
+            if(user.isLocked())
+                user.setLocked(false);
+            else user.setLocked(true);
+            usersRepository.save(user);
+            result = user.getIsBan();
+
+        }
+
+        return  result;
+    }
+
+    public Long isBan(Long userId){
+
+        User user = usersRepository.findUserByUserId(userId);
+        return user.getIsBan();
+
+    }
+    public Long getUserLogged() {
+
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        LOG.info("info: {}", loggedInUser.toString());
+
+        UserDetails userDetail = (UserDetails) loggedInUser
+                .getPrincipal();
+
+        User user = userRepository.findUserByEmail(userDetail.getUsername());
+        return user.getUserId();
     }
 
 }

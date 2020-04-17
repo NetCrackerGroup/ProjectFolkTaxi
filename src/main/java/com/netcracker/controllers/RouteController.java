@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+
 import com.google.gson.Gson;
 import com.netcracker.DTO.RouteDto;
 import com.netcracker.DTO.ScheduleDto;
@@ -11,6 +14,7 @@ import com.netcracker.DTO.UserDto;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.Schedule;
 import com.netcracker.entities.User;
+import com.netcracker.rootsearch.InfoAboutRoute;
 import com.netcracker.services.*;
 import org.locationtech.jts.geom.Point;
 
@@ -37,6 +41,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -130,18 +136,18 @@ public class RouteController {
         return usersDTO;
     }
     
-    @GetMapping("/closestRoutes/{startPoint}/{endPoint}/{stRadius}/{enRadius}/{departure}")
+    @GetMapping("/closestRoutes/{startPoint}/{endPoint}/{stRadius}/{enRadius}/{departure}/{time}")
     public Collection<RouteDto> getClosestRoutes(@PathVariable(value="startPoint") String startPoint,
     		                                     @PathVariable(value="endPoint") String endPoint,	
     											 @PathVariable(value="stRadius") Integer stRadius,
     											 @PathVariable(value="enRadius") Integer enRadius,
-    											 @PathVariable(value="departure") String departure){
+    											 @PathVariable(value="departure") String departure,
+    											 @PathVariable(value="time") String time){
     	
     	Calendar cal = new GregorianCalendar();
     	cal.set(Calendar.YEAR , Integer.parseInt(departure.split("\\.")[2]));
     	cal.set(Calendar.MONTH, Integer.parseInt(departure.split("\\.")[1]));
     	cal.set(Calendar.DAY_OF_MONTH , Integer.parseInt(departure.split("\\.")[0]));
-    	
     	
     	Integer dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 	      
@@ -177,49 +183,66 @@ public class RouteController {
 	      }
     	
     	
-    	Collection<Route> routes = routeService.getClosestRoutes(Double.parseDouble(startPoint.trim().split(",")[0]), 
+	      HashMap<InfoAboutRoute, Route> routes = routeService.getClosestRoutes(Double.parseDouble(startPoint.trim().split(",")[0]), 
     										 Double.parseDouble(startPoint.trim().split(",")[1]),
     										 Double.parseDouble(endPoint.trim().split(",")[0]),
     										 Double.parseDouble(endPoint.trim().split(",")[1]),
-    										 stRadius, enRadius, dayOfWeek);
+    										 stRadius, enRadius, dayOfWeek, time);
     	Collection<RouteDto> res = new ArrayList<RouteDto>();
     	RouteDto curDto;
-    	for(Route rt: routes) {
-    		curDto = routeMapper.toDto(rt); 
+    	Set<Map.Entry<InfoAboutRoute, Route>> set = routes.entrySet();
+    	Integer minutesTillStart;
+    	Integer timeNeededForWalk;
+    	for(Map.Entry<InfoAboutRoute, Route> rt: set) {
+    		curDto = routeMapper.toDto(rt.getValue()); 
     		
-    		curDto.setDistance((int)Math.round(distance(Double.parseDouble(startPoint.trim().split(",")[0]), 
-					 Double.parseDouble(startPoint.trim().split(",")[1]), curDto.getRouteBegin()[0], curDto.getRouteBegin()[1], 'K')));
+    		curDto.setDistance(rt.getKey().getDistance());
+    		
+    		rt.getKey().setTimeUntilStart(rt.getKey().getTimeUntilStart().replaceAll("-", ""));
+    		minutesTillStart = Integer.parseInt(rt.getKey().getTimeUntilStart().split(":")[0]) * 60 + Integer.parseInt(rt.getKey().getTimeUntilStart().split(":")[1]);
+    		timeNeededForWalk = rt.getKey().getDistance() / 83;
+    		
+    		/*
+    		 * if person needs to walk less then 30 min and he will be in time -> 3 score
+    		 * if person needs to walk more then 30 min and he will be in time -> 2 score
+    		 * if person needs to walk more then 30 min and he will be late -> 1 score
+    		 */
+    		if(minutesTillStart > timeNeededForWalk) {
+    			if(timeNeededForWalk < 30)
+    				curDto.setOptimality(3);
+    			else
+    				curDto.setOptimality(2);
+    		}
+    		else
+    			curDto.setOptimality(1);
     		
     		res.add(curDto);
     	}
+    	
+    	if(res.size() > 20) {
+    		int count = res.size();
+    		Iterator<RouteDto> it = res.iterator();
+    		while(it.hasNext() && count > 20) {
+    			if(it.next().getOptimality() == 1) {
+    				it.remove();
+    				count--;
+    			}
+    		}
+    		it = res.iterator();
+    		while(it.hasNext() && count > 20) {
+    			if(it.next().getOptimality() == 2) {
+    				it.remove();
+    				count--;
+    			}
+    		}
+    		it = res.iterator();
+    		while(it.hasNext() && count > 20) {
+    			it.remove();
+				count--;
+    			
+    		}
+    	}
+    	
     	return res;
     }
-    
-    private double distance(double lat1, double lon1, double lat2, double lon2, char unit) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        if (unit == 'K') {
-          dist = dist * 1609.344 * 0.95;
-        } else if (unit == 'N') {
-          dist = dist * 0.8684;
-          }
-        return (dist);
-      }
-
-      /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-      /*::  This function converts decimal degrees to radians             :*/
-      /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-      private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-      }
-
-      /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-      /*::  This function converts radians to decimal degrees             :*/
-      /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-      private double rad2deg(double rad) {
-        return (rad * 180.0 / Math.PI);
-      }
 }

@@ -1,5 +1,7 @@
 package com.netcracker.entities;
 
+import org.hibernate.validator.constraints.CodePointLength;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -17,27 +19,53 @@ public class Journey {
     @Column(name = "Journey_ID")
     private Long journeyId;
 
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Route_ID")
     private Route route;
 
-    /*@OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "driver_id")
-    private User driverId;*/
+    public Journey() { }
+    public Journey(LocalDate date,Collection<User> users, Route route, User driver) {
+
+        this.date = date;
+        this.users = users;
+        this.route = route;
+//        this.driverId = driver;
+    }
 
     @NotNull
     @Column(name = "Date_Of_Journey")
     private LocalDate date;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "Passenger_in_Journey",
             joinColumns = {@JoinColumn(name = "Journey_ID")},
             inverseJoinColumns = {@JoinColumn(name = "User_ID")}
     )
-    Collection<User> users;
+    private Collection<User> users;
 
+//    public User getDriverId() {
+//        return driverId;
+//    }
+//
+//    public void setDriverId(User driverId) {
+//        this.driverId = driverId;
+//    }
+
+//    @NotNull
+//    @JoinColumn(name = "Driver_ID")
+//    @OneToOne()
+//    private User driverId;
+
+    public Long getRoute_Id() {
+        return journeyId;
+    }
+
+    public void setRoute_Id(Long route_Id) {
+        this.journeyId = route_Id;
+    }
     public Long getJourneyId() { return journeyId; }
 
     public Route getRoute() {
@@ -58,7 +86,12 @@ public class Journey {
 
     public Collection<User> getUsers() { return users; }
 
-    public void setUsers(Collection<User> users) { this.users = users; }
+    public void setUsers(Collection<User> users) {
+        for (User u: users) {
+            u.setOneMoreJourney(this);
+        }
+
+    }
 
     /*public User getDriverId() {
         return driverId;
@@ -83,5 +116,9 @@ public class Journey {
     @Override
     public int hashCode() {
         return Objects.hash(journeyId);
+    }
+
+    public void setUser(User user) {
+            this.users.add(user);
     }
 }

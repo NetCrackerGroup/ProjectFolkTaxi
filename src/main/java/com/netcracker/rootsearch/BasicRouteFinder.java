@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -42,8 +43,8 @@ public class BasicRouteFinder implements FindRoute {
 	} 
 	
 	@Override
-	public List<Route> findRoutes(Double stXcord, Double stYcord, Double enXcord, Double enYcord,
-			Integer stRadius, Integer enRadius, Integer dayOfWeek) {
+	public HashMap<InfoAboutRoute, Route> findRoutes(Double stXcord, Double stYcord, Double enXcord, Double enYcord,
+			Integer stRadius, Integer enRadius, Integer dayOfWeek, String time) {
 		return null;
 		/*
 		ArrayList<Route> all = new ArrayList<Route>(entityManager.createQuery("from  Route", Route.class).getResultList());

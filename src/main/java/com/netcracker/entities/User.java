@@ -1,7 +1,7 @@
 package com.netcracker.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
+import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -38,9 +38,30 @@ public class User extends Recipient{
 	private String phoneNumber;
 	
 	@ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	Collection<Route> routes;
-  
+    @MapKey(name="routeId")
+    Collection<Route> routes;
+
+    public Collection<Journey> getJourneys() {
+        return journeys;
+    }
+
+    public void setJourney(Collection<Journey> journey) {
+        this.journeys = journey;
+    }
+    public void setOneMoreJourney(Journey journey) {
+
+        if (!getJourneys().contains(journey)) {
+            this.journeys.add(journey);
+            journey.setUser(this);
+        }
+    }
+
+    @ManyToMany(mappedBy = "users",cascade={CascadeType.ALL}, fetch = FetchType.LAZY)
+    Collection<Journey> journeys;
+
+
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    @MapKey(name="groupId")
     Collection<Group> groups;
 
     @Column(name = "Passenger_Rating")
@@ -64,7 +85,41 @@ public class User extends Recipient{
 
 	public User() {	}
 
-	public String getSecurityRole() {
+    public Long getNumberOfComplaints() {
+        return numberOfComplaints;
+    }
+
+    public void setNumberOfComplaints(Long numberOfComplaints) {
+        this.numberOfComplaints = numberOfComplaints;
+    }
+
+    @Column(name = "number_of_complaints")
+    private Long numberOfComplaints;
+
+    public Long getIsBan() {
+        return isBan;
+    }
+
+    public void setIsBan(Long isBan) {
+        this.isBan = isBan;
+    }
+
+    @Column(name = "is_ban")
+    private Long isBan;
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    @Column(name = "locked")
+    private boolean locked;
+
+
+    public String getSecurityRole() {
 		return securityRole;
 	}
 

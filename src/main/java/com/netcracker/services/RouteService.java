@@ -6,6 +6,7 @@ import java.util.Calendar;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.Schedule;
 import java.util.Collection;
+import java.util.HashMap;
 
 import com.netcracker.DTO.RouteDto;
 import com.netcracker.DTO.mappers.RouteMapper;
@@ -26,6 +27,8 @@ import org.springframework.stereotype.Service;
 import com.netcracker.entities.Route;
 import com.netcracker.repositories.RouteRepository;
 import com.netcracker.rootsearch.BasicRouteFinder;
+import com.netcracker.rootsearch.InfoAboutRoute;
+
 import javax.management.Query;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -70,8 +73,12 @@ public class RouteService {
         route.setDriverId(user);
         route.setCity(user.getCityId());
         schedule.setRouteId(route);
+        Collection<User> usersInGroup = new ArrayList<>();
+        usersInGroup.add(user);
+        route.setUsers(usersInGroup);
         routeRepository.save(route);
         scheduleRepository.save(schedule);
+
     }
 
     public void saveNewOneRoute(Route route) {
@@ -115,9 +122,9 @@ public class RouteService {
         return routeRepository.findRouteByRouteId(id).getUsers();
     }
     
-    public Collection<Route> getClosestRoutes(Double stXcord, Double stYcord, Double enXcord, Double enYcord,
-    		Integer stRadius, Integer enRadius, Integer dayOfWeek){
-    	Collection<Route> routes = srf.findRoutes(stXcord, stYcord, enXcord, enYcord, stRadius, enRadius, dayOfWeek);
+    public HashMap<InfoAboutRoute, Route> getClosestRoutes(Double stXcord, Double stYcord, Double enXcord, Double enYcord,
+    		Integer stRadius, Integer enRadius, Integer dayOfWeek, String time){
+    	HashMap<InfoAboutRoute, Route> routes = srf.findRoutes(stXcord, stYcord, enXcord, enYcord, stRadius, enRadius, dayOfWeek, time);
     	
     	return routes;  
     }

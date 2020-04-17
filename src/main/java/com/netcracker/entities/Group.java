@@ -43,7 +43,7 @@ public class Group extends Recipient{
     }
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @NotNull
     @JoinTable(
             name = "User_In_Group",

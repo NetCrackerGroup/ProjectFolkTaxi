@@ -79,8 +79,7 @@ public class MessagesController {
 
         LOG.info("]");
     }
-    //juhfybxbnm
-    //человек только состоящий
+
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/chat/{id}")

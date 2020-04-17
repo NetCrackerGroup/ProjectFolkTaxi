@@ -13,12 +13,14 @@ public class RouteDto {
     private double[] routeBegin;
     private double[] routeEnd;
     private BigDecimal price;
+    private String driverName;
     private Date startDate;
     private Integer routeId;
     private Integer countOfPlaces;
     private UserRouteDto userDto;
     private int distance;
-
+    private int optimality;
+    
     public void setUserRouteDto(UserRouteDto userDto) { this.userDto = userDto; }
 
     public UserRouteDto getUserRouteDto() { return userDto; }
@@ -26,7 +28,16 @@ public class RouteDto {
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
-    
+
+    public void setDriverName(String name) {
+    	driverName = name;
+    }
+
+    public String getDriverName(String name) {
+    	return driverName;
+    }
+
+
     public Date getStartDate() {
         return startDate;
     }
@@ -81,5 +92,13 @@ public class RouteDto {
 
 	public void setDistance(int distance) {
 		this.distance = distance;
+	}
+
+	public int getOptimality() {
+		return optimality;
+	}
+
+	public void setOptimality(int optimality) {
+		this.optimality = optimality;
 	}
 }

@@ -1,8 +1,10 @@
 package com.netcracker.entities;
 
 
+import com.netcracker.services.Channels.Deliverable;
 import org.hibernate.validator.constraints.Range;
 import org.locationtech.jts.geom.Point;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,7 +22,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "Routes")
-public class Route {
+public class Route extends Recipient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "route_id_generator")
@@ -28,7 +30,7 @@ public class Route {
     @Column(name = "route_id")
     private Long routeId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
     private City city;
 
@@ -43,17 +45,18 @@ public class Route {
     @Column(name = "price")
     private BigDecimal price;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "driver_id")
     private User driverId;
 
-    @Column(name = "journeys")
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Collection<Journey> journeys;
+//    @Column(name = "journeys")
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private Collection<Journey> journeys;
 
     public void setUsers(Collection<User> users) {
         this.users = users;
     }
+
 
     public Collection<User> getUsers() {
         return users;
@@ -63,8 +66,7 @@ public class Route {
     private Integer countOfPlaces;
 
 
-    @ManyToMany(fetch = FetchType.LAZY )
-
+    @ManyToMany(fetch = FetchType.EAGER )
     @JoinTable(
             name = "passenger_in_route",
             joinColumns = { @JoinColumn(name = "route_id") },
@@ -72,8 +74,8 @@ public class Route {
     )
     Collection<User> users;
 
-    @Column(name = "start_day")
-    private Date startDate;
+//    @Column(name = "start_day")
+//    private Date startDate;
 
     public Route() {
     }
@@ -86,13 +88,13 @@ public class Route {
         return countOfPlaces;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
+//    public void setStartDate(Date startDate) {
+//        this.startDate = startDate;
+//    }
+//
+//    public Date getStartDate() {
+//        return startDate;
+//    }
 
     //убрал @Range(min=0, max=90) и заработало, почему?
     public Route(  Point routeBegin,
@@ -104,7 +106,7 @@ public class Route {
         this.routeEnd = routeEnd;
         this.price = price;
         this.countOfPlaces = countOfPlaces;
-        this.startDate = startDate;
+//        this.startDate = startDate;
     }
 
     public Long getRouteId() {
@@ -173,11 +175,13 @@ public class Route {
     public String toString() {
         return "Route{" +
                 "routeId=" + routeId +
-                ", city='" + city  +
-                ", routeBegin='" + routeBegin +
+                ", city=" + city +
+                ", routeBegin=" + routeBegin +
                 ", routeEnd=" + routeEnd +
                 ", price=" + price +
-                ", driver=" + driverId +
+                ", driverId=" + driverId +
+                ", countOfPlaces=" + countOfPlaces +
+                ", users=" + users +
                 '}';
     }
 }

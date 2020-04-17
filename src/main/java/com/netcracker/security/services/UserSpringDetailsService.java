@@ -35,6 +35,10 @@ public class UserSpringDetailsService implements UserDetailsService {
         User user = new User(
                 storedUser.getEmail(),
                 storedUser.getPassword(),
+                true,
+                true,
+                true,
+                 !storedUser.isLocked(),
                 Collections.singleton(SR)
         );
 
@@ -42,4 +46,6 @@ public class UserSpringDetailsService implements UserDetailsService {
         //это я вляется jwt юсером тоемть переделанным
         return user;
     }
+
+
 }
