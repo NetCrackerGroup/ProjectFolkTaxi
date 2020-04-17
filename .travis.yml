@@ -23,6 +23,7 @@ after_success:
 - bash <(curl -s https://codecov.io/bash)
 - eval "$(ssh-agent -s)"
 - chmod 600 $TRAVIS_BUILD_DIR/authorized_keys
+- echo "TRAVIS_BUILD_DIR" = $TRAVIS_BUILD_DIR
 - ssh-add $TRAVIS_BUILD_DIR/authorized_keys
 - bundle exec rake publish
 notifications:
