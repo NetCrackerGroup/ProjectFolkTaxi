@@ -42,5 +42,7 @@ env:
 deploy:
   provider: script
   skip_cleanup: true
-  script: deploy_production.sh
+  script: bash deploy_production.sh
+  on:
+    branch: master
 
