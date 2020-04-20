@@ -46,8 +46,8 @@ deploy:
     branch: master
 
 cron:
-  branch: master
-  interval: hourly
-  options: always run
+  - branch: master
+      interval: monthly
+      options: always run
   script: bash deploy_production.sh
 
