@@ -27,6 +27,7 @@ after_success:
 - echo $TRAVIS_BUILD_DIR
 - ssh-add $TRAVIS_BUILD_DIR/authorized_keys
 #- bundle exec rake publish
+
 notifications:
   slack: ncvrneducatio-ilo8811:wiR4y5A4El7Sd2QxjiY9DkCN
 env:
@@ -41,13 +42,7 @@ env:
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -r --quiet --delete-after target/project-folk-taxi-0.0.1-SNAPSHOT.jar $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_DIRECTORY
+  script: bash deploy_production.sh
   on:
     branch: master
-
-cron:
-  - branch: master
-      interval: monthly
-      options: always run
-  script: bash deploy_production.sh
 
