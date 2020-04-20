@@ -41,7 +41,13 @@ env:
 deploy:
   provider: script
   skip_cleanup: true
-  script: bash deploy_production.sh
+  script: rsync -r --quiet --delete-after target/project-folk-taxi-0.0.1-SNAPSHOT.jar $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_DIRECTORY
   on:
     branch: master
+
+cron:
+  branch: master
+  interval: hourly
+  options: always run
+  script: bash deploy_production.sh
 
