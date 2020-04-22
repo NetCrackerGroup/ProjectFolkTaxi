@@ -8,9 +8,10 @@ tags: true
 addons:
   ssh_known_hosts: 142.93.130.144
 before_install:
+- openssl aes-256-cbc -K $encrypted_cc3d82d16f54_key -iv $encrypted_cc3d82d16f54_iv
+  -in authorized_keys.enc -out authorized_keys -d
 - psql -c 'create database folktaxi_test;' -U postgres
 test:
-
   adapter: postgresql
   database: folktaxi_test
 cache:
@@ -22,7 +23,7 @@ after_success:
 - chmod 600 $TRAVIS_BUILD_DIR/authorized_keys
 - echo "123"
 - echo $TRAVIS_BUILD_DIR
-- echo "$SECRET_KEY"
+- echo $SECRET_KEY
 - ssh-add $TRAVIS_BUILD_DIR/authorized_keys
 notifications:
   slack: ncvrneducatio-ilo8811:wiR4y5A4El7Sd2QxjiY9DkCN
