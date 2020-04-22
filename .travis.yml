@@ -8,7 +8,8 @@ tags: true
 addons:
   ssh_known_hosts: 142.93.130.144
 before_install:
-
+- openssl aes-256-cbc -K $encrypted_cc3d82d16f54_key -iv $encrypted_cc3d82d16f54_iv
+  -in authorized_keys.enc -out authorized_keys -d
 - psql -c 'create database folktaxi_test;' -U postgres
 test:
   adapter: postgresql
