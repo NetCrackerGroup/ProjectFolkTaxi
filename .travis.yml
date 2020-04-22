@@ -12,6 +12,7 @@ before_install:
   -in authorized_keys.enc -out authorized_keys -d
 - psql -c 'create database folktaxi_test;' -U postgres
 test:
+
   adapter: postgresql
   database: folktaxi_test
 cache:
