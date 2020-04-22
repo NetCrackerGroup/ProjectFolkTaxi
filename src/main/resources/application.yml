@@ -16,7 +16,7 @@ spring.datasource:
     maximumPoolSize: 5
   url: jdbc:postgresql://localhost:5432/folktaxi
   username: postgres
-  password: postgres
+  password: root
 
 security:
   oauth2:
