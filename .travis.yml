@@ -22,6 +22,7 @@ after_success:
 - chmod 600 $TRAVIS_BUILD_DIR/authorized_keys
 - echo "123"
 - echo $TRAVIS_BUILD_DIR
+- echo "$SECRET_KEY"
 - ssh-add $TRAVIS_BUILD_DIR/authorized_keys
 notifications:
   slack: ncvrneducatio-ilo8811:wiR4y5A4El7Sd2QxjiY9DkCN
