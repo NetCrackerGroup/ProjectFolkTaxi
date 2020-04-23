@@ -40,7 +40,19 @@ public class Route {
     @Column(name = "route_end")
     private Point routeEnd;
 
-    @Column(name = "price")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id")
+    private Group group;
+    
+    public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+
+	@Column(name = "price")
     private BigDecimal price;
 
     @OneToOne(fetch = FetchType.EAGER)

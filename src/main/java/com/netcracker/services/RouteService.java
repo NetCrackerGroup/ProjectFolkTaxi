@@ -26,7 +26,6 @@ import org.springframework.stereotype.Service;
 
 import com.netcracker.entities.Route;
 import com.netcracker.repositories.RouteRepository;
-import com.netcracker.rootsearch.BasicRouteFinder;
 import com.netcracker.rootsearch.InfoAboutRoute;
 
 import javax.management.Query;
@@ -72,6 +71,7 @@ public class RouteService {
 
         route.setDriverId(user);
         route.setCity(user.getCityId());
+        
         schedule.setRouteId(route);
         routeRepository.save(route);
         scheduleRepository.save(schedule);
@@ -119,8 +119,8 @@ public class RouteService {
     }
     
     public HashMap<InfoAboutRoute, Route> getClosestRoutes(Double stXcord, Double stYcord, Double enXcord, Double enYcord,
-    		Integer stRadius, Integer enRadius, Integer dayOfWeek, String time){
-    	HashMap<InfoAboutRoute, Route> routes = srf.findRoutes(stXcord, stYcord, enXcord, enYcord, stRadius, enRadius, dayOfWeek, time);
+    		Integer stRadius, Integer enRadius, Integer dayOfWeek, String time, Long groupId){
+    	HashMap<InfoAboutRoute, Route> routes = srf.findRoutes(stXcord, stYcord, enXcord, enYcord, stRadius, enRadius, dayOfWeek, time, groupId);
     	
     	return routes;  
     }

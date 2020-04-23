@@ -19,6 +19,7 @@ public class RouteDto {
     private UserRouteDto userDto;
     private int distance;
     private int optimality;
+    private Long groupId;
     
     public void setUserRouteDto(UserRouteDto userDto) { this.userDto = userDto; }
 
@@ -90,5 +91,13 @@ public class RouteDto {
 
 	public void setOptimality(int optimality) {
 		this.optimality = optimality;
+	}
+
+	public Long getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
 	}
 }
