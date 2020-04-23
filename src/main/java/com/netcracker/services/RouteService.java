@@ -1,6 +1,7 @@
 package com.netcracker.services;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import com.netcracker.entities.Route;
@@ -127,6 +128,11 @@ public class RouteService {
     	HashMap<InfoAboutRoute, Route> routes = srf.findRoutes(stXcord, stYcord, enXcord, enYcord, stRadius, enRadius, dayOfWeek, time);
     	
     	return routes;  
+    }
+    public String getRouteDriver(Long id) {
+        Route route = routeRepository.findRouteByRouteId(id);
+        return route.getDriverId().getImage();
+
     }
     
 }
