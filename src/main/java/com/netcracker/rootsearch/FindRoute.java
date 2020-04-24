@@ -15,6 +15,6 @@ public interface FindRoute {
 	 * dep - время отправления, которое хочет пассажир
 	 */
 	HashMap<InfoAboutRoute, Route> findRoutes(Double stXcord, Double stYcord, Double enXcord, Double enYcord, 
-			Integer stRadius, Integer enRadius, Integer dayOfWeek, String time);
+			Integer stRadius, Integer enRadius, Integer dayOfWeek, String time, Long groupId);
 	
 }
