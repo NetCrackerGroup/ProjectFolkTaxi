@@ -260,15 +260,17 @@ public class UsersController {
 
     @PostMapping("/rate/driver-rating")
     public void updateUserDriverRating(@RequestParam(value="userId") Long userId,
-                                       @RequestParam(value="driverRating") Double driverRating){
-        usersService.rateDriver(userId, driverRating);
+                                       @RequestParam(value="driverRating") Double driverRating,
+                                       @RequestParam(value="journeyId") Long journeyId){
+        usersService.rateDriver(userId, driverRating, journeyId);
 
     }
 
     @PostMapping("/rate/passenger-rating")
     public void updateUserPassengerRating(@RequestParam(value="userId") Long userId,
-                                          @RequestParam(value="passengerRating") Double passengerRating){
-        usersService.ratePassenger(userId, passengerRating);
+                                          @RequestParam(value="passengerRating") Double passengerRating,
+                                          @RequestParam(value="journeyId") Long journeyId){
+        usersService.ratePassenger(userId, passengerRating, journeyId);
 
     }
     @GetMapping("/isAdmin")

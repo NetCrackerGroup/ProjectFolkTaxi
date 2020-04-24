@@ -9,7 +9,9 @@ CREATE TABLE public.Rate_History (
     Rater_ID BIGINT NOT NULL,
     User_ID BIGINT NOT NULL,
     Mark BIGINT NOT NULL,
-    CONSTRAINT rate_history_id PRIMARY KEY (Rate_History_ID)
+    User_Is_Driver BOOLEAN NOT NULL,
+    CONSTRAINT rate_history_id PRIMARY KEY (Rate_History_ID),
+    UNIQUE (Journey_ID, Rater_ID, User_ID, User_Is_Driver)
 );
 
 ALTER TABLE public.Rate_History ADD CONSTRAINT journeys_rate_history_fk
