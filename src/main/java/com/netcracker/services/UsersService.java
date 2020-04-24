@@ -12,10 +12,7 @@ import com.netcracker.entities.City;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.User;
-import com.netcracker.repositories.CityRepository;
-import com.netcracker.repositories.DriverRatingRepository;
-import com.netcracker.repositories.PassengerRatingRepository;
-import com.netcracker.repositories.UserRepository;
+import com.netcracker.repositories.*;
 
 import com.netcracker.services.Channels.ChatSenderService;
 import com.netcracker.services.Channels.EmailServiceImpl;
@@ -48,6 +45,12 @@ public class UsersService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private JourneyRepository journeyRepository;
+
+    @Autowired
+    private RateHistoryRepository rateHistoryRepository;
 
     @Autowired
     private DriverRatingRepository driverRatingRepository;
@@ -254,17 +257,25 @@ public class UsersService {
         }
     }
 
-    public Long rateDriver (Long driverId, Double rate){
+    public Long rateDriver (Long driverId, Double rate, Long journeyId){
 
      Optional<User> posDriver = userRepository.findById(driverId);
 
-     if ( posDriver.isPresent() ) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    UserDetails userDetail = (UserDetails) auth.getPrincipal();
+    User rater = usersRepository.findUserByEmail(userDetail.getUsername());
+
+     if ( posDriver.isPresent() && rater.getUserId() != driverId) {
+         Optional<Journey> posJourney = journeyRepository.findById(journeyId);
+         Journey journey = posJourney.get();
          User driver = posDriver.get();
          DriverRating driverRating = driverRatingRepository.findById(driver.getUserId()).get();
          Long numberOfVotes = driverRating.getNumberOfVotes();
          driverRating.setNumberOfVotes( numberOfVotes + 1 );
          driverRating.setAverageMark( ( driverRating.getAverageMark() * (numberOfVotes - 1)  + rate ) / driverRating.getNumberOfVotes());
          driver.setDriverRating(driverRating.getAverageMark());
+         RateHistory rateHistory = new RateHistory(journey, rater.getUserId(), driver, rate, true);
+         rateHistoryRepository.save(rateHistory);
          driverRatingRepository.save(driverRating);
          userRepository.save(driver);
 
@@ -274,17 +285,25 @@ public class UsersService {
          return null;
     }
 
-    public Long ratePassenger (Long passengerId, Double rate){
+    public Long ratePassenger (Long passengerId, Double rate, Long journeyId){
 
         Optional<User> posPassenger = userRepository.findById(passengerId);
 
-        if ( posPassenger.isPresent() ) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        User rater = usersRepository.findUserByEmail(userDetail.getUsername());
+
+        if ( posPassenger.isPresent() && rater.getUserId() != passengerId) {
+            Optional<Journey> posJourney = journeyRepository.findById(journeyId);
+            Journey journey = posJourney.get();
             User passenger = posPassenger.get();
             PassengerRating passengerRating = passengerRatingRepository.findById(passenger.getUserId()).get();
             Long numberOfVotes = passengerRating.getNumberOfVotes();
             passengerRating.setNumberOfVotes( numberOfVotes + 1 );
             passengerRating.setAverageMark( ( passengerRating.getAverageMark() * (numberOfVotes - 1)  + rate ) / passengerRating.getNumberOfVotes());
             passenger.setPassengerRating(passengerRating.getAverageMark());
+            RateHistory rateHistory = new RateHistory(journey, rater.getUserId(), passenger, rate, false);
+            rateHistoryRepository.save(rateHistory);
             passengerRatingRepository.save(passengerRating);
             userRepository.save(passenger);
             return passenger.getUserId();
