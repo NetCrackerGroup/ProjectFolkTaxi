@@ -248,6 +248,9 @@ public class RouteController {
     @GetMapping("/driver/{id}")
 	public String getRouteDriver(@PathVariable(value="id") Long id) {
 		return routeService.getRouteDriver(id);
-
+	}
+	@GetMapping("/driverId/{id}")
+	public Long getDriverRoute(@PathVariable(value="id") Long id) {
+		return routeService.getDriverRoute(id);
 	}
 }

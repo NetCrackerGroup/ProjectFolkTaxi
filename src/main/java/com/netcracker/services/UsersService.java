@@ -120,6 +120,8 @@ public class UsersService {
         Optional<City> city = cityRepository.findById((long) userDto.getCityId());
         User user = userDto.toUser(city.get());
         Map<String, String> map = new HashMap<>();
+        user.setNumberOfComplaints((long) 0);
+        user.setIsBan((long) 0);
         map.put("username", user.getFio());
         FillInfoContent fillInfoContent = new FillInfoContent(map);
         notificationService.notify(infoContentService.getInfoContentByKey("user_registered"), emailService, user, fillInfoContent);

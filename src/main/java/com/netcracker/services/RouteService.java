@@ -134,6 +134,10 @@ public class RouteService {
         return route.getDriverId().getImage();
 
     }
+    public Long getDriverRoute(Long id) {
+        Route route = routeRepository.findRouteByRouteId(id);
+        return route.getDriverId().getUserId();
+    }
     
 }
 
