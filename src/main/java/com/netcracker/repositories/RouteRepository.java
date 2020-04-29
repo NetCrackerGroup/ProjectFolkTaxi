@@ -1,12 +1,14 @@
 package com.netcracker.repositories;
 
 import com.netcracker.entities.Chat;
+import com.netcracker.entities.Group;
 import com.netcracker.entities.Message;
 import com.netcracker.entities.Route;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.netcracker.entities.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +17,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RouteRepository extends CrudRepository<Route, Long> {
 	ArrayList<Route> findRouteByCity(Long cityId);
+	
 	Route findRouteByRouteId(Long routeId);
+	
+	//Group findGroupByGroupId(long groupId);
 
 	/*@Query("select c from Chats c where c.routeId = :routeId")
 	List<Chat> findChatByRoute(@Param("routeId")Long routeId);

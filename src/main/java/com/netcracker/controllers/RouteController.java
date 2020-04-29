@@ -92,6 +92,8 @@ public class RouteController {
         return routes;
     }
     
+    
+    
     @PostMapping("/add")
     public void saveNewRoute(@RequestParam(name = "postUser") String routeDto2, @RequestParam(required = false, name = "selectedDays") String scheduleDto2) throws ParseException {
         Gson gson = new Gson();
@@ -263,4 +265,36 @@ public class RouteController {
     	
     	return res;
     }
+    @GetMapping("/driver/{id}")
+	public String getRouteDriver(@PathVariable(value="id") Long id) {
+		return routeService.getRouteDriver(id);
+	}
+	@GetMapping("/driverId/{id}")
+	public Long getDriverRoute(@PathVariable(value="id") Long id) {
+		return routeService.getDriverRoute(id);
+	}
+
+	@PutMapping("/deletePassenger")
+	public Map<String,RouteDto> deleteUserCompletely(@RequestParam(value="routeId")Long routeId, @RequestParam(value="userId")Long userId){
+		LOG.info("[ deleteUserCompletely(userId : {})", userId);
+		Map<String, RouteDto> response = new HashMap<String, RouteDto>() ;
+		Route route;
+
+		route=routeService.deleteUserCompletely(routeId,userId);
+		response.put("route", routeMapper.toDto(route));
+
+		LOG.info("]");
+		return response;
+	}
+
+	@PostMapping("/userisdriverr")
+	public Map<String, Boolean> checkUserIsDriver(@RequestParam(name = "routeId") Long routeId) {
+		LOG.debug("#### checkUserIsModeraror #####");
+		Boolean userIsDriver = routeService.CheckUserIsDriver(routeId);
+
+		Map<String, Boolean>  response = new HashMap<String, Boolean>() {{
+			put("isDriver", userIsDriver);
+		}};
+		return response;
+	}
 }

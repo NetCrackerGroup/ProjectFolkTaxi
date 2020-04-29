@@ -25,12 +25,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         .antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser", "/users/sign-up", "/users/**", "/routes/**")
         .permitAll();
 http.authorizeRequests().anyRequest().fullyAuthenticated();
-*/
-	http.authorizeRequests()
-	.antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser", "/users/sign-up", "/users/**", "/routes/**", "/group/notifications")
-	.permitAll().and().authorizeRequests().anyRequest().fullyAuthenticated();
-
-    	
+*/    	
     	/*
         http
 
@@ -106,9 +101,11 @@ http.authorizeRequests().anyRequest().fullyAuthenticated();
                 .and().requestMatchers().antMatchers( "/users/Admin")
                 .and().authorizeRequests()
                 .antMatchers("/users/Admin").access("hasRole('ADMIN')");*/
-         /*http.authorizeRequests()
-                .antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser", "/users/sign-up", "/users/", "/group/notifications")
+
+         http.authorizeRequests()
+                 .antMatchers("/users/getAllUsersWithComplains").access("hasRole('ADMIN')")
+                .antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser", "/users/sign-up",  "/group/notifications", "/journeys/{Journey_ID}")
                 .permitAll().and().authorizeRequests().anyRequest().fullyAuthenticated()
-        ;*/
+        ;
     }
 }

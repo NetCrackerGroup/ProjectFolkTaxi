@@ -4,10 +4,7 @@ import com.netcracker.DTO.*;
 
 import com.netcracker.DTO.mappers.GroupMapper;
 import com.netcracker.DTO.mappers.UserModMapper;
-import com.netcracker.entities.City;
-import com.netcracker.entities.Group;
-import com.netcracker.entities.Route;
-import com.netcracker.entities.User;
+import com.netcracker.entities.*;
 import com.netcracker.repositories.UserRepository;
 
 import com.netcracker.repositories.RouteRepository;
@@ -86,13 +83,14 @@ public class UsersController {
     }
 
     @GetMapping("/user/image")
-    public String getUserImageForNav(){
+    public UserImage getUserImageForNav(){
 
-        String image = usersService.getUserImageForNav();
+        UserImage image = usersService.getUserImageForNav();
 
-        LOG.info("image : {}", image);
+        LOG.info("image : {}", image.getUserImageSource());
 
-        return image;
+        return image
+                ;
     }
 
     @GetMapping("/getAllUsers")
@@ -260,15 +258,17 @@ public class UsersController {
 
     @PostMapping("/rate/driver-rating")
     public void updateUserDriverRating(@RequestParam(value="userId") Long userId,
-                                       @RequestParam(value="driverRating") Double driverRating){
-        usersService.rateDriver(userId, driverRating);
+                                       @RequestParam(value="driverRating") Double driverRating,
+                                       @RequestParam(value="journeyId") Long journeyId){
+        usersService.rateDriver(userId, driverRating, journeyId);
 
     }
 
     @PostMapping("/rate/passenger-rating")
     public void updateUserPassengerRating(@RequestParam(value="userId") Long userId,
-                                          @RequestParam(value="passengerRating") Double passengerRating){
-        usersService.ratePassenger(userId, passengerRating);
+                                          @RequestParam(value="passengerRating") Double passengerRating,
+                                          @RequestParam(value="journeyId") Long journeyId){
+        usersService.ratePassenger(userId, passengerRating, journeyId);
 
     }
     @GetMapping("/isAdmin")

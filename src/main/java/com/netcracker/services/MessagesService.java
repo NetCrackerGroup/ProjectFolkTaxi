@@ -169,7 +169,7 @@ public class MessagesService {
     public Page<Message> getPageMessage(Long chatId, int page){
 
         Chat chat = chatsService.getChatById(chatId);
-        Pageable pageable =  PageRequest.of(page,2, Sort.Direction.DESC, "messageId");
+        Pageable pageable =  PageRequest.of(page,2, Sort.Direction.ASC, "messageId");
         Page<Message> pag = messageRepository.findAllByChat(chat,pageable);
 
         return pag;
