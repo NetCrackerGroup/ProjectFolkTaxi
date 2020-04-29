@@ -99,13 +99,25 @@ public class RouteService {
         User user = userRepository.findUserByEmail(userDetail.getUsername());
 
         Route route =  routeRepository.findRouteByRouteId(id);
+        Collection<Long> idNotUsers = new ArrayList<Long>();
+        boolean contain = false;
+        if(route.getNotUsers()!=null) {
+            for (User notUser : route.getNotUsers()) {
+                idNotUsers.add(notUser.getUserId());
+            }
+
+            if (idNotUsers.contains(user.getUserId())) {
+                contain = true;
+            }
+        }
+
         for (Route item:
              user.getRoutes()) {
             if (item.getRouteId() == id) return false;
         }
         if (route.getCountOfPlaces() == 0) {
             return false;
-        } else {
+        }else if(contain) return false; else{
             route.setCountOfPlaces(route.getCountOfPlaces() - 1);
             Collection<User> usersInGroup =  route.getUsers();
             usersInGroup.add(user);
@@ -138,6 +150,61 @@ public class RouteService {
         Route route = routeRepository.findRouteByRouteId(id);
         return route.getDriverId().getUserId();
     }
-    
+
+    public Route deleteUserCompletely (Long routeId,Long userId) {
+
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        User user = userRepository.findUserByEmail(userDetail.getUsername());
+
+        Route route = routeRepository.findById(routeId).orElse(null);
+        Long driverId = route.getDriverId().getUserId();
+
+        LOG.debug("[ driverId( :{}", driverId);
+
+        boolean driver = false;
+
+        LOG.debug("[ user( :{}", user.getUserId());
+
+        if (driverId == user.getUserId()) {
+            driver = true;
+        }
+
+        LOG.debug("[ driver_boolean( :{}", driver);
+        if (driver) {
+            Collection<User> usersNotInRoute = route.getNotUsers();
+            Collection<User> users = route.getUsers();
+            User deleteUser = userRepository.findUserByUserId(userId);
+            usersNotInRoute.add(deleteUser);
+            users.remove(deleteUser);
+            route.setUsers(users);
+            route.setNotUsers(usersNotInRoute);
+            route.setCountOfPlaces(route.getCountOfPlaces()+1);
+        }
+        LOG.debug("[ users( :{}", route.getUsers());
+
+        routeRepository.save(route);
+
+
+        return route;
+    }
+
+    public boolean CheckUserIsDriver(Long routeId){
+        boolean driver = false;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        User user = userRepository.findUserByEmail(userDetail.getUsername());
+
+        Route route = routeRepository.findById(routeId).orElse(null);
+
+        if(user.getUserId() == route.getDriverId().getUserId()) {
+             driver = true;
+        }
+        LOG.debug("[ Isdriver( :{}", driver);
+
+        return driver;
+
+    }
 }
 
