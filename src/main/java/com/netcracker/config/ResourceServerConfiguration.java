@@ -94,7 +94,8 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .and().authorizeRequests()
                 .antMatchers("/users/Admin").access("hasRole('ADMIN')");*/
          http.authorizeRequests()
-                .antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser", "/users/sign-up", "/users/", "/group/notifications", "/journeys/{Journey_ID}")
+                 .antMatchers("/users/getAllUsersWithComplains").access("hasRole('ADMIN')")
+                .antMatchers("/oauth/token", "/oauth/authorize**", "/helloUser", "/users/sign-up",  "/group/notifications", , "/journeys/{Journey_ID}")
                 .permitAll().and().authorizeRequests().anyRequest().fullyAuthenticated()
         ;
     }

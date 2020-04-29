@@ -74,6 +74,22 @@ public class Route extends Recipient {
     )
     Collection<User> users;
 
+    public Collection<User> getNotUsers() {
+        return notUsers;
+    }
+
+    public void setNotUsers(Collection<User> notUsers) {
+        this.notUsers = notUsers;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY )
+    @JoinTable(
+            name = "passenger_not_in_route",
+            joinColumns = { @JoinColumn(name = "route_id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id") }
+    )
+    Collection<User> notUsers;
+
 //    @Column(name = "start_day")
 //    private Date startDate;
 
