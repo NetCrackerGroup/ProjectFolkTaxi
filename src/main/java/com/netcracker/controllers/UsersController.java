@@ -4,10 +4,7 @@ import com.netcracker.DTO.*;
 
 import com.netcracker.DTO.mappers.GroupMapper;
 import com.netcracker.DTO.mappers.UserModMapper;
-import com.netcracker.entities.City;
-import com.netcracker.entities.Group;
-import com.netcracker.entities.Route;
-import com.netcracker.entities.User;
+import com.netcracker.entities.*;
 import com.netcracker.repositories.UserRepository;
 
 import com.netcracker.repositories.RouteRepository;
@@ -86,13 +83,14 @@ public class UsersController {
     }
 
     @GetMapping("/user/image")
-    public String getUserImageForNav(){
+    public UserImage getUserImageForNav(){
 
-        String image = usersService.getUserImageForNav();
+        UserImage image = usersService.getUserImageForNav();
 
-        LOG.info("image : {}", image);
+        LOG.info("image : {}", image.getUserImageSource());
 
-        return image;
+        return image
+                ;
     }
 
     @GetMapping("/getAllUsers")

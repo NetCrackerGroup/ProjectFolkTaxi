@@ -9,6 +9,9 @@ import com.netcracker.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -21,6 +24,9 @@ public class JourneyService {
     private static final Logger LOG = LoggerFactory.getLogger(UsersService.class);
 
     @Autowired
+    public UserRepository userRepository;
+
+    @Autowired
     private JourneyRepository journeyRepository;
 
     @Autowired
@@ -29,10 +35,15 @@ public class JourneyService {
     public JourneyFeedbackDto getJourneyByIdForRate(Long journeyId){
         LOG.info("[ getJourneyById : {}", journeyId);
 
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetail = (UserDetails) auth.getPrincipal();
+        User currUser = userRepository.findUserByEmail(userDetail.getUsername());
+
+
         Optional<Journey> journey = journeyRepository.findById(journeyId);
 
         LOG.info("] return : {}", journey.get());
-        return journey.isPresent() ? (new JourneyFeedbackDtoMapper()).toJourneyFeedbackDto(journey.get()) : null;
+        return journey.isPresent() ? (new JourneyFeedbackDtoMapper()).toJourneyFeedbackDto(journey.get(), currUser) : null;
     }
 
 

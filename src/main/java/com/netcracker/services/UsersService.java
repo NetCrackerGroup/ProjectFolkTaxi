@@ -129,13 +129,13 @@ public class UsersService {
         return user.getUserId();
     }
 
-    public String getUserImageForNav() {
+    public UserImage getUserImageForNav() {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetail = (UserDetails) auth.getPrincipal();
         User user = userRepository.findUserByEmail(userDetail.getUsername());
 
-        return user.getImage();
+        return new UserImage("Image", user.getImage());
     }
 
     public User updateUserFio(String fio) {
