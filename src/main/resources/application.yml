@@ -16,7 +16,7 @@ spring.datasource:
     maximumPoolSize: 5
   url: jdbc:postgresql://localhost:5432/postgres
   username: postgres
-  password: Palienko22
+  password: root
 
 security:
   oauth2:
