@@ -38,7 +38,7 @@ public class JourneyFeedbackDtoMapper {
         journeyFeedbackDto.setDriverRating(journey.getRoute().getDriverId().getDriverRating() == null ? null: Math.round(journey.getRoute().getDriverId().getDriverRating() * 100.0) / 100.0);
 
         Collection<User> users = journey.getRoute().getUsers();
-        Collection<PassengerForRateDto> passengers = null;
+        Collection<PassengerForRateDto> passengers = new ArrayList<PassengerForRateDto>();
         for (User user : users) {
             if (user.getUserId() != currUser.getUserId())
                 passengers.add(new PassengerForRateDtoMapper().toPassengerForRateDtoMapper(user));
