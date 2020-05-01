@@ -76,25 +76,15 @@ public class ScheduledTasks {
     public void getFinishedRoutes() throws Exception {
         LOG.info("[getFinishedRoutes ");
 
-        String schedQuery = "select s.route_id  from schedules s\n" +
-                "                                     inner join passenger_in_route\n" +
-                "                                    on passenger_in_route.route_id = s.route_id\n" +
-                "                                    where ((now())::timestamp  -   (s.time_of_journey::time + interval '1 hour')::time )::time < (interval '00:05:00')::time\n" +
-                "                                    and (? & CAST(S.schedule_day AS INT) <> 0  or s.start_day = now()::date )\n" +
-                "                                    group by s.route_id having count(s.route_id) > 1;";
+        String schedQuery = "select s.route_id from schedules s\n" +
+                "        inner join  journeys j on\n" +
+                "            s.route_id = j.route_id\n" +
+                "        inner join passenger_in_route\n" +
+                "            on passenger_in_route.route_id = s.route_id\n" +
+                "        where (? & CAST(S.schedule_day AS INT) <> 0  or s.start_day = now()::date ) and\n" +
+                "        j.is_finished = true and j.is_started = true\n" +
+                "        group by s.route_id having count(s.route_id) > 1;";
 
-
-//        select s.route_id,  s.time_of_journey  from schedules s
-//        inner join (
-//                select route_id, count(route_id) as countOfPassengers from passenger_in_route
-//        group by route_id
-//                                    ) as passOnRoute
-//        on passOnRoute.route_id = s.route_id
-//
-//        where passOnRoute.countOfPassengers > 1
-//        and
-//                ((now()+ interval '3 hour')::timestamp  -   (s.time_of_journey::time + interval '1 hour')::time )::time < (interval '00:05:00')::time
-//        and (8 & CAST(S.schedule_day AS INT) <> 0  or s.start_day = now()::date );
 
 
         JdbcTemplate template = new JdbcTemplate(dataSource);
@@ -110,10 +100,13 @@ public class ScheduledTasks {
         ArrayList<Long> ids = new ArrayList<>(idsFromQuery);
         for (Long id : ids) {
             Route currentRoute = routeRepository.findRouteByRouteId(id);
-            Collection<User> users = currentRoute.getUsers();
-            Journey journey = new Journey(date, new ArrayList<User>(), currentRoute, currentRoute.getDriverId());
+            Journey journey =  journeyRepository.getJourneyByRouteAndDate(currentRoute, date);
+            journey.setStarted(false);
             journeyRepository.save(journey);
-            journey.setUsers(users);
+//            Collection<User> users = currentRoute.getUsers();
+//            Journey journey = new Journey(date, new ArrayList<User>(), currentRoute, currentRoute.getDriverId(), false, false);
+//            journeyRepository.save(journey);
+//            journey.setUsers(users);
 
 
 //                for (User u:

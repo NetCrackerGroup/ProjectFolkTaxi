@@ -5,18 +5,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.netcracker.entities.Group;
-import com.netcracker.entities.Route;
-import com.netcracker.entities.Schedule;
+import com.netcracker.entities.*;
+
 import java.util.Collection;
 import java.util.HashMap;
 
 import com.netcracker.DTO.RouteDto;
 import com.netcracker.DTO.mappers.RouteMapper;
-import com.netcracker.entities.User;
-import com.netcracker.repositories.RouteRepository;
-import com.netcracker.repositories.ScheduleRepository;
-import com.netcracker.repositories.UserRepository;
+import com.netcracker.repositories.*;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +50,9 @@ public class RouteService {
 	
     @Autowired
     private SecondRouteFinder srf;
+
+    @Autowired
+    JourneyRepository journeyRepository;
     
     
     
@@ -209,6 +208,23 @@ public class RouteService {
 
         return driver;
 
+    }
+
+    public void startJourney(Long routeId) {
+        LocalDate date = LocalDate.now();
+        Route currentRoute = routeRepository.findRouteByRouteId(routeId);
+        Collection<User> users = currentRoute.getUsers();
+        Journey journey = new Journey(date, new ArrayList<User>(), currentRoute, currentRoute.getDriverId(), true, false);
+        journey.setUsers(users);
+        journeyRepository.save(journey);
+    }
+
+    public void endJourney(Long routeId) {
+        LocalDate date = LocalDate.now();
+        Route currentRoute = routeRepository.findRouteByRouteId(routeId);
+        Journey journey =  journeyRepository.getJourneyByRouteAndDate(currentRoute, date);
+        journey.setIsfinished(true);
+        journeyRepository.save(journey);
     }
 }
 

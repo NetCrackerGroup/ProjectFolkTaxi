@@ -26,17 +26,44 @@ public class Journey {
     private Route route;
 
     public Journey() { }
-    public Journey(LocalDate date,Collection<User> users, Route route, User driver) {
+    public Journey(LocalDate date,Collection<User> users, Route route, User driver,
+                   Boolean isStarted, Boolean isfinished) {
 
         this.date = date;
         this.users = users;
         this.route = route;
 //        this.driverId = driver;
+        this.isStarted = isStarted;
+        this.isfinished = isfinished;
     }
 
     @NotNull
     @Column(name = "Date_Of_Journey")
     private LocalDate date;
+
+    @NotNull
+    @Column(name = "is_started")
+    private Boolean isStarted;
+
+    @NotNull
+    @Column(name = "is_finished")
+    private Boolean isfinished;
+
+    public Boolean getStarted() {
+        return isStarted;
+    }
+
+    public void setStarted(Boolean started) {
+        isStarted = started;
+    }
+
+    public Boolean getIsfinished() {
+        return isfinished;
+    }
+
+    public void setIsfinished(Boolean isfinished) {
+        this.isfinished = isfinished;
+    }
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
@@ -107,15 +134,17 @@ public class Journey {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Journey journey = (Journey) o;
-        return journeyId.equals(journey.journeyId) &&
-                route.equals(journey.route) &&
-                date.equals(journey.date) &&
-                users.equals(journey.users);
+        return Objects.equals(journeyId, journey.journeyId) &&
+                Objects.equals(route, journey.route) &&
+                Objects.equals(date, journey.date) &&
+                Objects.equals(isStarted, journey.isStarted) &&
+                Objects.equals(isfinished, journey.isfinished) &&
+                Objects.equals(users, journey.users);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(journeyId);
+        return Objects.hash(journeyId, route, date, isStarted, isfinished, users);
     }
 
     public void setUser(User user) {
