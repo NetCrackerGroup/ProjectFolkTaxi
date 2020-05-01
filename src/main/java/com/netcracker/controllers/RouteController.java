@@ -298,8 +298,8 @@ public class RouteController {
 		return response;
 	}
 	@PostMapping("/startJourney")
-	public void startJourney(@RequestParam(name = "routeId") Long routeId) {
-    	routeService.startJourney(routeId);
+	public boolean startJourney(@RequestParam(name = "routeId") Long routeId) {
+    	return routeService.startJourney(routeId);
 	}
 
 	@PostMapping("/endJourney")

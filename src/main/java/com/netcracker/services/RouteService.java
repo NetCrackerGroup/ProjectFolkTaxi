@@ -210,13 +210,18 @@ public class RouteService {
 
     }
 
-    public void startJourney(Long routeId) {
+    public boolean startJourney(Long routeId) {
         LocalDate date = LocalDate.now();
         Route currentRoute = routeRepository.findRouteByRouteId(routeId);
         Collection<User> users = currentRoute.getUsers();
-        Journey journey = new Journey(date, new ArrayList<User>(), currentRoute, currentRoute.getDriverId(), true, false);
-        journey.setUsers(users);
-        journeyRepository.save(journey);
+        Journey currentJourney =  journeyRepository.getJourneyByRouteAndDate(currentRoute, date);
+        if (currentJourney == null) {
+            Journey journey = new Journey(date, new ArrayList<User>(), currentRoute, currentRoute.getDriverId(), true, false);
+            journey.setUsers(users);
+            journeyRepository.save(journey);
+            return true;
+        }
+        return false;
     }
 
     public void endJourney(Long routeId) {
