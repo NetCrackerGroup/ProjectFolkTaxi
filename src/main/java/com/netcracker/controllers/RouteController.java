@@ -307,4 +307,13 @@ public class RouteController {
 		}};
 		return response;
 	}
+	@PostMapping("/startJourney")
+	public boolean startJourney(@RequestParam(name = "routeId") Long routeId) {
+    	return routeService.startJourney(routeId);
+	}
+
+	@PostMapping("/endJourney")
+	public void endJourney(@RequestParam(name = "routeId") Long routeId) {
+    	routeService.endJourney(routeId);
+	}
 }
