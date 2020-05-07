@@ -2,6 +2,8 @@ package com.netcracker.controllers;
 
 import com.netcracker.DTO.GroupDto;
 import com.netcracker.DTO.mappers.GroupMapper;
+import com.netcracker.DTO.responses.StatusResponse;
+import com.netcracker.UseCases.EntryGroupUseCase;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.GroupNotification;
 import com.netcracker.models.CategoryNotification;
@@ -29,10 +31,16 @@ public class GroupController {
 
     private static final Logger LOG = LoggerFactory.getLogger(GroupController.class);
 
+    private final GroupService groupService;
+    private final GroupMapper groupMapper;
+    private final EntryGroupUseCase entryGroupUseCase;
+
     @Autowired
-    private GroupService groupService;
-    @Autowired
-    private GroupMapper groupMapper;
+    public GroupController(GroupService groupService, GroupMapper groupMapper, EntryGroupUseCase entryGroupUseCase) {
+        this.groupService = groupService;
+        this.groupMapper = groupMapper;
+        this.entryGroupUseCase = entryGroupUseCase;
+    }
 
 
     @ModelAttribute
@@ -67,18 +75,11 @@ public class GroupController {
         return groupDTo;
     }
 
-    @GetMapping("/entergroup/{link}")
-    public Map<String, GroupDto> addUserInGroup(@PathVariable("link") String link) {
 
-        Group group = groupService.addUserInGroup(link);
-        GroupDto groupDto = null;
-        if (group != null) {
-            groupDto = groupMapper.toDto(group);
-        }
-        GroupDto finalGroupDto = groupDto;
+    @GetMapping("/entergroup/{link}")
+    public StatusResponse addUserInGroup(@PathVariable("link") String link) {
         Map<String, GroupDto> json = new HashMap<String, GroupDto>();
-        json.put("result", finalGroupDto);
-        return json;
+        return entryGroupUseCase.addUserToGroup(link);
     }
 
 

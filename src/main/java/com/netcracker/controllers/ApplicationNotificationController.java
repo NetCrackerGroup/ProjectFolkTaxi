@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/notification")
 public class ApplicationNotificationController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ChatsController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ApplicationNotificationController.class);
 
     @Autowired
     private ApplicationNotificationService applicationNotificationService;
@@ -62,10 +62,12 @@ public class ApplicationNotificationController {
 
     @GetMapping("/topic")
     public Map<String, Integer> getTopicNotification() {
-        LOG.debug("===================================");
+        LOG.debug("Input");
         Map<String, Integer> maps = new HashMap<String, Integer>();
+        int result = applicationNotificationService.getCountTopicNotification();
+        LOG.debug("count : " + String.valueOf(result));
         maps.put( "count" , applicationNotificationService.getCountTopicNotification() );
-        LOG.debug("===================================");
+        LOG.debug("Output");
         return maps;
     }
 }

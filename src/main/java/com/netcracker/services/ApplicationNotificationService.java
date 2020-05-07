@@ -28,11 +28,13 @@ public class ApplicationNotificationService {
         if ( user != null )
         {
             Collection<Notification> notifications = notificationRepository.findByUser(user);
+            LOG.debug("notifications count : {}" , notifications.size() );
             notifications = notifications.stream()
                     .filter(x -> !x.isWasWatched())
                     .collect(Collectors.toCollection(LinkedList::new));
             notifications.forEach(x -> x.setWasWatched(true));
             notifications.forEach(notificationRepository::save);
+            LOG.debug("notifications : {}" , notifications);
             return notifications;
         }
         LOG.error("Not user!");

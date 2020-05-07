@@ -1,0 +1,1 @@
+DELETE FROM notifications where notification_id = 1;
