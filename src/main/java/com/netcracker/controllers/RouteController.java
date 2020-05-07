@@ -92,7 +92,17 @@ public class RouteController {
         return routes;
     }
     
-    
+    @GetMapping("/randomRoutes")
+    public ArrayList<RouteDto> getRandomRoutes(){
+    	LOG.info("[ getRandomRoutes");
+    	ArrayList<Route> routes = routeService.getRandomRoutes();
+    	LOG.info("] return : {}", routes.toString());
+    	ArrayList<RouteDto> res = new ArrayList<RouteDto>();
+    	for(Route rt: routes) {
+    		res.add(routeMapper.toDto(rt));
+    	}
+    	return res;
+    }
     
     @PostMapping("/add")
     public void saveNewRoute(@RequestParam(name = "postUser") String routeDto2, @RequestParam(required = false, name = "selectedDays") String scheduleDto2) throws ParseException {

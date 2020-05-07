@@ -148,7 +148,19 @@ public class RouteService {
         return route.getDriverId().getImage();
     }
     
-    
+    public ArrayList<Route> getRandomRoutes(){
+    	
+    	int min = 8;
+    	int max = 1000;
+    	
+    	ArrayList<Route> list = new ArrayList<Route>();
+    	
+    	for(int i = 0; i < 3; i++) {
+    		int rand = min + (int)(Math.random() * ((max - min) + 1));
+    		list.add(routeRepository.findRouteByRouteId(new Long(rand)));
+    	}
+    	return list;
+    }
     
     public Long getDriverRoute(Long id) {
         Route route = routeRepository.findRouteByRouteId(id);
