@@ -12,6 +12,7 @@ public class UserDto {
     private String fio;
     private String email;
     private String phoneNumber;
+    private String image;
 
     public UserDto() {
     }
@@ -21,6 +22,7 @@ public class UserDto {
         this.fio = fio;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        //this.image = image;
     }
 
     public Long getUserId() {
