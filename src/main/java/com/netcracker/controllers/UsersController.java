@@ -137,6 +137,14 @@ public class UsersController {
         return user;
     }
 
+    @GetMapping("/passenger/{id}")
+    public PassengerForRateDto getUserByIdForRate(@PathVariable(name = "id") Long id) {
+        LOG.info("[getUserByid : {}", id);
+        PassengerForRateDto user = usersService.getPassengerByIdForRate(id);
+        LOG.info("] return : {}", user);
+        return user;
+    }
+
     @GetMapping("/user/profile")
     public UserAccDto getUserForPro() {
         UserAccDto user = usersService.getUserForPro();
