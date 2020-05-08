@@ -13,7 +13,7 @@ public class PassengerForRateDtoMapper {
         PassengerForRateDto passengerForRateDto = new PassengerForRateDto();
         passengerForRateDto.setPassengerIdId(user.getUserId());
         passengerForRateDto.setPassengerName(user.getFio());
-        passengerForRateDto.setPassengerRating(Math.round(user.getPassengerRating() * 100.0) / 100.0);
+        //passengerForRateDto.setPassengerRating(user.getPassengerRating()  == null ? null: Math.round(user.getPassengerRating() * 100.0) / 100.0);
         return passengerForRateDto;
     }
 }

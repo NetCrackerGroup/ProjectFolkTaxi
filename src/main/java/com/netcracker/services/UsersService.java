@@ -1,6 +1,7 @@
 package com.netcracker.services;
 
 
+import com.netcracker.DTO.PassengerForRateDto;
 import com.netcracker.DTO.UserAccDto;
 import com.netcracker.DTO.UserDto;
 import com.netcracker.DTO.UserSecDto;
@@ -417,6 +418,14 @@ public class UsersService {
         Optional<User> user = usersRepository.findById(userId);
         LOG.debug("User - {}", user.get());
         return user.isPresent() ? (new UserAccMapper()).toUserAccDto(user.get()) : null;
+
+    }
+
+    public PassengerForRateDto getPassengerByIdForRate(Long userId) {
+        LOG.debug("Get user by id {}", userId);
+        Optional<User> user = usersRepository.findById(userId);
+        LOG.debug("User - {}", user.get());
+        return user.isPresent() ? (new PassengerForRateDtoMapper()).toPassengerForRateDtoMapper(user.get()) : null;
 
     }
 

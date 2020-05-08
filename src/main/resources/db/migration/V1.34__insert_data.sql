@@ -1,5 +1,6 @@
 UPDATE Passenger_Rating SET Average_Mark = 0;
 ALTER TABLE Passenger_Rating ADD Number_Of_Votes NUMERIC DEFAULT 0;
+INSERT INTO Passenger_In_Journey(Journey_Id, User_Id) VALUES(6, 7);
 
 CREATE SEQUENCE rate_history_id_seq;
 

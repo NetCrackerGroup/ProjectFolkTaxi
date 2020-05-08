@@ -10,11 +10,11 @@ public class JourneyFeedbackDto {
     private Long driverId;
     private String driverName;
     private Double driverRating;
-    private Collection<PassengerForRateDto> passengers;
+    private Collection<Long> passengers;
 
     public JourneyFeedbackDto(){}
 
-    public JourneyFeedbackDto(Long journeyId, Long routeId, Long driverId, String driverName, Double driverRating, Collection<PassengerForRateDto> passengers) {
+    public JourneyFeedbackDto(Long journeyId, Long routeId, Long driverId, String driverName, Double driverRating, Collection<Long> passengers) {
         this.journeyId = journeyId;
         this.routeId = routeId;
         this.driverId = driverId;
@@ -62,7 +62,7 @@ public class JourneyFeedbackDto {
         this.driverRating = driverRating;
     }
 
-    public void setPassengers(Collection<PassengerForRateDto> passengers) {
+    public void setPassengers(Collection<Long> passengers) {
         this.passengers = passengers;
     }
 

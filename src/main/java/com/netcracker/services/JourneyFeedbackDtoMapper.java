@@ -5,13 +5,16 @@ import com.netcracker.DTO.PassengerForRateDto;
 import com.netcracker.entities.Journey;
 import com.netcracker.entities.User;
 import com.netcracker.repositories.UserRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 
 public class JourneyFeedbackDtoMapper {
@@ -35,13 +38,13 @@ public class JourneyFeedbackDtoMapper {
             partOfJourney = true;
         }
         journeyFeedbackDto.setDriverName(journey.getRoute().getDriverId().getFio());
-        journeyFeedbackDto.setDriverRating(journey.getRoute().getDriverId().getDriverRating());
+        journeyFeedbackDto.setDriverRating(journey.getRoute().getDriverId().getDriverRating() == null ? null: Math.round(journey.getRoute().getDriverId().getDriverRating() * 100.0) / 100.0);
 
         Collection<User> users = journey.getRoute().getUsers();
-        Collection<PassengerForRateDto> passengers = null;
+        Collection<Long> passengers = new ArrayList<Long>();
         for (User user : users) {
             if (user.getUserId() != currUser.getUserId())
-                passengers.add(new PassengerForRateDtoMapper().toPassengerForRateDtoMapper(user));
+                passengers.add(user.getUserId());
             else
                 partOfJourney = true;
         }
