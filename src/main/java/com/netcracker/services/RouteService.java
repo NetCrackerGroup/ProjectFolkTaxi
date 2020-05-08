@@ -1,13 +1,18 @@
 package com.netcracker.services;
 
 import java.math.BigDecimal;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.netcracker.entities.*;
 
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import com.netcracker.DTO.RouteDto;
@@ -18,6 +23,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.provider.HibernateUtils;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +36,8 @@ import com.netcracker.repositories.RouteRepository;
 import com.netcracker.rootsearch.InfoAboutRoute;
 
 import javax.management.Query;
+import javax.sql.DataSource;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -53,6 +63,12 @@ public class RouteService {
 
     @Autowired
     JourneyRepository journeyRepository;
+    
+    @Autowired
+	JdbcTemplate jdbc;
+	
+	@Autowired
+	DataSource dataSource;
     
     
     
@@ -147,17 +163,78 @@ public class RouteService {
         return route.getDriverId().getImage();
     }
     
-    public ArrayList<Route> getRandomRoutes(){
+    @SuppressWarnings("unchecked")
+	public ArrayList<Route> getRandomRoutes(){
     	
     	int min = 8;
     	int max = 1000;
     	
     	ArrayList<Route> list = new ArrayList<Route>();
+    	ArrayList<Long> temp = new ArrayList<Long>();
     	
-    	for(int i = 0; i < 3; i++) {
-    		int rand = min + (int)(Math.random() * ((max - min) + 1));
-    		list.add(routeRepository.findRouteByRouteId(new Long(rand)));
-    	}
+    	int rand = min + (int)(Math.random() * ((max - min) + 1));
+    		
+		List<Long> results = jdbc.query(
+                "SELECT S.Route_Id "
+                + "FROM SCHEDULES S "
+                + "WHERE ? & CAST(S.schedule_day AS INT) <> 0" 
+                + "  AND (S.time_of_journey - CAST( NOW() AS time)) < CAST( ? AS interval)" 
+       		    + "  AND (CAST( NOW() AS time) - S.time_of_journey) < CAST( ? AS interval);", 
+       		 new PreparedStatementSetter() {
+	    	  		public void setValues(PreparedStatement preparedStatement) throws SQLException{
+	    	  			
+	    	  			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	    	  			LocalDateTime now = LocalDateTime.now();
+	    	  			
+	    	  			Calendar cal = new GregorianCalendar();
+	    	  	    	cal.set(Calendar.YEAR , Integer.parseInt(dtf.format(now).split("\\-")[2]));
+	    	  	    	cal.set(Calendar.MONTH, Integer.parseInt(dtf.format(now).split("\\-")[1]));
+	    	  	    	cal.set(Calendar.DAY_OF_MONTH , Integer.parseInt(dtf.format(now).split("\\-")[0]));
+	    	  	    	
+	    	  	    	Integer dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+	    	  		      
+	    	  		      switch(dayOfWeek) {
+	    	  			      case(1):{
+	    	  			    	  dayOfWeek = 1;
+	    	  			    	  break;
+	    	  			      }
+	    	  			      case(2):{
+	    	  			    	  dayOfWeek = 64;
+	    	  			    	  break;
+	    	  			      }
+	    	  			      case(3):{
+	    	  			    	  dayOfWeek = 32;
+	    	  			    	  break;
+	    	  			      }
+	    	  			      case(4):{
+	    	  			    	  dayOfWeek = 16;
+	    	  			    	  break;
+	    	  			      }
+	    	  			      case(5):{
+	    	  			    	  dayOfWeek = 8;
+	    	  			    	  break;
+	    	  			      }
+	    	  			      case(6):{
+	    	  			    	  dayOfWeek = 4;
+	    	  			    	  break;
+	    	  			      }
+	    	  			      case(7):{
+	    	  			    	  dayOfWeek = 2;
+	    	  			    	  break;
+	    	  			      }
+	    	  		      }
+	    	  			
+	    	  			preparedStatement.setInt(1, dayOfWeek);
+	    	  			preparedStatement.setString(2, "06:00");
+	    	  			preparedStatement.setString(3, "06:00");
+	    	  		}
+	      		},
+                new BeanPropertyRowMapper(Long.class));
+		temp.addAll(0, results);
+		
+		for(int i = 0; i < 3; i++)
+			list.add(routeRepository.findRouteByRouteId(temp.get(i)));
+	
     	return list;
     }
     
