@@ -7,6 +7,7 @@ services:
 tags: true
 addons:
   ssh_known_hosts: 142.93.130.144
+
 before_install:
 - psql -c 'create database folktaxi_test;' -U postgres
 test:

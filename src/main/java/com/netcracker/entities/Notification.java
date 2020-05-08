@@ -20,27 +20,27 @@ public class Notification {
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name = "Info_ID")
+    @JoinColumn(name = "Info_ID")
     private InfoContent infoContent;
 
 
-    @ManyToMany(fetch = FetchType.LAZY )
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "infotonotification",
-            joinColumns = { @JoinColumn(name = "notification_id") },
-            inverseJoinColumns = { @JoinColumn(name = "infomap_id") }
+            joinColumns = {@JoinColumn(name = "notification_id")},
+            inverseJoinColumns = {@JoinColumn(name = "infomap_id")}
     )
     Collection<InfoMap> templatevalues;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name = "User_ID")
+    @JoinColumn(name = "User_ID")
     private User user;
 
     @Column(name = "time")
     private Timestamp timestamp;
 
-    @Column(name="Was_Watched")
+    @Column(name = "Was_Watched")
     @NotNull
     private boolean wasWatched;
 

@@ -11,9 +11,11 @@ import com.google.gson.Gson;
 import com.netcracker.DTO.RouteDto;
 import com.netcracker.DTO.ScheduleDto;
 import com.netcracker.DTO.UserDto;
+import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.Schedule;
 import com.netcracker.entities.User;
+import com.netcracker.repositories.GroupRepository;
 import com.netcracker.rootsearch.InfoAboutRoute;
 import com.netcracker.services.*;
 import org.locationtech.jts.geom.Point;
@@ -42,6 +44,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,6 +71,9 @@ public class RouteController {
     private UserMapper userMapper;
   
     @Autowired
+    private GroupRepository groupRepository;
+    
+    @Autowired
     private ChatsService chatsService;
 	
     @GetMapping ("")
@@ -86,14 +92,27 @@ public class RouteController {
         return routes;
     }
     
+    
+    
     @PostMapping("/add")
     public void saveNewRoute(@RequestParam(name = "postUser") String routeDto2, @RequestParam(required = false, name = "selectedDays") String scheduleDto2) throws ParseException {
         Gson gson = new Gson();
         RouteDto routeDto = gson.fromJson(routeDto2, RouteDto.class);
+        
         ScheduleDto scheduleDto = gson.fromJson(scheduleDto2, ScheduleDto.class);
         LOG.info("[ saveNewRoute : price  {}, routeBegin {}, routeEnd {}",
                 routeDto.getPrice(), routeDto.getRouteBegin(), routeDto.getRouteEnd());
         Route route =  routeMapper.toEntity(routeDto);
+        
+        Optional<Group> group = groupRepository.findById(routeDto.getGroupId());
+        LOG.info(" Group Present = " + group.isPresent());
+        if(!group.isPresent()) {
+        	route.setGroup(null);
+        }
+        else {
+        	route.setGroup(group.get());
+        }
+        
         //доделать расписание , посмотреть как сделать время, по возможности раздилить dto
         Schedule schedule = scheduleMapper.toEntity(scheduleDto);
         schedule.setScheduleDay(Integer.parseInt(scheduleDto.getScheduleDay(), 2));
@@ -136,18 +155,19 @@ public class RouteController {
         return usersDTO;
     }
     
-    @GetMapping("/closestRoutes/{startPoint}/{endPoint}/{stRadius}/{enRadius}/{departure}/{time}")
+    @GetMapping("/closestRoutes/{startPoint}/{endPoint}/{stRadius}/{enRadius}/{departure}/{time}/{groupId}")
     public Collection<RouteDto> getClosestRoutes(@PathVariable(value="startPoint") String startPoint,
     		                                     @PathVariable(value="endPoint") String endPoint,	
     											 @PathVariable(value="stRadius") Integer stRadius,
     											 @PathVariable(value="enRadius") Integer enRadius,
     											 @PathVariable(value="departure") String departure,
-    											 @PathVariable(value="time") String time){
+    											 @PathVariable(value="time") String time,
+    											 @PathVariable(value="groupId") Long groupId){
     	
     	Calendar cal = new GregorianCalendar();
-    	cal.set(Calendar.YEAR , Integer.parseInt(departure.split("\\.")[2]));
-    	cal.set(Calendar.MONTH, Integer.parseInt(departure.split("\\.")[1]));
-    	cal.set(Calendar.DAY_OF_MONTH , Integer.parseInt(departure.split("\\.")[0]));
+    	cal.set(Calendar.YEAR , Integer.parseInt(departure.split("\\-")[2]));
+    	cal.set(Calendar.MONTH, Integer.parseInt(departure.split("\\-")[1]));
+    	cal.set(Calendar.DAY_OF_MONTH , Integer.parseInt(departure.split("\\-")[0]));
     	
     	Integer dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 	      
@@ -187,7 +207,7 @@ public class RouteController {
     										 Double.parseDouble(startPoint.trim().split(",")[1]),
     										 Double.parseDouble(endPoint.trim().split(",")[0]),
     										 Double.parseDouble(endPoint.trim().split(",")[1]),
-    										 stRadius, enRadius, dayOfWeek, time);
+    										 stRadius, enRadius, dayOfWeek, time, groupId);
     	Collection<RouteDto> res = new ArrayList<RouteDto>();
     	RouteDto curDto;
     	Set<Map.Entry<InfoAboutRoute, Route>> set = routes.entrySet();
@@ -276,5 +296,14 @@ public class RouteController {
 			put("isDriver", userIsDriver);
 		}};
 		return response;
+	}
+	@PostMapping("/startJourney")
+	public boolean startJourney(@RequestParam(name = "routeId") Long routeId) {
+    	return routeService.startJourney(routeId);
+	}
+
+	@PostMapping("/endJourney")
+	public void endJourney(@RequestParam(name = "routeId") Long routeId) {
+    	routeService.endJourney(routeId);
 	}
 }

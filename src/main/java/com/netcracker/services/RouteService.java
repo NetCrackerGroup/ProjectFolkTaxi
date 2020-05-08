@@ -4,17 +4,15 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-import com.netcracker.entities.Route;
-import com.netcracker.entities.Schedule;
+
+import com.netcracker.entities.*;
+
 import java.util.Collection;
 import java.util.HashMap;
 
 import com.netcracker.DTO.RouteDto;
 import com.netcracker.DTO.mappers.RouteMapper;
-import com.netcracker.entities.User;
-import com.netcracker.repositories.RouteRepository;
-import com.netcracker.repositories.ScheduleRepository;
-import com.netcracker.repositories.UserRepository;
+import com.netcracker.repositories.*;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +25,6 @@ import org.springframework.stereotype.Service;
 
 import com.netcracker.entities.Route;
 import com.netcracker.repositories.RouteRepository;
-import com.netcracker.rootsearch.BasicRouteFinder;
 import com.netcracker.rootsearch.InfoAboutRoute;
 
 import javax.management.Query;
@@ -53,6 +50,9 @@ public class RouteService {
 	
     @Autowired
     private SecondRouteFinder srf;
+
+    @Autowired
+    JourneyRepository journeyRepository;
     
     
     
@@ -73,6 +73,7 @@ public class RouteService {
 
         route.setDriverId(user);
         route.setCity(user.getCityId());
+        
         schedule.setRouteId(route);
         Collection<User> usersInGroup = new ArrayList<>();
         usersInGroup.add(user);
@@ -136,16 +137,18 @@ public class RouteService {
     }
     
     public HashMap<InfoAboutRoute, Route> getClosestRoutes(Double stXcord, Double stYcord, Double enXcord, Double enYcord,
-    		Integer stRadius, Integer enRadius, Integer dayOfWeek, String time){
-    	HashMap<InfoAboutRoute, Route> routes = srf.findRoutes(stXcord, stYcord, enXcord, enYcord, stRadius, enRadius, dayOfWeek, time);
+    		Integer stRadius, Integer enRadius, Integer dayOfWeek, String time, Long groupId){
+    	HashMap<InfoAboutRoute, Route> routes = srf.findRoutes(stXcord, stYcord, enXcord, enYcord, stRadius, enRadius, dayOfWeek, time, groupId);
     	
     	return routes;  
     }
     public String getRouteDriver(Long id) {
         Route route = routeRepository.findRouteByRouteId(id);
         return route.getDriverId().getImage();
-
     }
+    
+    
+    
     public Long getDriverRoute(Long id) {
         Route route = routeRepository.findRouteByRouteId(id);
         return route.getDriverId().getUserId();
@@ -205,6 +208,28 @@ public class RouteService {
 
         return driver;
 
+    }
+
+    public boolean startJourney(Long routeId) {
+        LocalDate date = LocalDate.now();
+        Route currentRoute = routeRepository.findRouteByRouteId(routeId);
+        Collection<User> users = currentRoute.getUsers();
+        Journey currentJourney =  journeyRepository.getJourneyByRouteAndDate(currentRoute, date);
+        if (currentJourney == null) {
+            Journey journey = new Journey(date, new ArrayList<User>(), currentRoute, currentRoute.getDriverId(), true, false);
+            journey.setUsers(users);
+            journeyRepository.save(journey);
+            return true;
+        }
+        return false;
+    }
+
+    public void endJourney(Long routeId) {
+        LocalDate date = LocalDate.now();
+        Route currentRoute = routeRepository.findRouteByRouteId(routeId);
+        Journey journey =  journeyRepository.getJourneyByRouteAndDate(currentRoute, date);
+        journey.setIsfinished(true);
+        journeyRepository.save(journey);
     }
 }
 

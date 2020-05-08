@@ -21,6 +21,9 @@ class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin(frontUrl);
+        config.addAllowedOrigin("http://142.93.130.144:8080/angular");
+        config.addAllowedOrigin("http://142.93.130.144/angular");
+        config.addAllowedOrigin("http://142.93.130.144");
         config.addAllowedHeader("Authorization");
         config.addAllowedHeader("Content-Type");
         config.addAllowedHeader("Accept");

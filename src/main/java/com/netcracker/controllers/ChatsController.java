@@ -1,6 +1,5 @@
 package com.netcracker.controllers;
 
-
 import com.netcracker.DTO.ChatDto;
 import com.netcracker.DTO.mappers.ChatMapper;
 import com.netcracker.entities.Chat;

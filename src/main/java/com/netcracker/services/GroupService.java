@@ -1,6 +1,8 @@
 package com.netcracker.services;
 
 import com.netcracker.Application;
+import com.netcracker.CustomException.GroupNotFindException;
+import com.netcracker.CustomException.UserIsAlreadyInGroup;
 import com.netcracker.DTO.GroupDto;
 import com.netcracker.entities.Chat;
 import com.netcracker.DTO.mappers.GroupMapper;
@@ -100,7 +102,6 @@ public class GroupService {
         LOG.debug("Type Group : {}", typeGroup);
         LOG.debug("create group - name : \'{}\' , link :  \'{}\'", name, link);
 
-
         User user = authUserComponent.getUser();
         LOG.debug("----Notificate");
         Group group = new Group(name, link, typeGroup);
@@ -118,12 +119,37 @@ public class GroupService {
 
     }
 
+
+    public void addUserToGroup(User user, Group group) throws UserIsAlreadyInGroup {
+        Collection<User> users = group.getUsers();
+        if (users.contains(user)) {
+            throw new UserIsAlreadyInGroup("Пользователь уже участник");
+        }
+
+        group.getUsers().add(user);
+        groupRepository.save(group);
+    }
+
+    public Group findGroupByLink(String link ) throws GroupNotFindException {
+        Optional<Group> group = groupRepository.findGroupByCityLink(link);
+        if (!group.isPresent()) {
+            throw new GroupNotFindException("Группа не найдена");
+        }
+        return group.get();
+    }
+
     public Group addUserInGroup (String link){
         Optional<Group> group = groupRepository.findGroupByCityLink(link);
         if (group.isPresent()) {
+            Group g = group.get();
             group.get().getUsers().add(authUserComponent.getUser());
+            groupRepository.save(g);
+            return g;
         }
+        else {
+            LOG.debug("Group not find!");
 
+        }
         return group.get();
     }
 
@@ -270,6 +296,4 @@ public class GroupService {
         LOG.debug("[ moderator( :{}", moderator);
         return moderator;
     }
-
-
-    }
+}

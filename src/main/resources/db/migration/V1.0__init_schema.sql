@@ -106,7 +106,7 @@ CREATE TABLE public.Group_Moderator (
 
 
 CREATE SEQUENCE route_id_seq
-start with 1006;
+start with 1007;
 
 CREATE TABLE public.Route (
                 Route_ID BIGINT NOT NULL default nextval('route_id_seq'),
@@ -115,6 +115,7 @@ CREATE TABLE public.Route (
                 Route_End geography NOT NULL,
                 Price NUMERIC,
                 Driver_ID BIGINT NOT NULL,
+                Group_ID BIGINT,
                 CONSTRAINT route_pk PRIMARY KEY (Route_ID)
 );
 
@@ -128,7 +129,8 @@ CREATE TABLE public.Schedule (
                 CONSTRAINT schedule_pk PRIMARY KEY (Schedule_ID)
 );
 
-CREATE SEQUENCE chat_id_seq;
+CREATE SEQUENCE chat_id_seq
+start with 3;
 
 CREATE TABLE public.Chat (
                 Chat_ID BIGINT NOT NULL default nextval('chat_id_seq'),
@@ -323,4 +325,9 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-
+ALTER TABLE public.Route ADD CONSTRAINT route_group_id_fk
+FOREIGN KEY (Group_ID)
+REFERENCES public.Group_1 (Group_ID)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
