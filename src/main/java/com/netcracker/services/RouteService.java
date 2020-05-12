@@ -2,6 +2,7 @@ package com.netcracker.services;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,6 +27,7 @@ import org.springframework.data.jpa.provider.HibernateUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -229,7 +231,12 @@ public class RouteService {
 	    	  			preparedStatement.setString(3, "06:00");
 	    	  		}
 	      		},
-                new BeanPropertyRowMapper(Long.class));
+       		    new RowMapper<Long>() {
+                    @Override
+                    public Long mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        return rs.getLong("route_id");
+                    }
+                });
 		temp.addAll(0, results);
 		
 		for(int i = 0; i < 3; i++)
