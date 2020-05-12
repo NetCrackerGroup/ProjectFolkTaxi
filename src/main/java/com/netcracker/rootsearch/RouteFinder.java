@@ -7,7 +7,7 @@ import java.util.List;
 import com.netcracker.entities.Route;
 
 
-public interface FindRoute {
+public interface RouteFinder {
 
 	/*
 	 * adress - Адрес отправления

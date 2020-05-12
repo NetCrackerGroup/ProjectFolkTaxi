@@ -44,7 +44,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.netcracker.rootsearch.SecondRouteFinder;
+import com.netcracker.rootsearch.OptimalRouteFinder;
 
 @Service
 public class RouteService {
@@ -61,7 +61,7 @@ public class RouteService {
     private UserRepository userRepository;
 	
     @Autowired
-    private SecondRouteFinder srf;
+    private OptimalRouteFinder srf;
 
     @Autowired
     JourneyRepository journeyRepository;

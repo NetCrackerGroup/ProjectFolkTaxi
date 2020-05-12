@@ -29,7 +29,7 @@ import com.netcracker.entities.Route;
 import com.netcracker.repositories.RouteRepository;
 
 @Repository
-public class SecondRouteFinder implements FindRoute{
+public class OptimalRouteFinder implements RouteFinder{
 
 	@PersistenceContext
     private EntityManager entityManager;
