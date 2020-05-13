@@ -7,9 +7,14 @@ services:
 tags: true
 addons:
   ssh_known_hosts: 142.93.130.144
+  postgresql: 9.6
+    apt:
+      packages:
+        - postgresql-9.6-postgis-2.3
 
 before_install:
 - psql -c 'create database folktaxi;' -U postgres
+- psql -U postgres -c "create extension postgis"
 test:
   adapter: postgresql
   database: folktaxi
