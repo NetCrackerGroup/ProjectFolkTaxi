@@ -2,18 +2,17 @@ language: java
 jdk:
 - openjdk11
 sudo: true
-#services:
-#- postgresql
+services:
+- postgresql
 tags: true
 addons:
   ssh_known_hosts: 142.93.130.144
 
-#before_install:
-#- psql -c 'create database folktaxi;' -U postgres
-#- psql -U postgres -c "create extension postgis"
-#test:
-#  adapter: postgresql
-#  database: folktaxi
+before_install:
+- psql -c 'create database folktaxi_test;' -U postgres
+test:
+  adapter: postgresql
+  database: folktaxi_test
 cache:
   directories:
   - "$HOME/.m2"
