@@ -4,8 +4,13 @@ jdk:
 sudo: true
 services:
   - postgresql
+
 tags: true
 addons:
+  postgresql: 9.6
+  apt:
+    packages:
+      - postgresql-9.6-postgis-2.3
   ssh_known_hosts: 142.93.130.144
 
 before_install:
