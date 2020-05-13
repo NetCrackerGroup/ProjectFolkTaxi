@@ -4,7 +4,6 @@ jdk:
 sudo: true
 services:
   - postgresql
-  - postgis
 
 tags: true
 addons:
