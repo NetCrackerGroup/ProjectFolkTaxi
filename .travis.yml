@@ -15,6 +15,7 @@ addons:
       - postgis-2.5.4
   ssh_known_hosts: 142.93.130.144
 
+
 before_install:
   - sudo apt install postgis postgresql-11-postgis-2.5
   - psql -c 'create database folktaxi;' -U postgres
