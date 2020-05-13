@@ -11,12 +11,14 @@ addons:
   postgresql: 10
   apt:
     packages:
-      - postgresql-10-postgis-2.3
+      - postgresql-10
+      - postgis-2.3
   ssh_known_hosts: 142.93.130.144
 
 before_install:
   - psql -c 'create database folktaxi;' -U postgres
 #  - psql -U postgres -d folktaxi -c 'create extension postgis'
+   - echo $libdir
   - psql -d folktaxi  -c 'create extension postgis;' -U postgres
 #test:
 #  adapter: postgresql
