@@ -1,0 +1,1 @@
+INSERT INTO Info(Info_Key, Info_Subject, Info_Text) VALUES('user_entered_route', 'Новый пассажир', 'Пользователь $$$userRoute$$$ вступил в маршрут');

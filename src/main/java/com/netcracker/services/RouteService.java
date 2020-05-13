@@ -7,18 +7,15 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.*;
 
 import com.netcracker.entities.*;
-
-import java.util.Collection;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
 
 import com.netcracker.DTO.RouteDto;
 import com.netcracker.DTO.mappers.RouteMapper;
 import com.netcracker.repositories.*;
+import com.netcracker.services.Channels.ApplicationSenderService;
+import com.netcracker.services.Channels.FillInfoContent;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +39,6 @@ import javax.sql.DataSource;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import com.netcracker.rootsearch.OptimalRouteFinder;
 
@@ -71,7 +67,15 @@ public class RouteService {
 	
 	@Autowired
 	DataSource dataSource;
-    
+
+	@Autowired
+    private NotificationService notificationService;
+
+	@Autowired
+    private InfoContentService infoContentService;
+
+	@Autowired
+    private ApplicationSenderService applicationSenderService;
     
     
     public ArrayList<Route> getRoutesByCityId(Long cityId){
@@ -111,7 +115,7 @@ public class RouteService {
         route.setCity(user.getCityId());
         routeRepository.save(route);
     }
-    public boolean joinToRoute(long id) {
+    public boolean joinToRoute(long id) throws Exception {
         LOG.info("[ joinToRoute : {}", id);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetail = (UserDetails) auth.getPrincipal();
@@ -141,6 +145,16 @@ public class RouteService {
             Collection<User> usersInGroup =  route.getUsers();
             usersInGroup.add(user);
             route.setUsers(usersInGroup);
+            Map<String, String> maps = new HashMap<String, String>();
+            User driver = route.getDriverId();
+            maps.put("userRoute", user.getFio());
+            FillInfoContent fillInfoContent = new FillInfoContent(maps);
+            notificationService.notify(
+                    infoContentService.getInfoContentByKey("user_entered_route"),
+                    applicationSenderService,
+                    driver,
+                    fillInfoContent
+            );
             routeRepository.save(route);
             return true;
         }

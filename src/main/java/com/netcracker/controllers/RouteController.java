@@ -149,7 +149,7 @@ public class RouteController {
         return routeDto;
     }
     @PostMapping("/join")
-    public boolean joinToRoute(@RequestParam(name = "id") String id) {
+    public boolean joinToRoute(@RequestParam(name = "id") String id) throws Exception {
         LOG.info("[ joinToRoute : {}", id);
         return routeService.joinToRoute(Long.parseLong(id));
     }
