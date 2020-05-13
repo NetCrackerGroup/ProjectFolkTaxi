@@ -9,10 +9,10 @@ addons:
   ssh_known_hosts: 142.93.130.144
 
 before_install:
-- psql -c 'create database folktaxi_test;' -U postgres
+- psql -c 'create database folktaxi;' -U postgres
 test:
   adapter: postgresql
-  database: folktaxi_test
+  database: folktaxi
 cache:
   directories:
   - "$HOME/.m2"
