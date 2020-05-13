@@ -4,7 +4,7 @@ jdk:
 sudo: true
 services:
 - postgresql
-tags: false
+tags: true
 addons:
   ssh_known_hosts: 142.93.130.144
   postgresql: 9.6
