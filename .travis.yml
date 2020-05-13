@@ -20,7 +20,7 @@ before_install:
 -
 test:
   adapter: postgresql
-  database: folktaxi_test
+  database: folktaxi
 cache:
   directories:
   - "$HOME/.m2"
