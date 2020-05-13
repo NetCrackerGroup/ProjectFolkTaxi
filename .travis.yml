@@ -14,7 +14,7 @@ addons:
 
 before_install:
 - psql -c 'create database folktaxi;' -U postgres
-- psql -U postgres -c "create extension postgis"
+- psql -U postgres -d folktaxi  -c "create extension postgis"
 test:
   adapter: postgresql
   database: folktaxi
