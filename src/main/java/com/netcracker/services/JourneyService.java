@@ -27,6 +27,9 @@ public class JourneyService {
     public UserRepository userRepository;
 
     @Autowired
+    public JourneyFeedbackDtoMapper journeyFeedbackDtoMapper;
+
+    @Autowired
     private JourneyRepository journeyRepository;
 
     @Autowired
@@ -43,7 +46,7 @@ public class JourneyService {
         Optional<Journey> journey = journeyRepository.findById(journeyId);
 
         LOG.info("] return : {}", journey.get());
-        return journey.isPresent() ? (new JourneyFeedbackDtoMapper()).toJourneyFeedbackDto(journey.get(), currUser) : null;
+        return journey.isPresent() ? journeyFeedbackDtoMapper.toJourneyFeedbackDto(journey.get(), currUser) : null;
     }
 
 
