@@ -265,19 +265,19 @@ public class UsersController {
     }
 
     @PostMapping("/rate/driver-rating")
-    public void updateUserDriverRating(@RequestParam(value="userId") Long userId,
+    public Long updateUserDriverRating(@RequestParam(value="userId") Long userId,
                                        @RequestParam(value="driverRating") Double driverRating,
                                        @RequestParam(value="journeyId") Long journeyId){
-        usersService.rateDriver(userId, driverRating, journeyId);
-
+       //return usersService.rateDriver(Long.parseLong(userId), Double.parseDouble(driverRating), Long.parseLong(journeyId));
+       return usersService.rateDriver(userId, driverRating, journeyId);
     }
 
     @PostMapping("/rate/passenger-rating")
-    public void updateUserPassengerRating(@RequestParam(value="userId") Long userId,
+    public Long updateUserPassengerRating(@RequestParam(value="userId") Long userId,
                                           @RequestParam(value="passengerRating") Double passengerRating,
                                           @RequestParam(value="journeyId") Long journeyId){
-        usersService.ratePassenger(userId, passengerRating, journeyId);
-
+       // return usersService.ratePassenger(Long.parseLong(userId), Double.parseDouble(passengerRating), Long.parseLong(journeyId));
+       return usersService.ratePassenger(userId, passengerRating, journeyId);
     }
     @GetMapping("/isAdmin")
     public Map<String,Boolean> IsAdmin(){
