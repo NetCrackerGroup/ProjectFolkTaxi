@@ -105,7 +105,7 @@ http.authorizeRequests().anyRequest().fullyAuthenticated();
          http
                  .authorizeRequests()
                     .antMatchers("/users/getAllUsersWithComplains").access("hasRole('ADMIN')")
-                    .antMatchers("/oauth/token", "/oauth/authorize**", "/routes/randomRoutes", "/helloUser", "/users/sign-up", "/journeys/{Journey_ID}", "/group")
+                    .antMatchers("/oauth/token", "/oauth/authorize**", "/routes/randomRoutes", "/helloUser", "/users/sign-up", "/journeys/{Journey_ID}", "/group", "/yandex/driver", "/yandex/callback")
                     .permitAll()
                     .anyRequest().fullyAuthenticated()
         ;

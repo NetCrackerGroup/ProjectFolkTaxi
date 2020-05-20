@@ -5,10 +5,10 @@ security.jwt.token:
   token-validity-in-seconds: 86400
   token-validity-in-seconds-for-remember-me: 2592000
 
-logging:
-  level:
-    root: INFO
-    com.netcracker: TRACE
+#logging:
+#  level:
+#    root: INFO
+#    com.netcracker: TRACE
 
 spring.datasource:
   hikari:

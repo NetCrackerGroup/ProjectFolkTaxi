@@ -9,7 +9,6 @@ import com.netcracker.entities.GroupNotification;
 import com.netcracker.models.CategoryNotification;
 import com.netcracker.services.*;
 import com.netcracker.services.GroupService;
-import com.netcracker.services.TypeGroupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
