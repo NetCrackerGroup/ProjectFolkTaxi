@@ -51,7 +51,7 @@ public class JourneyFeedbackDtoMapper {
         Collection<User> users = journey.getRoute().getUsers();
         Collection<UserDto> passengers = new ArrayList<>();
         for (User user : users) {
-            if (user.getUserId() != currUser.getUserId()) {
+            if (user.getUserId() != currUser.getUserId() && user.getUserId() != journeyFeedbackDto.getDriverId()) {
                 UserDto userRouteDto = userRouteMapper.toDto(user);
                 passengers.add(userRouteDto);
             }
