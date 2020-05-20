@@ -269,15 +269,18 @@ public class UsersService {
     User rater = usersRepository.findUserByEmail(userDetail.getUsername());
 
      if ( posDriver.isPresent() && rater.getUserId() != driverId) {
+
          Optional<Journey> posJourney = journeyRepository.findById(journeyId);
          Journey journey = posJourney.get();
          User driver = posDriver.get();
          DriverRating driverRating = driverRatingRepository.findById(driver.getUserId()).get();
          Long numberOfVotes = driverRating.getNumberOfVotes();
+
          driverRating.setNumberOfVotes( numberOfVotes + 1 );
-         driverRating.setAverageMark( ( driverRating.getAverageMark() * (numberOfVotes - 1)  + rate ) / driverRating.getNumberOfVotes());
+         driverRating.setAverageMark( ( driverRating.getAverageMark() * numberOfVotes  + rate ) / driverRating.getNumberOfVotes());
          driver.setDriverRating(driverRating.getAverageMark());
          RateHistory rateHistory = new RateHistory(journey, rater.getUserId(), driver, rate, true);
+
          rateHistoryRepository.save(rateHistory);
          driverRatingRepository.save(driverRating);
          userRepository.save(driver);
@@ -297,18 +300,23 @@ public class UsersService {
         User rater = usersRepository.findUserByEmail(userDetail.getUsername());
 
         if ( posPassenger.isPresent() && rater.getUserId() != passengerId) {
+
             Optional<Journey> posJourney = journeyRepository.findById(journeyId);
             Journey journey = posJourney.get();
             User passenger = posPassenger.get();
             PassengerRating passengerRating = passengerRatingRepository.findById(passenger.getUserId()).get();
+
+
             Long numberOfVotes = passengerRating.getNumberOfVotes();
             passengerRating.setNumberOfVotes( numberOfVotes + 1 );
-            passengerRating.setAverageMark( ( passengerRating.getAverageMark() * (numberOfVotes - 1)  + rate ) / passengerRating.getNumberOfVotes());
+            passengerRating.setAverageMark( ( passengerRating.getAverageMark() * numberOfVotes + rate ) / passengerRating.getNumberOfVotes());
             passenger.setPassengerRating(passengerRating.getAverageMark());
             RateHistory rateHistory = new RateHistory(journey, rater.getUserId(), passenger, rate, false);
+
             rateHistoryRepository.save(rateHistory);
             passengerRatingRepository.save(passengerRating);
             userRepository.save(passenger);
+
             return passenger.getUserId();
         }
         else
