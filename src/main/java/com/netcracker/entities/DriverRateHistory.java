@@ -4,14 +4,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Rate_History")
-public class RateHistory {
+@Table(name = "Driver_Rate_History")
+public class DriverRateHistory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rate_history_id_generator")
-    @SequenceGenerator(name = "rate_history_id_generator", sequenceName = "rate_history_id_seq", allocationSize = 1)
-    @Column(name = "rate_history_id")
-    private Long rateHistoryId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "driver_rate_history_id_generator")
+    @SequenceGenerator(name = "driver_rate_history_id_generator", sequenceName = "driver_rate_history_id_seq", allocationSize = 1)
+    @Column(name = "driver_rate_history_id")
+    private Long driverRateHistoryId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "journey_id")
@@ -21,34 +21,29 @@ public class RateHistory {
     private Long raterId;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User userId;
+    @JoinColumn(name = "driver_id")
+    private User driverId;
 
     @Column(name = "mark")
     private Double mark;
 
-    @Column(name = "user_is_driver")
-    private Boolean userIsDriver;
-
-    public RateHistory() {
+    public DriverRateHistory() {
     }
 
-    public RateHistory(
+    public DriverRateHistory(
             @NotNull Journey journeyId,
             @NotNull Long raterId,
-            @NotNull User userId,
-            @NotNull Double mark,
-            @NotNull Boolean userIsDriver
+            @NotNull User driverId,
+            @NotNull Double mark
     ) {
         this.journeyId = journeyId;
         this.raterId = raterId;
-        this.userId = userId;
+        this.driverId = driverId;
         this.mark = mark;
-        this.userIsDriver = userIsDriver;
     }
 
     public Long getRateHistoryId() {
-        return rateHistoryId;
+        return driverRateHistoryId;
     }
 
     public Journey getJourneyId() {
@@ -67,12 +62,12 @@ public class RateHistory {
         this.raterId = raterId;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getDriverId() {
+        return driverId;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setDriverId(User driverId) {
+        this.driverId = driverId;
     }
 
     public Double getMark() {
