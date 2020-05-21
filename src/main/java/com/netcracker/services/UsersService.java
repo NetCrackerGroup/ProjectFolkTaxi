@@ -51,7 +51,10 @@ public class UsersService {
     private JourneyRepository journeyRepository;
 
     @Autowired
-    private RateHistoryRepository rateHistoryRepository;
+    private DriverRateHistoryRepository driverRateHistoryRepository;
+
+    @Autowired
+    private PassengerRateHistoryRepository passengerRateHistoryRepository;
 
     @Autowired
     private DriverRatingRepository driverRatingRepository;
@@ -262,30 +265,41 @@ public class UsersService {
 
     public Long rateDriver (Long driverId, Double rate, Long journeyId){
 
-     Optional<User> posDriver = userRepository.findById(driverId);
+    Optional<User> posDriver = userRepository.findById(driverId);
 
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     UserDetails userDetail = (UserDetails) auth.getPrincipal();
     User rater = usersRepository.findUserByEmail(userDetail.getUsername());
 
      if ( posDriver.isPresent() && rater.getUserId() != driverId) {
-
          Optional<Journey> posJourney = journeyRepository.findById(journeyId);
          Journey journey = posJourney.get();
          User driver = posDriver.get();
-         DriverRating driverRating = driverRatingRepository.findById(driver.getUserId()).get();
-         Long numberOfVotes = driverRating.getNumberOfVotes();
+         Optional<DriverRating> posDriverRating = driverRatingRepository.findById(driver.getUserId());
+         if (driverRateHistoryRepository.findByJourneyIdAndRaterIdAndDriverId(journey, rater.getUserId(), driver) == null) {
+             if (posDriverRating.isPresent()) {
+                 DriverRating driverRating = posDriverRating.get();
+                 Long numberOfVotes = driverRating.getNumberOfVotes();
+                 driverRating.setNumberOfVotes(numberOfVotes + 1);
+                 driverRating.setAverageMark((driverRating.getAverageMark() * numberOfVotes + rate) / driverRating.getNumberOfVotes());
+                 driver.setDriverRating(driverRating.getAverageMark());
+                 driverRatingRepository.save(driverRating);
+             } else {
+                 DriverRating driverRating = new DriverRating(driverId);
+                 driverRating.setNumberOfVotes(1L);
+                 driverRating.setAverageMark(rate);
+                 driver.setDriverRating(driverRating.getAverageMark());
+                 driverRatingRepository.save(driverRating);
+             }
 
-         driverRating.setNumberOfVotes( numberOfVotes + 1 );
-         driverRating.setAverageMark( ( driverRating.getAverageMark() * numberOfVotes  + rate ) / driverRating.getNumberOfVotes());
-         driver.setDriverRating(driverRating.getAverageMark());
-         RateHistory rateHistory = new RateHistory(journey, rater.getUserId(), driver, rate, true);
+             DriverRateHistory rateHistory = new DriverRateHistory(journey, rater.getUserId(), driver, rate);
+             driverRateHistoryRepository.save(rateHistory);
+             userRepository.save(driver);
 
-         rateHistoryRepository.save(rateHistory);
-         driverRatingRepository.save(driverRating);
-         userRepository.save(driver);
-
-         return driver.getUserId();
+             return driver.getUserId();
+         }
+         else
+             return null;
      }
      else
          return null;
@@ -300,24 +314,34 @@ public class UsersService {
         User rater = usersRepository.findUserByEmail(userDetail.getUsername());
 
         if ( posPassenger.isPresent() && rater.getUserId() != passengerId) {
-
             Optional<Journey> posJourney = journeyRepository.findById(journeyId);
             Journey journey = posJourney.get();
             User passenger = posPassenger.get();
-            PassengerRating passengerRating = passengerRatingRepository.findById(passenger.getUserId()).get();
+            Optional<PassengerRating> posPassengerRating = passengerRatingRepository.findById(passenger.getUserId());
+            if (passengerRateHistoryRepository.findByJourneyIdAndRaterIdAndPassengerId(journey, rater.getUserId(), passenger) == null){
+                if (posPassengerRating.isPresent()) {
+                    PassengerRating passengerRating = posPassengerRating.get();
+                    Long numberOfVotes = passengerRating.getNumberOfVotes();
+                    passengerRating.setNumberOfVotes(numberOfVotes + 1);
+                    passengerRating.setAverageMark((passengerRating.getAverageMark() * numberOfVotes + rate) / passengerRating.getNumberOfVotes());
+                    passenger.setPassengerRating(passengerRating.getAverageMark());
+                    passengerRatingRepository.save(passengerRating);
+                } else {
+                    PassengerRating passengerRating = new PassengerRating(passengerId);
+                    passengerRating.setNumberOfVotes(1L);
+                    passengerRating.setAverageMark(rate);
+                    passenger.setPassengerRating(passengerRating.getAverageMark());
+                }
 
-
-            Long numberOfVotes = passengerRating.getNumberOfVotes();
-            passengerRating.setNumberOfVotes( numberOfVotes + 1 );
-            passengerRating.setAverageMark( ( passengerRating.getAverageMark() * numberOfVotes + rate ) / passengerRating.getNumberOfVotes());
-            passenger.setPassengerRating(passengerRating.getAverageMark());
-            RateHistory rateHistory = new RateHistory(journey, rater.getUserId(), passenger, rate, false);
-
-            rateHistoryRepository.save(rateHistory);
-            passengerRatingRepository.save(passengerRating);
+            PassengerRateHistory rateHistory = new PassengerRateHistory(journey, rater.getUserId(), passenger, rate);
+            passengerRateHistoryRepository.save(rateHistory);
             userRepository.save(passenger);
 
             return passenger.getUserId();
+            }
+
+            else
+                return null;
         }
         else
             return null;
