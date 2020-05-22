@@ -118,6 +118,7 @@ public class YandexController {
             yandexService.payRoute(code, routeId);
             return new StatusResponse("success");
         } catch (Exception ex) {
+            LOG.error(" Eroror " , ex);
             LOG.debug("{}", ex.toString());
             LOG.debug("Exception : {}", ex.getMessage());
             LOG.debug("failure request");

@@ -9,7 +9,6 @@ import com.netcracker.services.Channels.ApplicationSenderService;
 import com.netcracker.services.Channels.FillInfoContent;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +64,8 @@ public class YandexService {
     }
 
 
-    public void payRoute(String code, Long routeId) throws FailureAccessToken, PayFailure, Exception {
+    public void payRoute(String code, Long routeId) throws FailureAccessToken, PayFailure, Exception
+    {
         LOG.debug("Method pauRoute");
         Optional<String> optionalAccessToken = getToken(code);
         LOG.debug("end access token");
@@ -78,31 +78,24 @@ public class YandexService {
 
             User user = authUserComponent.getUser();
             Route route = routeRepository.findRouteByRouteId(routeId);
-/*
+
             MultiValueMap<String, Object> maps = new LinkedMultiValueMap<String, Object>();
             maps.put("pattern_id", Collections.singletonList("p2p"));
             maps.put("to", Collections.singletonList(route.getAccountNumber().toString()));
             maps.put("amount_due", Collections.singletonList(route.getPrice()));
             maps.put("message", Collections.singletonList(String.format("%s оплатил поездку!", user.getEmail())));
-            maps.put("comment", Collections.singletonList("Оплата поездки в Folk Taxi"));**/
-
-            Map<String, Object> maps = new HashMap<String, Object>();
-            maps.put("pattern_id", "p2p");
-            maps.put("to", route.getAccountNumber().toString());
-            maps.put("amount_due", route.getPrice());
-            maps.put("message", String.format("%s оплатил поездку!", user.getEmail()));
-            maps.put("comment", "Оплата поездки в Folk Taxi");
+            maps.put("comment", Collections.singletonList("Оплата поездки в Folk Taxi"));
 
             LOG.debug("Body : {}" , maps);
 
             HttpHeaders headers = new HttpHeaders();
             headers.setBearerAuth(accessToken);
-            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
             LOG.debug("Send request");
             LOG.debug("headers : {}", headers);
 
-            HttpEntity<Map<String, Object>> body = new HttpEntity<>(maps, headers);
+            HttpEntity<MultiValueMap<String, Object>> body = new HttpEntity<>(maps, headers);
             ResponseEntity<String> resp = restTemplate.postForEntity(url, body, String.class);
 
             LOG.debug("Response : {}", resp);
@@ -116,7 +109,7 @@ public class YandexService {
                 String requestId = (String) jsonObject.get("request_id");
                 url = "https://money.yandex.ru/api/process-payment";
 
-                maps = new HashMap<>();
+                maps = new LinkedMultiValueMap<>();
                 maps.put("request_id", Collections.singletonList(requestId));
 
                 body = new HttpEntity<>(maps, headers);
@@ -141,7 +134,6 @@ public class YandexService {
                             fillInfoContent
                     );
                 }
-
             }
             else {
                 throw new PayFailure("fail");
