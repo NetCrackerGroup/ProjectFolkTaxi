@@ -102,7 +102,6 @@ public class RouteService {
         route.setUsers(usersInGroup);
         routeRepository.save(route);
         scheduleRepository.save(schedule);
-
     }
 
     public void saveNewOneRoute(Route route) {
@@ -115,6 +114,7 @@ public class RouteService {
         route.setCity(user.getCityId());
         routeRepository.save(route);
     }
+
     public boolean joinToRoute(long id) throws Exception {
         LOG.info("[ joinToRoute : {}", id);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

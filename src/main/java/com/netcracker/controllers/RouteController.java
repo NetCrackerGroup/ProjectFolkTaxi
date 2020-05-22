@@ -1,16 +1,9 @@
 package com.netcracker.controllers;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 import com.google.gson.Gson;
-import com.netcracker.DTO.RouteDto;
-import com.netcracker.DTO.ScheduleDto;
-import com.netcracker.DTO.UserDto;
+import com.netcracker.DTO.*;
 import com.netcracker.entities.Group;
 import com.netcracker.entities.Route;
 import com.netcracker.entities.Schedule;
@@ -40,16 +33,12 @@ import com.netcracker.services.RouteService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("routes")
@@ -316,4 +305,13 @@ public class RouteController {
 	public void endJourney(@RequestParam(name = "routeId") Long routeId) {
     	routeService.endJourney(routeId);
 	}
+
+	@GetMapping("/members")
+	public Collection<ResponseLong> getMembers(@RequestParam("routeId") Long routeId) {
+    	return routeService.getAllUserRoute(routeId).stream()
+				.map(user -> new ResponseLong(user.getUserId()))
+				.collect(Collectors.toCollection(LinkedList::new));
+	}
+
+
 }

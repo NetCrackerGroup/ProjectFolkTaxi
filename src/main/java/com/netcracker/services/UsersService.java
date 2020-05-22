@@ -372,6 +372,12 @@ public class UsersService {
         return user.getGroups();
     }
 
+    public Long getUserId() {
+        User user = authUserComponent.getUser();
+
+        return user.getUserId();
+    }
+
     public Collection<Group> getUserAsAdminGroup() {
 
         User user = authUserComponent.getUser();
