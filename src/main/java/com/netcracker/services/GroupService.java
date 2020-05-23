@@ -161,9 +161,8 @@ public class GroupService {
 
     public Iterable<Group> getAllGroups () {
         LOG.debug("Get groups");
-
-        Iterable<Group> groups = groupRepository.findAll();
-        return groups;
+        TypeGroup typeGroup = typeGroupService.getTypeGroupByName("public");
+        return groupRepository.findGroupsByTypeGroup(typeGroup);
     }
 
     public Group deleteUserInGroup (Long groupId){

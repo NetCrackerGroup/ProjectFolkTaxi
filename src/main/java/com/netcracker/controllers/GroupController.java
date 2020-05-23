@@ -55,7 +55,6 @@ public class GroupController {
     public Iterable<GroupDto> getAllGroups ()
     {
         LOG.debug("get All Groups!");
-
         Iterable<Group> groups = groupService.getAllGroups();
         Collection<GroupDto> groupsDto = new LinkedList<>()  ;
         for ( Group group : groups ) {
