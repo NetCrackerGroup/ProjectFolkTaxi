@@ -1,0 +1,1 @@
+update info set info_text = 'Вы успешно добавили яндекс кошелек к аккаунту'where info_key = 'added_cash_to_user';

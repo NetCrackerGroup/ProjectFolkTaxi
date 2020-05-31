@@ -46,7 +46,7 @@ public class YandexService {
     @Value("${baseUrl}")
     private String baseUrl;
 
-    @Value("${frontUrl}")
+    @Value("${frontDomen}")
     private String frontUrl;
 
     private RouteService routeService;
@@ -129,7 +129,7 @@ public class YandexService {
         Map<String, String> infoMaps = new HashMap<>();
         infoMaps.put("username", user.getFio());
         infoMaps.put("price", String.valueOf(price));
-        FillInfoContent fillInfoContent = new FillInfoContent(new HashMap<>());
+        FillInfoContent fillInfoContent = new FillInfoContent(infoMaps);
         notificationService.notify(
                 infoContentService.getInfoContentByKey("thank_driver"),
                 applicationSenderService,
