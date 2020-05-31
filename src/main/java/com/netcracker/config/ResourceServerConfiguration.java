@@ -102,10 +102,12 @@ http.authorizeRequests().anyRequest().fullyAuthenticated();
                 .and().authorizeRequests()
                 .antMatchers("/users/Admin").access("hasRole('ADMIN')");*/
 
-         http.authorizeRequests()
-                 .antMatchers("/users/getAllUsersWithComplains").access("hasRole('ADMIN')")
-                .antMatchers("/oauth/token", "/oauth/authorize**", "/routes/randomRoutes", "/helloUser", "/users/sign-up",  "/group/notifications", "/journeys/{Journey_ID}")
-                .permitAll().and().authorizeRequests().anyRequest().fullyAuthenticated()
+         http
+                 .authorizeRequests()
+                    .antMatchers("/users/getAllUsersWithComplains").access("hasRole('ADMIN')")
+                    .antMatchers("/oauth/token", "/oauth/authorize**", "/routes/randomRoutes", "/helloUser", "/users/sign-up", "/journeys/{Journey_ID}", "/group", "/yandex/driver", "/yandex/callback")
+                    .permitAll()
+                    .anyRequest().fullyAuthenticated()
         ;
     }
 }

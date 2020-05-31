@@ -1,6 +1,7 @@
 package com.netcracker.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.netcracker.services.Channels.Deliverable;
 import org.hibernate.validator.constraints.Range;
 import org.locationtech.jts.geom.Point;
@@ -77,6 +78,9 @@ public class Route extends Recipient {
     @Column(name = "count_of_places")
     private Integer countOfPlaces;
 
+    @JsonIgnore
+    @Column(name = "account_number")
+    private Long accountNumber;
 
     @ManyToMany(fetch = FetchType.EAGER )
     @JoinTable(
@@ -145,6 +149,14 @@ public class Route extends Recipient {
         this.routeId = routeId;
     }
 
+    @JsonIgnore
+    public Long getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(Long accountNumber) {
+        this.accountNumber = accountNumber;
+    }
 
     public City getCity() {
         return city;
@@ -187,29 +199,42 @@ public class Route extends Recipient {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(routeId);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Route route = (Route) obj;
-        return routeId.equals(route.routeId);
-    }
-
-    @Override
     public String toString() {
         return "Route{" +
                 "routeId=" + routeId +
                 ", city=" + city +
                 ", routeBegin=" + routeBegin +
                 ", routeEnd=" + routeEnd +
+                ", group=" + group +
                 ", price=" + price +
                 ", driverId=" + driverId +
                 ", countOfPlaces=" + countOfPlaces +
+                ", accountNumber=" + accountNumber +
                 ", users=" + users +
+                ", notUsers=" + notUsers +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Route route = (Route) o;
+        return Objects.equals(getRouteId(), route.getRouteId()) &&
+                Objects.equals(getCity(), route.getCity()) &&
+                Objects.equals(getRouteBegin(), route.getRouteBegin()) &&
+                Objects.equals(getRouteEnd(), route.getRouteEnd()) &&
+                Objects.equals(getGroup(), route.getGroup()) &&
+                Objects.equals(getPrice(), route.getPrice()) &&
+                Objects.equals(getDriverId(), route.getDriverId()) &&
+                Objects.equals(getCountOfPlaces(), route.getCountOfPlaces()) &&
+                Objects.equals(getAccountNumber(), route.getAccountNumber()) &&
+                Objects.equals(getUsers(), route.getUsers()) &&
+                Objects.equals(getNotUsers(), route.getNotUsers());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getRouteId(), getCity(), getRouteBegin(), getRouteEnd(), getGroup(), getPrice(), getDriverId(), getCountOfPlaces(), getAccountNumber(), getUsers(), getNotUsers());
     }
 }

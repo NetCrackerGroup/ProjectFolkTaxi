@@ -41,6 +41,10 @@ public class User extends Recipient{
     @MapKey(name="routeId")
     Collection<Route> routes;
 
+
+	@Column(name = "yandex_acount")
+	private Long yandexAccount;
+
     public Collection<Journey> getJourneys() {
         return journeys;
     }
@@ -211,6 +215,14 @@ public class User extends Recipient{
 
 	public void setInfo(String info) { this.info = info; }
 
+	public Long getYandexAccount() {
+		return yandexAccount;
+	}
+
+	public void setYandexAccount(Long yandexAccount) {
+		this.yandexAccount = yandexAccount;
+	}
+
 	public String getImage() {
 		return image;
 	}
@@ -225,21 +237,27 @@ public class User extends Recipient{
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) return true;
-		if (obj == null || getClass() != obj.getClass()) return false;
-		User user = (User) obj;
-		return userId.equals(user.userId);
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		User user = (User) o;
+		return isLocked() == user.isLocked() &&
+				Objects.equals(getUserId(), user.getUserId());
 	}
 
 	@Override
 	public String toString() {
-		return "User{"+
+		return "User{" +
 				"userId=" + userId +
-				", cityId=" + cityId +
-				", fio=" + fio +
-				", email=" + email +
-				", phoneNumber=" + phoneNumber +
-				"}";
+				", fio='" + fio + '\'' +
+				", email='" + email + '\'' +
+				", phoneNumber='" + phoneNumber + '\'' +
+				", yandexAccount=" + yandexAccount +
+				", passengerRating=" + passengerRating +
+				", password='" + password + '\'' +
+				", securityRole='" + securityRole + '\'' +
+				", driverRating=" + driverRating +
+				", info='" + info + '\'' +
+				'}';
 	}
 }

@@ -6,7 +6,7 @@
     </div>
     <div style="background-color: #000036; padding : 1em 0 1em 4em;">
         <p>
-                <a href="${url}" style="font-size:medium; color: white;">Найти маршруты</a>
-            </p>
+            <a href="${url}" style="font-size:medium; color: white;">Найти маршруты</a>
+        </p>
     </div>
 </div>

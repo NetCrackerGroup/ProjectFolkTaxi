@@ -183,6 +183,11 @@ public class UsersController {
         return ids;
     }
 
+    @GetMapping("/whois")
+    public ResponseLong getUserId() {
+        return new ResponseLong(usersService.getUserId());
+    }
+
     @GetMapping("/groups")
     public Collection<GroupDto> getGroups() {
 

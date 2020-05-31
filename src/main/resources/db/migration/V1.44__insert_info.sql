@@ -1,0 +1,2 @@
+insert into info(info_key, info_subject, info_text) values ('added_cash_to_route', 'Маршрут', 'Вы успешно добавилили яндекс кошелек к маршруту');
+insert into info(info_key, info_subject, info_text) values ('user_pay_route', 'Маршрут' ,'$$$username$$$ оплатил поездку в маршруте');
