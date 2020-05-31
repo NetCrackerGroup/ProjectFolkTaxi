@@ -1,0 +1,1 @@
+alter table app_users add column yandex_acount BIGINT default null;

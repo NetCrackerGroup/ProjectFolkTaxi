@@ -1,0 +1,3 @@
+insert into info (info_key, info_subject, info_text) values ('added_cash_to_user', 'Аккаунт', 'Вы успешно добавилили яндекс кошелек к маршруту');
+insert into info (info_key, info_subject, info_text) values ('thank_driver', 'Поездка', 'Пользователь $$$username$$$ поблагодарил вас за поездку в размере $$$price$$$ рублей');
+insert into info (info_key, info_subject, info_text) values ('other_thank_driver', 'Поездка', 'Угостит вас кофем');

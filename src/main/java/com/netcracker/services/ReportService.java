@@ -26,7 +26,7 @@ public class ReportService {
     @Autowired
     private UserRepository userRepository;
 
-    public Report findReportById(Long id){
+    public Report findReportById(Long id) {
 
         Optional<Report> report = reportRepository.findById(id);
 
@@ -36,7 +36,7 @@ public class ReportService {
     public Long createNewReport(Long userId,
                                 String reportReason,
                                 String reportText
-                                ){
+    ) {
 
         Optional<User> user = userRepository.findById(userId);
 
@@ -46,7 +46,4 @@ public class ReportService {
 
         return newReport.getReportId();
     }
-
-
 }
-

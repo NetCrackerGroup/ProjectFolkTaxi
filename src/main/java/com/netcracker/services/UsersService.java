@@ -1,6 +1,8 @@
 package com.netcracker.services;
 
 
+import com.netcracker.CustomException.NotFoundById;
+import com.netcracker.CustomException.YandexAccountFailure;
 import com.netcracker.DTO.PassengerForRateDto;
 import com.netcracker.DTO.UserAccDto;
 import com.netcracker.DTO.UserDto;
@@ -532,4 +534,22 @@ public class UsersService {
         return user.getUserId();
     }
 
+    public User addingYandexPurse(String account ) throws NumberFormatException, YandexAccountFailure {
+        if (Objects.isNull(account))
+            throw new YandexAccountFailure();
+        Long yandexPurse = Long.valueOf(account);
+        User user = authUserComponent.getUser();
+        user.setYandexAccount(yandexPurse);
+        usersRepository.save(user);
+        return user;
+    }
+
+    public User getUser(Long id) throws NotFoundById {
+        Optional<User>  optionalUser = usersRepository.findById(id);
+        if ( !optionalUser.isPresent() ) {
+            LOG.error("Not Found user by Id : {}", id);
+            throw new NotFoundById();
+        }
+        return optionalUser.get();
+    }
 }

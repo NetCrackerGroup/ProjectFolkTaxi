@@ -1,5 +1,6 @@
 package com.netcracker.services;
 
+import com.netcracker.CustomException.JourneyNotFound;
 import com.netcracker.DTO.JourneyFeedbackDto;
 import com.netcracker.entities.*;
 import com.netcracker.repositories.ChatRepository;
@@ -63,5 +64,14 @@ public class JourneyService {
         Journey journey =  journeyRepository.getJourneyByRouteAndDate(route, messageDate);
 
         return journey.getJourneyId();
+    }
+
+    public Journey getJourney(Long id) throws JourneyNotFound {
+        Optional<Journey> optionalJourney = journeyRepository.findById(id);
+        if (!optionalJourney.isPresent()) {
+            throw new JourneyNotFound();
+        }
+        LOG.debug("Journey : {}", id);
+        return optionalJourney.get();
     }
 }

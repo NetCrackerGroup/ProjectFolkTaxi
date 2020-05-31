@@ -15,6 +15,7 @@ import com.netcracker.DTO.RouteDto;
 import com.netcracker.DTO.mappers.RouteMapper;
 import com.netcracker.repositories.*;
 import com.netcracker.services.Channels.ApplicationSenderService;
+import com.netcracker.services.Channels.EmailServiceImpl;
 import com.netcracker.services.Channels.FillInfoContent;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -76,6 +77,10 @@ public class RouteService {
 
 	@Autowired
     private ApplicationSenderService applicationSenderService;
+
+	@Autowired
+    private YandexService yandexService;
+
     
     
     public ArrayList<Route> getRoutesByCityId(Long cityId){
@@ -334,12 +339,12 @@ public class RouteService {
         return false;
     }
 
-    public void endJourney(Long routeId) {
+    public void endJourney(Long routeId) throws Exception {
         LocalDate date = LocalDate.now();
         Route currentRoute = routeRepository.findRouteByRouteId(routeId);
         Journey journey =  journeyRepository.getJourneyByRouteAndDate(currentRoute, date);
         journey.setIsfinished(true);
+        this.yandexService.thanksPasseger(currentRoute, journey);
         journeyRepository.save(journey);
     }
 }
-

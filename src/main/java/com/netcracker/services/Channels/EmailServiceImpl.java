@@ -65,11 +65,7 @@ public class EmailServiceImpl implements Deliverable{
             MimeMessagePreparator preparator = new MimeMessagePreparator() {
                 public void prepare(MimeMessage mimeMessage) throws MessagingException, IOException, TemplateException {
                     mimeMessage.setFrom(domenUser.getDomenName());
-                    //mimeMessage.setText(message);
 
-                    //Configuration cfg = new Configuration(Configuration.VERSION_2_3_27);
-                    //cfg.setDirectoryForTemplateLoading();
-                   // cfg.setTemplateLoader();
                     Map<String, Object> root = new HashMap<>();
                     String[] text = message.getText().split(Pattern.quote("$$$"));
                     LOG.debug("Text : {}",  Arrays.toString(text));

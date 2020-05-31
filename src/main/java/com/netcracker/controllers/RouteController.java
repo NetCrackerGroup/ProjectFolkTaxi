@@ -302,7 +302,7 @@ public class RouteController {
 	}
 
 	@PostMapping("/endJourney")
-	public void endJourney(@RequestParam(name = "routeId") Long routeId) {
+	public void endJourney(@RequestParam(name = "routeId") Long routeId) throws Exception {
     	routeService.endJourney(routeId);
 	}
 

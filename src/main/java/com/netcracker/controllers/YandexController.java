@@ -1,9 +1,11 @@
 package com.netcracker.controllers;
 
-import com.netcracker.CustomException.FailureAccessToken;
+import com.netcracker.CustomException.*;
 import com.netcracker.DTO.CodeDTO;
+import com.netcracker.DTO.InfoToThankPassengerDTO;
 import com.netcracker.DTO.responses.StatusResponse;
 import com.netcracker.entities.Route;
+import com.netcracker.services.PaidJourneyService;
 import com.netcracker.services.RouteService;
 import com.netcracker.services.YandexService;
 import org.json.simple.parser.ParseException;
@@ -24,16 +26,19 @@ import java.util.*;
 @RestController
 @RequestMapping("/yandex")
 public class YandexController {
-    private static final Logger LOG = LoggerFactory.getLogger(ScheduleController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(YandexController.class);
 
     private YandexService yandexService;
     private RouteService routeService;
+    private PaidJourneyService paidJourneyService;
 
     @Autowired
     public YandexController(YandexService yandexService,
-                            RouteService routeService) {
+                            RouteService routeService,
+                            PaidJourneyService paidJourneyService) {
         this.yandexService = yandexService;
         this.routeService = routeService;
+        this.paidJourneyService = paidJourneyService;
     }
 
     @Value("${yandex.client.id}")
@@ -51,6 +56,7 @@ public class YandexController {
     @RequestMapping("/callback")
     public void callback() {
     }
+
 
     @GetMapping("clientId")
     public  Map<String, String> getClient(@RequestParam(name = "who") String whoUser) {
@@ -122,6 +128,50 @@ public class YandexController {
             LOG.debug("{}", ex.toString());
             LOG.debug("Exception : {}", ex.getMessage());
             LOG.debug("failure request");
+            return new StatusResponse("failure");
+        }
+    }
+
+    @GetMapping("check/connect/purse")
+    public StatusResponse getConnectYandexPurse() {
+        if ( yandexService.validYandexPurse())
+            return new StatusResponse("success");
+        else
+            return new StatusResponse("failure");
+    }
+
+    @PostMapping("thank/driver")
+    public StatusResponse passengerThankDriver(
+            @RequestBody InfoToThankPassengerDTO infoToThankPassengerDTO
+    ) {
+        try {
+            yandexService.thanksPassengerForJourney(infoToThankPassengerDTO);
+            return new StatusResponse("success");
+        } catch (NotFoundById | JourneyNotFound | FailureAccessToken | ParseException | FailureRequestPayment | PayFailure notFoundById) {
+            LOG.error("error : {}", notFoundById.getMessage(), notFoundById);
+            return new StatusResponse("failure");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new StatusResponse("failure");
+        }
+    }
+
+    @PutMapping("/purse")
+    public StatusResponse connectYandexPurse(@RequestParam(name = "code") String code) {
+        LOG.debug("connect Cash!");
+        try {
+            yandexService.connectYandexPurse(code);
+            return new StatusResponse("success");
+        }
+        catch (FailureAccessToken | NumberFormatException | YandexAccountFailure ex) {
+            LOG.error("error", ex);
+            return new StatusResponse("failure");
+        }
+        catch (ParseException ex) {
+            LOG.debug("Parser Error!");
+            return new StatusResponse("failure");
+        } catch (Exception e) {
+            e.printStackTrace();
             return new StatusResponse("failure");
         }
     }

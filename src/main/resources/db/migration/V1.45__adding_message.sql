@@ -1,0 +1,1 @@
+insert into info (info_key, info_subject, info_text) values ('passenger_thanks', 'Поездка завершина', 'Вы совершили поездку в качестве пассажира, <a href="http://google.com">Благодарить</a>');
